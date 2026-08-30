@@ -1,0 +1,225 @@
+/* ==========================================================================
+   APEX DRIVER — SECTION TYPES
+   Two wrappers. Every section on the page is one or the other.
+
+   GREEN  — photography and atmosphere. Full-bleed media, display type,
+            glass permitted (nav + voucher only), NO hairlines except the
+            route line, NO radius. Color arrives from the photograph.
+
+   PAPER  — document. Solid Graphite ground with Slate panels, tracked-caps
+            labels, mono spec rows, 4px corners. Nothing bleeds, nothing
+            floats, nothing moves.
+
+   The radius rule lives here and nowhere else: each wrapper sets --radius,
+   and every component downstream reads it. A component never hard-codes 4px.
+   ========================================================================== */
+
+.section {
+  position: relative;
+  width: 100%;
+}
+
+.section__inner {
+  position: relative;
+  z-index: var(--z-content);
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* --------------------------------------------------------------------------
+   GREEN — photography, atmosphere, motion
+   -------------------------------------------------------------------------- */
+.section--green {
+  --radius: var(--radius-hairline);   /* no radius, ever */
+  --section-ink: var(--chalk);
+
+  isolation: isolate;
+  color: var(--section-ink);
+  background: var(--graphite);   /* only ever seen before media loads */
+  overflow: clip;
+}
+
+/* Green sections carry no dividing lines. The route line is the sole
+   exception and opts back in explicitly via .routeline. */
+.section--green hr,
+.section--green .panel { display: none; }
+
+.section--green .section__media {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-media);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The source is a portrait frame; hold the crop on the cars rather than
+     letting a wide viewport centre on empty sky. */
+  object-position: 50% 62%;
+  border-radius: var(--radius);
+}
+
+/* Graphite at opacity — legibility without introducing a color.
+   Two stacked gradients, so their alphas multiply: the copy column ends up
+   near-solid Graphite while the right side, where the voucher floats, stays
+   open enough for the photograph to be the brightest thing on the page.
+   Tuned against real photography — a lit Verde Mantis burns straight through
+   anything lighter than this. */
+.section--green .section__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-scrim);
+  background:
+    linear-gradient(180deg,
+      rgb(var(--graphite-rgb) / .48) 0%,
+      rgb(var(--graphite-rgb) / .26) 45%,
+      var(--scrim-bottom) 100%),
+    linear-gradient(90deg,
+      rgb(var(--graphite-rgb) / .82) 0%,
+      rgb(var(--graphite-rgb) / .62) 34%,
+      rgb(var(--graphite-rgb) / .10) 76%);
+  pointer-events: none;
+}
+
+/* Single column: the copy runs the full width, so the horizontal gradient
+   has nothing to hide behind and the vertical one has to carry it alone. */
+@media (max-width: 60rem) {
+  .section--green .section__scrim {
+    background: linear-gradient(180deg,
+      rgb(var(--graphite-rgb) / .70) 0%,
+      rgb(var(--graphite-rgb) / .78) 38%,
+      rgb(var(--graphite-rgb) / .55) 62%,
+      var(--scrim-bottom) 100%);
+  }
+}
+
+.section--green .section__inner {
+  padding-block: var(--section-y);
+  min-height: min(92svh, 54rem);
+  display: flex;
+  align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   PAPER — document, specification, price
+   -------------------------------------------------------------------------- */
+.section--paper {
+  --radius: var(--radius-paper);      /* the 4px rule, scoped */
+  --section-ink: var(--chalk);
+
+  background: var(--ground);
+  color: var(--section-ink);
+}
+
+.section--paper .section__inner {
+  padding-block: var(--section-y);
+}
+
+/* Filled panel. The only raised surface outside glass. */
+.panel {
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: clamp(var(--space-6), 4vw, var(--space-12));
+}
+.panel--flush { padding: 0; overflow: hidden; }
+
+/* Hairline divider — Paper only. Green sections hide these outright. */
+.rule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--hairline-solid);
+}
+
+/* --------------------------------------------------------------------------
+   SECTION HEAD — 12px tracked caps, sitting above the section body
+   -------------------------------------------------------------------------- */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+}
+.section-head__label { flex: none; }
+.section-head__line {
+  flex: 1;
+  height: 1px;
+  background: var(--hairline-solid);
+}
+.section--green .section-head__line { display: none; }
+
+/* Section intro — the heading and single orienting line that sit between the
+   tracked-caps label and the section body. Tightens the label above it. */
+.section-head:has(+ .section-intro) { margin-bottom: var(--space-8); }
+.section-intro {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 46ch;
+  margin-bottom: clamp(var(--space-10), 5vw, var(--space-16));
+}
+/* Deliberately a step below .t-head. Section intros orient; they do not
+   shout. The only places allowed to shout are the hero and the gift-givers
+   beat, and they would lose that if every section matched them. */
+.section-intro__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-semi);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+/* --------------------------------------------------------------------------
+   PLATE — the photograph frame. Portrait 9:16 by default; the voucher is
+   the page's only landscape object.
+   -------------------------------------------------------------------------- */
+.plate {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--slate);
+}
+.plate > img,
+.plate > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.plate--landscape { aspect-ratio: 16 / 9; }
+.plate--square    { aspect-ratio: 1; }
+
+/* Placeholder state — used until real photography is dropped in. Kept
+   strictly within Slate/Granite so no color enters from the UI layer. */
+.plate:not(:has(img, video))::after {
+  content: attr(data-plate);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  background:
+    repeating-linear-gradient(135deg,
+      rgb(var(--chalk-rgb) / .015) 0 12px,
+      transparent 12px 24px),
+    var(--slate);
+}
+
+/* --------------------------------------------------------------------------
+   GLASS — nav and voucher only. Applying .glass to a third surface is a
+   design-system violation, not a styling choice.
+   -------------------------------------------------------------------------- */
+.glass {
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-edge);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  border-radius: var(--radius);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: rgb(var(--graphite-rgb) / .82); }
+}

@@ -1,0 +1,596 @@
+/* ==========================================================================
+   APEX DRIVER — COMPONENTS
+   Everything below is built from tokens only. No literal colors, no literal
+   font stacks, no literal radii.
+   ========================================================================== */
+
+/* ==========================================================================
+   PRIMARY ACTION — Gift the Experience
+   Chalk fill, Graphite text, one notched corner bottom-right. The loudest
+   element on the page. It appears in the nav, the hero, and the close, and
+   nowhere in between.
+   The notch replaces the radius entirely, in Green and Paper alike — it is
+   an identity, not a corner treatment.
+   ========================================================================== */
+.btn {
+  --btn-notch: var(--notch);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-8);
+  background: var(--chalk);
+  color: var(--ink-inverse);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: 0;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--btn-notch)),
+    calc(100% - var(--btn-notch)) 100%,
+    0 100%
+  );
+  transition: clip-path var(--dur-quick) var(--ease-tilt);
+}
+/* Feedback deepens the notch. No color shift — the palette has no room for
+   a hover state, and photography must stay the brightest thing here. */
+.btn:hover  { --btn-notch: calc(var(--notch) * 1.6); }
+.btn:active { --btn-notch: calc(var(--notch) * 1.25); }
+
+.btn--sm { padding: var(--space-3) var(--space-5); font-size: var(--text-label); }
+.btn--lg { padding: var(--space-5) var(--space-10); font-size: var(--text-md); }
+.btn--block { display: flex; width: 100%; justify-content: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}
+
+/* Secondary action — Meet the cars, See how it works, What he can expect.
+   Quiet by construction: no fill, no notch, no box. It reads as a label that
+   happens to be clickable, so the primary stays the loudest thing on screen. */
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-label);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--ink-secondary);
+  padding-block: var(--space-2);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.6em;
+  text-decoration-color: rgb(var(--chalk-rgb) / .24);
+  transition: color var(--dur-quick) var(--ease-tilt),
+              text-decoration-color var(--dur-quick) var(--ease-tilt);
+}
+.link:hover {
+  color: var(--ink);
+  text-decoration-color: rgb(var(--chalk-rgb) / .55);
+}
+/* Granite has nowhere near enough contrast over a lit photograph, so in a
+   Green section the secondary action steps up to Chalk. It stays quiet
+   next to the primary because it has no fill, not because it is dim. */
+.section--green .link {
+  color: var(--ink);
+  text-decoration-color: rgb(var(--chalk-rgb) / .45);
+}
+@media (prefers-reduced-motion: reduce) {
+  .link { transition: none; }
+}
+
+/* ==========================================================================
+   MARK — the hairpin A
+   An A whose apex is a hairpin: two legs climbing to a tight 180 at the top,
+   crossbar where the road would cut back across itself. Same stroke language
+   as the route line, so the mark reads as a fragment of road.
+   ========================================================================== */
+.mark {
+  display: block;
+  width: auto;
+  height: var(--mark-size, 1.75rem);
+  color: currentColor;
+  overflow: visible;
+}
+.mark path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--mark-stroke, 5.5);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mark--sm { --mark-size: 1.25rem; --mark-stroke: 6; }
+.mark--lg { --mark-size: 3.5rem;  --mark-stroke: 5; }
+
+/* Lockup — mark, wordmark, and the route line at wordmark scale. */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--ink);
+}
+.wordmark__type {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.wordmark__name {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semi);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  line-height: 1;
+}
+.wordmark__route {
+  height: 7px;
+  width: 100%;
+  color: var(--ink-secondary);
+}
+
+/* ==========================================================================
+   ROUTE LINE
+   The wrapper sizes the road; the component draws it. Never rounded, never
+   filled, never tinted — it inherits color like a piece of text.
+   ========================================================================== */
+.routeline {
+  position: relative;
+  display: block;
+  line-height: 0;
+  border-radius: 0;          /* hairline geometry, in every section type */
+  color: var(--ink-secondary);
+}
+/* Absolutely positioned so the SVG contributes no intrinsic size of its own.
+   The wrapper is what sizes the road. */
+.routeline__svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.routeline--wordmark { height: 10px; }
+.routeline--voucher  { height: 2rem; color: rgb(var(--chalk-rgb) / .55); }
+.routeline--diagram  { height: 7rem; }
+.routeline--page     { height: 100%; color: rgb(var(--chalk-rgb) / .18); }
+
+/* Tulip — rally navigation shorthand. Entry dot, one instruction, exit
+   arrow. Hairline, no radius, no panel behind it. */
+.tulip {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+.tulip__figure {
+  width: clamp(4.5rem, 8vw, 6.5rem);
+  aspect-ratio: 1;
+  color: var(--ink-secondary);
+}
+.tulip__caption { color: var(--ink-secondary); }
+
+/* ==========================================================================
+   NAV — sticky glass over the page
+   One of exactly two glass surfaces.
+   ========================================================================== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+  width: 100%;
+}
+.nav__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  min-height: var(--nav-h);
+  padding: var(--space-3) var(--gutter);
+  border-radius: 0;
+  border-inline: 0;
+  border-top: 0;
+}
+.nav__region {
+  display: none;
+  color: var(--ink-secondary);
+}
+@media (min-width: 48rem) {
+  .nav__region { display: block; }
+}
+/* The primary CTA is never abbreviated, so the lockup yields instead: below
+   30rem the nav shows the mark alone and the button keeps its full label. */
+@media (max-width: 30rem) {
+  .nav .wordmark__type { display: none; }
+}
+
+/* ==========================================================================
+   GIFT GIVERS — the one block that runs on emotion without a fact chasing it,
+   and the page's single ellipsis beat. Nothing else on the page gets this.
+   ========================================================================== */
+.givers {
+  display: grid;
+  gap: clamp(var(--space-8), 5vw, var(--space-16));
+}
+.givers > .t-sub { max-width: 58ch; color: var(--ink); }
+.givers__beat { max-width: 24ch; }
+
+/* ==========================================================================
+   NOTICE — errors and empty states
+   Warm is not apologetic: say what happened, then what to do. There is no
+   red, because there is no accent color. An error earns a Chalk edge; an
+   empty state is simply quieter. Never an exclamation mark.
+   ========================================================================== */
+.notice {
+  display: grid;
+  gap: var(--space-2);
+  max-width: var(--measure);
+  padding: var(--space-5) var(--space-6);
+  background: var(--panel);
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-light);
+  line-height: var(--leading-snug);
+  color: var(--ink-secondary);
+}
+.notice--error {
+  color: var(--ink);
+  box-shadow: inset 2px 0 0 var(--chalk);
+}
+
+/* ==========================================================================
+   VOUCHER — the signature element
+   Glass over live footage, violet-tinted, landscape in a page of portrait
+   plates. The only Viola on the site, the second and last glass surface,
+   and the only thing that moves.
+   ========================================================================== */
+.voucher {
+  position: relative;
+  width: min(100%, 27rem);
+  perspective: 1400px;
+}
+.voucher__settle { opacity: 0; }
+.voucher.is-settled .voucher__settle {
+  animation: voucher-settle var(--dur-settle) var(--ease-settle) both;
+}
+@keyframes voucher-settle {
+  from { opacity: 0; transform: translateY(1.75rem) scale(.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+.voucher__plane {
+  position: relative;
+  aspect-ratio: 8 / 5;
+  overflow: hidden;
+  border-radius: 0;                 /* Green section — hairline, no radius */
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform var(--dur-tilt) var(--ease-tilt);
+  will-change: transform;
+  /* The card sizes its own contents. A voucher rendered at 300px and one
+     rendered at 430px are the same object, not two type scales. */
+  container-type: inline-size;
+}
+.voucher__tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 140% at 12% 4%, var(--voucher-bloom) 0%, transparent 62%),
+    linear-gradient(155deg, var(--voucher-tint) 0%, rgb(var(--viola-rgb) / .10) 70%),
+    /* Graphite floor. The card has to stay legible over any frame of the
+       footage, including a lit Verde Mantis filling the whole plane. Without
+       it the glass is transparent enough that the serial disappears. */
+    rgb(var(--graphite-rgb) / .38);
+}
+.voucher__body {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+  padding: clamp(var(--space-5), 3.5vw, var(--space-8));
+  gap: var(--space-4);
+}
+.voucher__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  color: var(--ink);
+}
+.voucher__kind { color: rgb(var(--chalk-rgb) / .72); }
+.voucher__to {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  align-self: center;
+}
+.voucher__for { flex: none; color: rgb(var(--chalk-rgb) / .72); }
+.voucher__name {
+  font-size: clamp(var(--text-xl), 9.5cqi, var(--text-3xl));
+  color: var(--ink);
+}
+.voucher__foot {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--space-5);
+}
+.voucher__serial { color: rgb(var(--chalk-rgb) / .68); }
+
+/* ==========================================================================
+   PRICING ROW
+   Deliberately uniform. There is no --featured, no --popular, no raised
+   card, no border, no badge, and no accent. The only things that change
+   between tiers are the indent and the size — the indent carries the
+   inheritance, the size carries the accumulation.
+   ========================================================================== */
+.packages {
+  display: grid;
+  gap: clamp(var(--space-10), 5vw, var(--space-16));
+}
+
+.pricerow {
+  --tier: 0;
+  --tier-size: var(--step-1);
+  --pricerow-indent: calc(var(--step-indent) * var(--tier));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "name  price"
+    "lines lines";
+  align-items: baseline;
+  column-gap: var(--space-6);
+  row-gap: var(--space-2);
+  background: none;      /* no cards */
+  border: 0;             /* no rules */
+  padding: 0;
+}
+.pricerow--i   { --tier: 0; --tier-size: var(--step-1); }
+.pricerow--ii  { --tier: 1; --tier-size: var(--step-2); }
+.pricerow--iii { --tier: 2; --tier-size: var(--step-3); }
+
+.pricerow__name {
+  grid-area: name;
+  padding-left: var(--pricerow-indent);
+  font-family: var(--font-display);
+  font-size: var(--tier-size);
+  font-weight: var(--weight-semi);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--track-display);
+}
+/* Price sits in a fixed right column so the tiers indent away from a common
+   edge. Tabular figures, so they column-align like a spec sheet without
+   borrowing the mono face, which is reserved. */
+.pricerow__price {
+  grid-area: price;
+  font-family: var(--font-display);
+  font-size: var(--tier-size);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--track-display);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.pricerow__lines {
+  grid-area: lines;
+  padding-left: var(--pricerow-indent);
+  margin-top: var(--space-2);
+  display: grid;
+  gap: var(--space-1);
+  color: var(--ink-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-light);
+  line-height: var(--leading-snug);
+}
+
+/* Narrow: the price moves under its own name rather than to the far edge,
+   and indents with the tier so it stays attached to the package it belongs
+   to. Indent halves, since the column has less room to give. */
+@media (max-width: 34rem) {
+  .pricerow {
+    --pricerow-indent: calc(var(--step-indent) * var(--tier) * .5);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "name"
+      "price"
+      "lines";
+  }
+  .pricerow__price {
+    text-align: left;
+    padding-left: var(--pricerow-indent);
+  }
+}
+
+/* ==========================================================================
+   GIFT STEPS — the ONLY numbered markers in the system
+   Three steps down a spine, the third given the most room. Numbers are Sora
+   tracked caps; Chivo Mono stays reserved for fleet specs and the serial.
+   Do not reuse .giftstep__num anywhere else.
+   ========================================================================== */
+.giftsteps {
+  position: relative;
+  display: grid;
+  gap: var(--space-16);
+  padding-left: clamp(var(--space-8), 7vw, var(--space-16));
+}
+.giftsteps__spine {
+  position: absolute;
+  left: 0;
+  top: var(--space-2);
+  bottom: var(--space-2);
+  width: clamp(var(--space-6), 5vw, var(--space-12));
+  pointer-events: none;
+}
+.giftstep { position: relative; }
+.giftstep__num {
+  display: block;
+  margin-bottom: var(--space-4);
+  color: var(--ink);
+}
+.giftstep__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semi);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--track-display);
+  margin-bottom: var(--space-4);
+}
+.giftstep__body { display: grid; gap: var(--space-6); }
+
+/* The third step is where the gift actually happens, so it gets the room. */
+.giftstep--major { padding-block: var(--space-8) var(--space-4); }
+.giftstep--major .giftstep__title { font-size: var(--text-3xl); }
+.giftstep--major .giftstep__body {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+}
+@media (min-width: 48rem) {
+  .giftstep--major .giftstep__body {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* ==========================================================================
+   PROSE COLUMNS — safety, experience, spectators, expiry
+   Sora at reading size. No icons. No badges. No panels.
+   ========================================================================== */
+.prose-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-10) var(--space-16);
+}
+@media (min-width: 48rem) {
+  .prose-columns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.prose-block__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--track-display);
+  margin-bottom: var(--space-3);
+}
+
+/* ==========================================================================
+   SPEC SHEET — label, dotted leader, value
+   The fleet is the one place on the page that carries specs, so this is the
+   one place Chivo Mono appears outside the voucher serial.
+   ========================================================================== */
+.specsheet {
+  --leader: rgb(var(--chalk-rgb) / .22);
+  display: grid;
+  gap: var(--space-2);
+}
+.specsheet__row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--track-mono);
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+}
+.specsheet__label { flex: none; color: var(--ink-secondary); }
+.specsheet__leader {
+  flex: 1 1 auto;
+  min-width: var(--space-6);
+  align-self: center;
+  height: 0;
+  border-bottom: 1px dotted var(--leader);
+  transform: translateY(.18em);
+}
+.specsheet__value { flex: none; color: var(--ink); }
+
+/* Safety variant. Same document structure, but set in Sora at reading size,
+   because the type rules do not license Chivo Mono outside the fleet and the
+   serial. Used for the at-a-glance safety facts under the prose block. */
+.specsheet--safety { gap: var(--space-3); }
+.specsheet--safety .specsheet__row {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-light);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ==========================================================================
+   FLEET — portrait plates, real setting, spec rows beneath
+   ========================================================================== */
+.fleet {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: clamp(var(--space-8), 5vw, var(--space-16));
+}
+.fleet__car { display: grid; gap: var(--space-6); }
+.fleet__name { color: var(--ink); }
+
+/* ==========================================================================
+   PULL QUOTES — Newsreader italic, the second of its two licensed uses
+   ========================================================================== */
+.quotes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-12) var(--space-16);
+}
+@media (min-width: 48rem) {
+  .quotes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.quote { display: grid; gap: var(--space-5); }
+.quote__attr { color: var(--ink-secondary); }
+
+/* ==========================================================================
+   HERO — headline left, voucher floating right
+   ========================================================================== */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-12);
+  align-items: center;
+  width: 100%;
+}
+@media (min-width: 60rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    gap: var(--space-16);
+  }
+}
+.hero__copy { display: grid; gap: var(--space-6); justify-items: start; }
+.hero__lede { color: var(--ink-secondary); max-width: 42ch; }
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-8);
+  margin-top: var(--space-2);
+}
+/* Flex rather than justify-self, so the voucher resolves its width against a
+   definite box instead of shrink-wrapping to its own text. */
+.hero__voucher {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  z-index: var(--z-voucher);
+}
+@media (min-width: 60rem) {
+  .hero__voucher { justify-content: flex-end; }
+}
+
+/* ==========================================================================
+   CLOSE — final call, Paper section
+   ========================================================================== */
+.close {
+  display: grid;
+  gap: var(--space-8);
+  justify-items: start;
+}

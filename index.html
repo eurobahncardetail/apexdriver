@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apex Driver — Guided Supercar Driving Experiences</title>
+<meta name="description" content="The gift he'd never buy himself. Guided Lamborghini Huracán drives through Maryland, DC and Northern Virginia. Frederick, MD.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@1,6..72,300..500&family=Chivo+Mono:wght@300;400;500&display=swap">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/components.css">
+
+<style>
+/* ==========================================================================
+   DEMO SCAFFOLDING — NOT PART OF THE DESIGN SYSTEM
+   Two kinds of stand-in, both of which must be gone before launch:
+     1. Photography and video that has not been shot yet.
+     2. Copy still awaiting your sign-off (.todo).
+   The .todo treatment is deliberately ugly so a placeholder cannot ship by
+   accident. Delete this block once the real assets and copy land.
+   ========================================================================== */
+.section__media[data-plate] {
+  display: grid;
+  place-content: end end;
+  padding: var(--gutter);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  background:
+    repeating-linear-gradient(135deg,
+      rgb(var(--chalk-rgb) / .02) 0 16px,
+      transparent 16px 32px),
+    radial-gradient(120% 90% at 70% 30%, var(--slate) 0%, var(--graphite) 70%);
+}
+.section__media[data-plate]::after { content: attr(data-plate); }
+
+.todo {
+  display: block;
+  padding: var(--space-4) var(--space-5);
+  border: 1px dashed rgb(var(--chalk-rgb) / .28);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--track-mono);
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+</style>
+</head>
+<body>
+
+<!-- ======================================================================
+     NAV — sticky glass. Glass surface 1 of 2.
+     The primary CTA is never varied, so it reads in full here too; below
+     30rem the lockup drops back to the mark alone to make room for it.
+     ====================================================================== -->
+<header class="nav">
+  <div class="nav__bar glass">
+    <a class="wordmark" href="#top" aria-label="Apex Driver, home">
+      <svg class="mark mark--sm" viewBox="0 0 64 72" aria-hidden="true">
+        <path d="M8 68 L21 20 A11 11 0 0 1 43 20 L56 68"/>
+        <path d="M13 50 H51"/>
+      </svg>
+      <span class="wordmark__type">
+        <span class="wordmark__name">Apex Driver</span>
+        <span class="wordmark__route routeline routeline--wordmark"
+              data-route="0,.9 .28,.9 .48,.12 .76,.12 1,.6"
+              data-route-scale="wordmark"></span>
+      </span>
+    </a>
+
+    <span class="nav__region t-label">MD &middot; DC &middot; NoVA</span>
+
+    <a class="btn btn--sm" href="#packages">Gift the Experience</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ======================================================================
+     HERO — GREEN SECTION
+     ====================================================================== -->
+<section class="section section--green">
+  <!-- Still stands in for the driving footage the spec calls for. Swap to:
+       <video class="section__media" autoplay muted loop playsinline poster="img/hero.jpg"> -->
+  <img class="section__media" src="img/hero.jpg" alt="The Verde Mantis and Viola Huracans parked together at dusk in Reston Station, headlights on." width="1400" height="2072" fetchpriority="high">
+  <div class="section__scrim"></div>
+
+  <div class="section__inner">
+    <div class="hero">
+      <div class="hero__copy">
+        <span class="t-label">Guided supercar driving experiences</span>
+        <h1 class="t-hero">The gift he&rsquo;d<br>never buy himself</h1>
+        <p class="hero__lede t-prose t-prose--muted">
+          He&rsquo;s been pointing these out through the windshield for years.
+          Give him half an hour behind the wheel of a Lamborghini Hurac&aacute;n,
+          on a guided scenic route through Maryland, DC, and Northern Virginia.
+          You choose the experience. He picks the day.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--lg" href="#packages">Gift the Experience</a>
+          <a class="link" href="#fleet">Meet the cars</a>
+        </div>
+      </div>
+
+      <!-- ==============================================================
+           THE VOUCHER — signature element. Glass surface 2 of 2, the only
+           Viola on the site, the only landscape object, and the only thing
+           on the page that moves.
+           ============================================================== -->
+      <div class="hero__voucher">
+        <figure class="voucher" data-voucher>
+          <div class="voucher__settle">
+            <div class="voucher__plane glass">
+              <div class="voucher__tint"></div>
+              <div class="voucher__body">
+
+                <div class="voucher__head">
+                  <svg class="mark mark--sm" viewBox="0 0 64 72" aria-hidden="true">
+                    <path d="M8 68 L21 20 A11 11 0 0 1 43 20 L56 68"/>
+                    <path d="M13 50 H51"/>
+                  </svg>
+                  <span class="voucher__kind t-label">Gift Voucher</span>
+                </div>
+
+                <div class="voucher__to">
+                  <span class="voucher__for t-label">For</span>
+                  <span class="voucher__name t-name">James</span>
+                </div>
+
+                <div class="voucher__foot">
+                  <span class="routeline routeline--voucher"
+                        data-route="0,.78 .18,.78 .38,.16 .64,.16 .84,.72 1,.72"
+                        data-route-scale="voucher"></span>
+                  <span class="voucher__serial t-mono">No.&nbsp;0003-495</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     DESIGNED FOR GIFT GIVERS — PAPER SECTION
+     The one block on the page where the emotion runs without a fact
+     chasing it, and the page's single ellipsis beat.
+     ====================================================================== -->
+<section class="section section--paper" id="givers">
+  <div class="section__inner">
+    <div class="section-head">
+      <h2 class="section-head__label t-label">Designed for gift givers</h2>
+      <span class="section-head__line"></span>
+    </div>
+
+    <div class="givers">
+      <p class="t-sub">
+        We specialize in helping women create unforgettable moments for the men
+        in their lives. A birthday surprise. An anniversary gift. A wedding
+        gift. A &ldquo;just because&rdquo; moment. Or something he would never
+        think to buy for himself.
+      </p>
+      <p class="t-head givers__beat">
+        Because the best reactions aren&rsquo;t planned&hellip;they&rsquo;re experienced.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     PACKAGES — PAPER SECTION
+     No rules, no cards. The indent carries the inheritance; the size
+     carries the accumulation. None is raised above the others.
+     ====================================================================== -->
+<section class="section section--paper" id="packages">
+  <div class="section__inner">
+    <div class="section-head">
+      <h2 class="section-head__label t-label">Packages</h2>
+      <span class="section-head__line"></span>
+    </div>
+
+    <div class="section-intro">
+      <p class="section-intro__title">Choose the experience you&rsquo;d like to gift</p>
+      <p class="t-prose t-prose--muted">Three tiers, each one including everything below it.</p>
+    </div>
+
+    <ul class="packages">
+      <li class="pricerow pricerow--i">
+        <h3 class="pricerow__name">Apex Driver I</h3>
+        <span class="pricerow__price">$495</span>
+        <div class="pricerow__lines">
+          <span>30 min &middot; supercar &middot; guided scenic route</span>
+          <span>bring a passenger &middot; gift bag &middot; VIP scheduling</span>
+        </div>
+      </li>
+
+      <li class="pricerow pricerow--ii">
+        <h3 class="pricerow__name">Apex Driver II</h3>
+        <span class="pricerow__price">$795</span>
+        <div class="pricerow__lines">
+          <span>45 min &middot; extended scenic route</span>
+          <span>everything in I</span>
+        </div>
+      </li>
+
+      <li class="pricerow pricerow--iii">
+        <h3 class="pricerow__name">Apex Driver III</h3>
+        <span class="pricerow__price">$995</span>
+        <div class="pricerow__lines">
+          <span>1 hour &middot; photo &amp; video</span>
+          <span>everything in II</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================================================================
+     HOW IT WORKS — PAPER SECTION
+     The only numbered markers in the entire system. The spine is the route
+     line at page scale; step three carries a tulip at diagram scale.
+     ====================================================================== -->
+<section class="section section--paper" id="how">
+  <div class="section__inner">
+    <div class="section-head">
+      <h2 class="section-head__label t-label">How it works</h2>
+      <span class="section-head__line"></span>
+    </div>
+
+    <div class="section-intro">
+      <p class="section-intro__title">Three steps, and the rest is his</p>
+    </div>
+
+    <ol class="giftsteps">
+      <span class="giftsteps__spine routeline routeline--page"
+            data-route=".5,0 .5,.24 .12,.4 .12,.68 .62,.84 .62,1"
+            data-route-scale="page"></span>
+
+      <li class="giftstep">
+        <span class="giftstep__num t-label">01</span>
+        <h3 class="giftstep__title">You choose the experience</h3>
+        <div class="giftstep__body">
+          <p class="t-prose t-prose--muted">
+            A few minutes at checkout. No date needed yet.
+          </p>
+        </div>
+      </li>
+
+      <li class="giftstep">
+        <span class="giftstep__num t-label">02</span>
+        <h3 class="giftstep__title">The card arrives</h3>
+        <div class="giftstep__body">
+          <p class="t-prose t-prose--muted">
+            A physical gift card in the mail and a digital copy by email, both
+            with his name on them. Hand it over however you like.
+          </p>
+        </div>
+      </li>
+
+      <li class="giftstep giftstep--major">
+        <span class="giftstep__num t-label">03</span>
+        <h3 class="giftstep__title">He picks his day</h3>
+        <div class="giftstep__body">
+          <div>
+            <p class="t-prose t-prose--muted">
+              He calls with a date that works and we meet in Frederick. Come
+              along &mdash; you&rsquo;ll want to be there when he pulls away.
+            </p>
+          </div>
+
+          <div class="tulip">
+            <span class="tulip__figure routeline"
+                  data-route=".5,1 .5,.52 .88,.52"
+                  data-route-scale="diagram"
+                  data-route-markers="tulip"></span>
+            <span class="tulip__caption t-label">Meet &middot; Frederick, MD</span>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ======================================================================
+     BEFORE YOU BUY — PAPER SECTION
+     Two-column prose. Sora at reading size. No icons, no badges.
+     ====================================================================== -->
+<section class="section section--paper" id="before">
+  <div class="section__inner">
+    <div class="section-head">
+      <h2 class="section-head__label t-label">Before you buy</h2>
+      <span class="section-head__line"></span>
+    </div>
+
+    <div class="prose-columns">
+      <div class="prose-block">
+        <h3 class="prose-block__title">Is it safe?</h3>
+        <!-- AWAITING COPY — safety paragraph, to be used verbatim. -->
+        <p class="todo">Awaiting safety paragraph &mdash; to run verbatim.</p>
+      </div>
+
+      <div class="prose-block">
+        <h3 class="prose-block__title">Does he need experience?</h3>
+        <p class="t-prose t-prose--muted">
+          Not a bit. The pace car sets the speed, and the briefing before the
+          drive covers everything he needs to know.
+        </p>
+      </div>
+
+      <div class="prose-block">
+        <h3 class="prose-block__title">Can I be there?</h3>
+        <p class="t-prose t-prose--muted">
+          Please do. Spectators are welcome at the meeting point, and it&rsquo;s
+          the best seat for the moment he gets in.
+        </p>
+      </div>
+
+      <div class="prose-block">
+        <h3 class="prose-block__title">What if he can&rsquo;t use it?</h3>
+        <!-- AWAITING COPY — refund and expiry policy. -->
+        <p class="todo">Awaiting refund and expiry policy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     THE FLEET — PAPER SECTION
+     The one place with specs. Portrait plates, mono rows, dotted leaders.
+     ====================================================================== -->
+<section class="section section--paper" id="fleet">
+  <div class="section__inner">
+    <div class="section-head">
+      <h2 class="section-head__label t-label">The fleet</h2>
+      <span class="section-head__line"></span>
+    </div>
+
+    <div class="section-intro">
+      <p class="section-intro__title">Two Hurac&aacute;ns</p>
+      <p class="t-prose t-prose--muted">
+        One Verde Mantis. One Viola. He tells us which one he wants when he books.
+      </p>
+    </div>
+
+    <div class="fleet">
+      <article class="fleet__car">
+        <figure class="plate"><img src="img/fleet-viola.jpg" alt="The Viola Huracán on the cobblestone plaza at Reston Station, trees and storefronts behind it." width="900" height="1600" loading="lazy"></figure>
+        <h3 class="fleet__name t-mono">Hurac&aacute;n &middot; Viola</h3>
+        <dl class="specsheet">
+          <div class="specsheet__row">
+            <dt class="specsheet__label">Value</dt>
+            <span class="specsheet__leader" aria-hidden="true"></span>
+            <dd class="specsheet__value">$295K</dd>
+          </div>
+          <div class="specsheet__row">
+            <dt class="specsheet__label">Horsepower</dt>
+            <span class="specsheet__leader" aria-hidden="true"></span>
+            <dd class="specsheet__value">602 HP</dd>
+          </div>
+          <div class="specsheet__row">
+            <dt class="specsheet__label">0&ndash;60</dt>
+            <span class="specsheet__leader" aria-hidden="true"></span>
+            <dd class="specsheet__value">3.2 S</dd>
+          </div>
+          <div class="specsheet__row">
+            <dt class="specsheet__label">Top speed</dt>
+            <span class="specsheet__leader" aria-hidden="true"></span>
+            <dd class="specsheet__value">202 MPH</dd>
+          </div>
+        </dl>
+      </article>
+
+      <article class="fleet__car">
+        <figure class="plate"><img src="img/fleet-verde.jpg" alt="The Verde Mantis Huracán outside the glass tower at Reston Station." width="900" height="1600" loading="lazy"></figure>
+        <h3 class="fleet__name t-mono">Hurac&aacute;n &middot; Verde Mantis</h3>
+        <dl class="specsheet">
+          <div class="specsheet__row">
+            <dt class="specsheet__label">Value</dt>
+            <span class="specsheet__leader" aria-hidden="true"></span>
+            <dd class="specsheet__value">$295K</dd>
+          </div>
+          <div class="specsheet__row">
+            <dt class="specsheet__label">Horsepower</dt>
+            <span class="specsheet__leader" aria-hidden="true"></span>
+            <dd class="specsheet__value">602 HP</dd>
+          </div>
+          <div class="specsheet__row">
+            <dt class="specsheet__label">0&ndash;60</dt>
+            <span class="specsheet__leader" aria-hidden="true"></span>
+            <dd class="specsheet__value">3.2 S</dd>
+          </div>
+          <div class="specsheet__row">
+            <dt class="specsheet__label">Top speed</dt>
+            <span class="specsheet__leader" aria-hidden="true"></span>
+            <dd class="specsheet__value">202 MPH</dd>
+          </div>
+        </dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     TESTIMONIALS — PAPER SECTION
+     Kept from the design spec (two Newsreader italic pull quotes), but the
+     warm-register deck did not include quotes, so nothing is invented here.
+     This is Newsreader's second and only other licensed use — if the section
+     is cut, the face appears on the voucher alone.
+     ====================================================================== -->
+<section class="section section--paper" id="said">
+  <div class="section__inner">
+    <div class="section-head">
+      <h2 class="section-head__label t-label">What they said after</h2>
+      <span class="section-head__line"></span>
+    </div>
+
+    <div class="quotes">
+      <!-- AWAITING COPY — two real customer quotes, or cut the section. -->
+      <p class="todo">Awaiting pull quote 1 &mdash; real customer words, with a first name and town.</p>
+      <p class="todo">Awaiting pull quote 2 &mdash; real customer words, with a first name and town.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     CLOSE — PAPER SECTION
+     The primary action, third and last appearance.
+     ====================================================================== -->
+<section class="section section--paper">
+  <div class="section__inner">
+    <div class="panel">
+      <div class="close">
+        <span class="t-label">Frederick, Maryland</span>
+        <h2 class="t-head">He isn&rsquo;t expecting this</h2>
+        <p class="t-prose t-prose--muted">
+          Choose the experience, and his card goes out today.
+        </p>
+        <a class="btn btn--lg" href="#packages">Gift the Experience</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="section section--paper">
+  <div class="section__inner" style="padding-block: var(--space-12)">
+    <hr class="rule" style="margin-bottom: var(--space-8)">
+    <a class="wordmark" href="#top">
+      <svg class="mark mark--sm" viewBox="0 0 64 72" aria-hidden="true">
+        <path d="M8 68 L21 20 A11 11 0 0 1 43 20 L56 68"/>
+        <path d="M13 50 H51"/>
+      </svg>
+      <span class="wordmark__type">
+        <span class="wordmark__name">Apex Driver</span>
+        <span class="wordmark__route routeline routeline--wordmark"
+              data-route="0,.9 .28,.9 .48,.12 .76,.12 1,.6"
+              data-route-scale="wordmark"></span>
+      </span>
+    </a>
+  </div>
+</footer>
+
+<script type="module" src="js/apex.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+/* ==========================================================================
+   APEX DRIVER — DESIGN TOKENS
+   Frederick, MD · supercar driving experience vouchers
+   --------------------------------------------------------------------------
+   HARD RULES ENCODED HERE:
+   1. Six colors. Nothing else. All remaining color on the page arrives
+      inside the photographs — never from a UI token.
+   2. Viola is the voucher only. Glass is the nav and the voucher only.
+   3. Sora is display. Newsreader is italic-only, for the recipient's name
+      and pull quotes. Chivo Mono is fleet specs and the voucher serial.
+      Nothing else, in either case.
+   4. 4px radius belongs to Paper sections only. Green sections, the route
+      line, and the tulip diagrams stay hairline with no radius.
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------ COLOR
+     The whole palette. Six entries. Do not add a seventh. */
+
+  --graphite:   #171A1E;              /* page ground                         */
+  --slate:      #22262C;              /* raised panels, solid sections       */
+  --chalk:      #E8E6E1;              /* primary text, primary button fill   */
+  --granite:    #8A8F99;              /* secondary text, labels              */
+  --viola:      #6C3AAB;              /* THE VOUCHER ONLY                    */
+
+  /* Glass — nav and voucher only. Never a third surface. */
+  --glass-fill: rgba(255, 255, 255, .06);
+  --glass-edge: rgba(255, 255, 255, .14);
+  --glass-blur: 20px;
+
+  /* Channel forms, so scrims and tints are the palette at opacity rather
+     than new colors. */
+  --graphite-rgb: 23 26 30;
+  --chalk-rgb:    232 230 225;
+  --viola-rgb:    108 58 171;
+
+  /* ------------------------------------------------------------- SEMANTIC */
+  --ground:          var(--graphite);
+  --panel:           var(--slate);
+  --ink:             var(--chalk);
+  --ink-secondary:   var(--granite);
+  --ink-inverse:     var(--graphite);   /* on Chalk fills */
+  --hairline:        var(--glass-edge);
+  --hairline-solid:  rgb(var(--chalk-rgb) / .10);  /* hairlines on Paper */
+
+  /* Scrim over hero footage — graphite at opacity, not a new color. */
+  --scrim-top:    rgb(var(--graphite-rgb) / .55);
+  --scrim-bottom: rgb(var(--graphite-rgb) / .88);
+
+  /* Voucher tint — the single licensed use of Viola. Tuned to read as tinted
+     glass rather than a violet card: once real footage sits behind it, the
+     footage should still come through. These two are the knobs to adjust
+     after the hero video is shot. */
+  --voucher-tint:  rgb(var(--viola-rgb) / .30);
+  --voucher-bloom: rgb(var(--viola-rgb) / .48);
+
+  /* --------------------------------------------------------------- TYPE */
+  --font-display: 'Sora', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-quote:   'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;  /* italic only */
+  --font-mono:    'Chivo Mono', ui-monospace, SFMono-Regular, 'Cascadia Mono', Consolas, monospace;
+
+  /* Scale. Fixed steps below display; fluid at display sizes. */
+  --text-label: 0.75rem;      /* 12px — section labels, tracked caps, Sora  */
+  --text-xs:    0.8125rem;    /* 13px — spec rows, serial, fine print       */
+  --text-sm:    0.9375rem;    /* 15px — package detail lines, nav           */
+  --text-md:    1.0625rem;    /* 17px — prose reading size                  */
+  --text-lg:    1.25rem;      /* 20px — lead paragraphs, pull quote small   */
+  --text-xl:    1.5rem;       /* 24px — package I                           */
+  --text-2xl:   1.875rem;     /* 30px — package II                          */
+  --text-3xl:   2.375rem;     /* 38px — package III, pull quotes            */
+  --text-4xl:   clamp(2.5rem, 1.60rem + 3.6vw, 4rem);     /* section heads  */
+  --text-5xl:   clamp(2.75rem, 1.15rem + 6.4vw, 5.75rem); /* hero headline  */
+
+  /* Package steps — name and price grow together as the tier accumulates.
+     The indent carries the inheritance; the size carries the accumulation. */
+  --step-1: var(--text-xl);
+  --step-2: var(--text-2xl);
+  --step-3: var(--text-3xl);
+  --step-indent: clamp(1.5rem, 4vw, 4rem);
+
+  /* Tracking */
+  --track-caps:    0.14em;    /* 12px tracked-caps labels                   */
+  --track-mono:    0.04em;
+  --track-display: -0.02em;
+  --track-hero:    -0.03em;
+
+  /* Leading */
+  --leading-hero:  0.94;
+  --leading-tight: 1.06;
+  --leading-snug:  1.25;
+  --leading-body:  1.62;
+
+  /* Weight — Sora only; Newsreader and Chivo Mono stay at their one weight. */
+  --weight-light:  300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semi:   600;
+  --weight-bold:   700;
+
+  /* ------------------------------------------------------------ SPACING
+     4px base. Every gap, pad, and margin comes from here. */
+  --space-1:  0.25rem;   /*   4px */
+  --space-2:  0.5rem;    /*   8px */
+  --space-3:  0.75rem;   /*  12px */
+  --space-4:  1rem;      /*  16px */
+  --space-5:  1.25rem;   /*  20px */
+  --space-6:  1.5rem;    /*  24px */
+  --space-8:  2rem;      /*  32px */
+  --space-10: 2.5rem;    /*  40px */
+  --space-12: 3rem;      /*  48px */
+  --space-16: 4rem;      /*  64px */
+  --space-20: 5rem;      /*  80px */
+  --space-24: 6rem;      /*  96px */
+  --space-32: 8rem;      /* 128px */
+  --space-40: 10rem;     /* 160px */
+
+  --section-y: clamp(var(--space-16), 9vw, var(--space-32));
+  --gutter:    clamp(var(--space-5), 4vw, var(--space-16));
+  --page-max:  78rem;    /* 1248px */
+  --measure:   62ch;     /* prose column */
+  --nav-h:     4rem;
+
+  /* ------------------------------------------------------------- RADIUS
+     THE RULE: 4px is a Paper-section property. Everything else is hairline.
+     Components read var(--radius), which each section wrapper sets. Green
+     sections and route-line/tulip SVG never override it. */
+  --radius-paper:    4px;
+  --radius-hairline: 0;
+  --radius: var(--radius-hairline);   /* default — must be opted into */
+
+  /* Notch — the primary action's one identifying corner (bottom-right). */
+  --notch: 0.625rem;   /* 10px */
+
+  /* --------------------------------------------------------- ROUTE LINE
+     One component, four scales. Stroke and bend radius travel together so
+     the line reads as the same road at 16px and at 900px. */
+  --route-color: currentColor;
+
+  --route-stroke-wordmark: 1.25px;
+  --route-stroke-voucher:  1.5px;
+  --route-stroke-diagram:  2px;
+  --route-stroke-page:     3px;
+
+  --route-bend-wordmark:   4px;
+  --route-bend-voucher:    8px;
+  --route-bend-diagram:    14px;
+  --route-bend-page:       28px;
+
+  /* --------------------------------------------------------------- MOTION
+     Motion budget for the whole page: the voucher settles once, then tilts
+     toward the cursor. The route line owns a draw-on-scroll capability that
+     is off by default so this page stays still. */
+  --dur-settle: 1100ms;
+  --dur-tilt:   350ms;
+  --dur-draw:   1200ms;
+  --dur-quick:  180ms;
+
+  --ease-settle: cubic-bezier(.16, 1, .3, 1);
+  --ease-tilt:   cubic-bezier(.22, .61, .36, 1);
+  --ease-draw:   cubic-bezier(.65, 0, .35, 1);
+
+  --tilt-max: 6deg;
+
+  /* ---------------------------------------------------------------- DEPTH */
+  --z-media:   0;
+  --z-scrim:   1;
+  --z-content: 2;
+  --z-voucher: 20;
+  --z-nav:     100;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-settle: 1ms;
+    --dur-tilt:   1ms;
+    --dur-draw:   1ms;
+    --tilt-max:   0deg;
+  }
+}
