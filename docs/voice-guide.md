@@ -206,8 +206,17 @@ names the recipient, and puts the wheel — not the car — at the center.
 
 ### How it works
 
-Ships as-is. Four steps, each one a fact. Note step 02 does the heavy lifting by
-defining Pilot and Copilot without a glossary.
+Copy unchanged, order changed. The steps were numbered 01–04 but ran out of
+sequence: "REDEEM WHEN READY" sat at 04, describing the booking that happens
+before anyone meets in Frederick. Numbering promises chronology, so it has to
+deliver it.
+
+Now: **01** redeem → **02** meet → **03** choose pilot or copilot → **04** drive.
+
+Two things improved at once. The numbers are true, and the section ends on the
+drive instead of on booking admin — the route diagram's arrowhead now lands on
+the most exciting step rather than the most procedural one. Step 03 still does
+the heavy lifting, defining Pilot and Copilot without a glossary.
 
 One optional addition, for buyers who don't know what they're committing the
 recipient to:
