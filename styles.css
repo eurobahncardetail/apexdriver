@@ -471,22 +471,16 @@ img, svg { display: block; max-width: 100%; }
 }
 .faq__q::-webkit-details-marker { display: none; }
 
-/* Hover brightens the marker and number rather than dimming the question.
-   The question rests at 18.45:1; the old `color: graphite` hover dropped it to
-   7.89:1, so hovering made the target harder to read. */
-.faq__num,
+/* Hover brightens the marker rather than dimming the question. The question
+   rests at 18.45:1; the old `color: graphite` hover dropped it to 7.89:1, so
+   hovering made the target harder to read.
+
+   The 01-04 numbers that sat here are gone. Numbering implies sequence, and
+   these four questions have no order - nothing breaks if they are rearranged.
+   It borrowed the credibility of the How It Works steps, which are a real
+   sequence, without the content earning it. */
 .faq__marker { transition: color 120ms var(--ease); }
-.faq__q:hover .faq__num,
 .faq__q:hover .faq__marker { color: var(--void-black); }
-
-.faq__meta {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.faq__num { font-family: var(--font-mono); font-size: 12px; color: var(--steel); }
 
 /* Disclosure marker: the logo's angled apex bar, not a stock chevron. Closed it
    stands at the logo's slant; open it lies flat, becoming the lane line that
