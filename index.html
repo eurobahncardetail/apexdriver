@@ -15,6 +15,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
+
+  <script>
+    /* The page's one motion moment: the How It Works route line draws itself
+       once, with the four steps resolving in cadence. Everything here is
+       opt-in - the class below is what arms the animation, so without JS,
+       without IntersectionObserver, or with reduced motion the section simply
+       renders in its final state. Runs in <head> so the armed state is set
+       before first paint rather than flashing after it. */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!('IntersectionObserver' in window)) return;
+
+      var root = document.documentElement;
+      root.classList.add('js-motion');
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var how = document.getElementById('how');
+        if (!how) { root.classList.remove('js-motion'); return; }
+
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-drawn');
+            io.unobserve(entry.target); // fires once; replaying on every pass is noise
+          });
+        }, {
+          /* Threshold alone would never fire when the section is taller than
+             the viewport. This triggers once its top crosses 75% of the fold,
+             at any section height. */
+          rootMargin: '0px 0px -25% 0px',
+          threshold: 0
+        });
+
+        io.observe(how);
+      });
+    })();
+  </script>
 </head>
 <body>
 
@@ -100,15 +137,35 @@
            the arrowhead now lands on the drive rather than on booking admin. -->
       <div class="how__figure">
         <svg viewBox="0 0 320 220" aria-hidden="true" focusable="false">
+          <defs>
+            <!-- The visible path is already dashed (6 6), so the usual
+                 draw-on trick - dasharray = path length, animate the offset -
+                 would destroy the dashes. Instead a solid path masks it and
+                 the mask is what draws. pathLength="1" normalises the length,
+                 so the offset runs 1 -> 0 with no measuring in JS. -->
+            <mask id="route-reveal" maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="220">
+              <path class="route__reveal"
+                    d="M24 196 C 90 196, 100 40, 170 40 S 260 130, 296 24"
+                    fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"
+                    pathLength="1" stroke-dasharray="1"></path>
+            </mask>
+          </defs>
+
+          <!-- Origin marker: present from the start, it is where the line begins -->
           <circle cx="24" cy="196" r="5" fill="#F7F7F5"></circle>
           <text x="14" y="212" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8A8D93">01</text>
+
           <path d="M24 196 C 90 196, 100 40, 170 40 S 260 130, 296 24"
                 fill="none" stroke="#8A8D93" stroke-width="2"
-                stroke-dasharray="6 6" stroke-linecap="round"></path>
+                stroke-dasharray="6 6" stroke-linecap="round"
+                mask="url(#route-reveal)"></path>
+
+          <!-- Scale lives on the polygon, not the <g>: a CSS transform on the
+               group would replace its translate/rotate attribute. -->
           <g transform="translate(288,14) rotate(45)">
-            <polygon points="0,22 4.05,22 9,0 4.95,0" fill="#F7F7F5"></polygon>
+            <polygon class="route__head" points="0,22 4.05,22 9,0 4.95,0" fill="#F7F7F5"></polygon>
           </g>
-          <text x="278" y="8" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8A8D93">04</text>
+          <text class="route__head-label" x="278" y="8" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8A8D93">04</text>
         </svg>
       </div>
     </section>

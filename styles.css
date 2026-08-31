@@ -64,6 +64,12 @@
 
   /* One easing curve, weighted to settle rather than drift. Not `ease`. */
   --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+
+  /* The route draw gets its own curve: near-linear through the middle so the
+     line reads as travel at speed. The --ease settle curve would make it look
+     like the line is arriving rather than driving. */
+  --ease-draw: cubic-bezier(0.45, 0.05, 0.2, 1);
+  --draw-ms:   1500ms;
 }
 
 /* ==========================================================================
@@ -605,4 +611,83 @@ img, svg { display: block; max-width: 100%; }
 
   .footer { gap: 12px; }
   .footer__contact { gap: 12px; }
+}
+
+/* ==========================================================================
+   Motion — the route line draws
+   The page's single orchestrated moment, and the only animation on it beyond
+   hover feedback. The handoff's reference file defined @keyframes dashdraw and
+   never applied it; this finishes that intent.
+
+   Rules it holds to:
+   - Opt-in. Every rule below is gated on .js-motion, which only exists when JS
+     ran AND reduced motion is off. Without it the section renders finished.
+   - The words never move or fade. Only the route line, the arrowhead, and each
+     step's number and hairline resolve — titles and body copy are readable and
+     final at all times.
+   - It resolves TO the specified design, never past it. The pre-animation state
+     is dimmer than spec; the end state IS spec.
+   - Fires once. Replaying on every scroll past is the generic tell.
+   ========================================================================== */
+
+/* --- Armed state: dimmer than spec, set before first paint --------------- */
+
+.js-motion .route__reveal { stroke-dashoffset: 1; }
+
+.js-motion .route__head,
+.js-motion .route__head-label { opacity: 0; }
+
+.js-motion .route__head {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0.8);
+}
+
+.js-motion .step__num { color: var(--graphite); }
+.js-motion .step      { border-top-color: transparent; }
+
+/* --- Drawn state: the specified design, reached in cadence -------------- */
+
+.js-motion #how.is-drawn .route__reveal {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset var(--draw-ms) var(--ease-draw);
+}
+
+/* The arrowhead lands as the line completes — the final beat, and since the
+   steps now run in chronological order it lands on the drive. */
+.js-motion #how.is-drawn .route__head,
+.js-motion #how.is-drawn .route__head-label {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 260ms var(--ease) 1380ms,
+              transform 260ms var(--ease) 1380ms;
+}
+
+.js-motion #how.is-drawn .step      { border-top-color: var(--graphite); }
+.js-motion #how.is-drawn .step__num { color: var(--steel); }
+
+.js-motion #how.is-drawn .step,
+.js-motion #how.is-drawn .step__num {
+  transition: border-top-color 320ms var(--ease), color 320ms var(--ease);
+}
+
+/* Staggered at 0 / 30 / 60 / 90% of the draw, so the steps resolve in step
+   with the line rather than as a generic list cascade. */
+.js-motion #how.is-drawn .step:nth-child(1),
+.js-motion #how.is-drawn .step:nth-child(1) .step__num { transition-delay: 0ms; }
+.js-motion #how.is-drawn .step:nth-child(2),
+.js-motion #how.is-drawn .step:nth-child(2) .step__num { transition-delay: 450ms; }
+.js-motion #how.is-drawn .step:nth-child(3),
+.js-motion #how.is-drawn .step:nth-child(3) .step__num { transition-delay: 900ms; }
+.js-motion #how.is-drawn .step:nth-child(4),
+.js-motion #how.is-drawn .step:nth-child(4) .step__num { transition-delay: 1350ms; }
+
+/* Belt and braces: the JS bails on reduced motion, but the preference can also
+   change after load. Anything already armed snaps to its final state. */
+@media (prefers-reduced-motion: reduce) {
+  .js-motion .route__reveal { stroke-dashoffset: 0; }
+  .js-motion .route__head { opacity: 1; transform: none; }
+  .js-motion .route__head-label { opacity: 1; }
+  .js-motion .step__num { color: var(--steel); }
+  .js-motion .step { border-top-color: var(--graphite); }
 }

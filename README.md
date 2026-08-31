@@ -87,6 +87,18 @@ two-line headline. It is now `clamp(34px, 5.8vw, 82px)`, solved against the
 tightest point of the two-column range (~901px). Verified two lines and no
 horizontal overflow from 320px to 1440px.
 
+**The How It Works route line draws itself** — the page's one motion moment, and
+the only animation beyond hover feedback. The handoff's reference file defined
+`@keyframes dashdraw` and never applied it; this finishes that intent. The dashed
+curve draws from the dot at 01 to the arrowhead at 04 over 1.5s while each step's
+number and hairline resolve in cadence, staggered at 0/30/60/90% of the draw.
+
+It is entirely opt-in: every rule is gated on a `js-motion` class that only
+exists when JS ran and reduced motion is off, so without either the section
+renders finished. The pre-animation state is dimmer than spec and the end state
+*is* spec — the animation never overshoots the design. Titles and body copy never
+move or fade; only the line, the arrowhead, and the numbers and hairlines resolve.
+
 **How It Works runs in chronological order** — 01 redeem, 02 meet, 03 choose,
 04 drive. The steps were numbered but out of sequence: "Redeem when ready" sat at
 04, describing the booking that happens before anyone meets in Frederick. Copy is
