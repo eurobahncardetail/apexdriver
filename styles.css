@@ -286,18 +286,11 @@ img, svg { display: block; max-width: 100%; }
   font-stretch: var(--display-width);
   letter-spacing: var(--display-tracking);
   font-weight: var(--display-weight);
-  /* Re-derived for the expanded face. The handoff's clamp(48px, 7vw, 92px) was
-     set for Anton, which is very condensed; at width 125 "THE WHEEL." is 7.9x
-     the font size, so 92px overflowed the 1.1fr column by 48px and broke the
-     two-line hero. Solved against the narrowest point of the two-column range
-     (~901px, just above the stack breakpoint) where the column is tightest
-     relative to viewport. Optically this is not smaller - expanded caps at 82px
-     carry more mass than condensed caps at 92px. */
-  /* Re-derived again for the full-bleed hero: the title now spans the whole
-     content width rather than a 1.1fr column, so it can carry more mass. At
-     width 125 "THE WHEEL." is 7.9x the font size = 822px at the 104px cap,
-     inside the 1272px content width, and 8vw stays clear of the gutters all
-     the way down to 320px. */
+  /* Derived for the full-bleed hero, not inherited. The handoff's
+     clamp(48px, 7vw, 92px) was set for Anton, which is very condensed; Archivo
+     at width 125 sets "THE WHEEL." at 7.9x the font size. Here the title spans
+     the full content width, so 104px = ~822px, inside the 1272px content box,
+     and 7.4vw stays clear of the gutters all the way down to 320px. */
   font-size: clamp(36px, 7.4vw, 104px);
   line-height: 0.96;
   text-transform: uppercase;
