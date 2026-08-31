@@ -84,8 +84,16 @@
         <a class="btn" href="#pricing">GIVE THE DRIVE</a>
       </div>
       <div>
-        <!-- ASSET NEEDED: Huracán, front 3/4, dark garage/road backdrop -->
-        <div class="photo-slot">HERO PHOTO<br>HURACÁN — FRONT 3/4<br>DARK GARAGE / ROAD BACKDROP</div>
+        <picture>
+          <source type="image/webp"
+                  srcset="assets/photos/hero-huracan-800.webp 800w,
+                          assets/photos/hero-huracan-1600.webp 1600w"
+                  sizes="(max-width: 900px) 92vw, 45vw">
+          <img class="photo" src="assets/photos/hero-huracan-1600.jpg"
+               width="1600" height="1200"
+               alt="A purple Lamborghini Huracán head-on at dusk, headlights lit, against a dark building."
+               fetchpriority="high" decoding="async">
+        </picture>
       </div>
     </section>
 
@@ -181,8 +189,16 @@
       <div class="fleet__grid">
 
         <div>
-          <!-- ASSET NEEDED: Huracán 01 photo -->
-          <div class="photo-slot">FLEET PHOTO 01<br>HURACÁN</div>
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/photos/huracan-01-650.webp 650w,
+                            assets/photos/huracan-01-1300.webp 1300w"
+                    sizes="(max-width: 640px) 92vw, 45vw">
+            <img class="photo" src="assets/photos/huracan-01-1300.jpg"
+                 width="1300" height="975"
+                 alt="The green Huracán, front three-quarter view, parked on a paved plaza."
+                 loading="lazy" decoding="async">
+          </picture>
           <div class="car__meta">
             <span class="car__name">HURACÁN 01</span>
             <span class="car__spec">V10 · 630HP</span>
@@ -190,8 +206,16 @@
         </div>
 
         <div>
-          <!-- ASSET NEEDED: Huracán 02 photo -->
-          <div class="photo-slot">FLEET PHOTO 02<br>HURACÁN</div>
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/photos/huracan-02-650.webp 650w,
+                            assets/photos/huracan-02-1300.webp 1300w"
+                    sizes="(max-width: 640px) 92vw, 45vw">
+            <img class="photo" src="assets/photos/huracan-02-1300.jpg"
+                 width="1300" height="975"
+                 alt="The purple Huracán, front three-quarter view, on a tree-lined street."
+                 loading="lazy" decoding="async">
+          </picture>
           <div class="car__meta">
             <span class="car__name">HURACÁN 02</span>
             <span class="car__spec">V10 · 630HP</span>

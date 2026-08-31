@@ -162,25 +162,17 @@ img, svg { display: block; max-width: 100%; }
 .btn:hover { background: var(--chrome); color: var(--void-black); }
 .btn--lg { padding: 18px 40px; }
 
-/* Image placeholders (asset needed) --------------------------------------- */
+/* Car photography ---------------------------------------------------------
+   The only color on the page, by design. Ratio is fixed at 4:3 per the
+   handoff, and width/height on the <img> match it, so the grid holds its
+   shape before the image decodes and nothing shifts. */
 
-.photo-slot {
+.photo {
   aspect-ratio: 4 / 3;
   width: 100%;
-  display: grid;
-  /* Bottom-left, like a production note on a contact sheet - the page is
-     left-aligned everywhere else, so centered placeholder text fought it. */
-  align-content: end;
-  justify-items: start;
-  padding: 24px;
-  text-align: left;
-  background: var(--asphalt-alt);
-  border: 1px dashed var(--graphite);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
-  color: var(--steel);
+  height: auto;
+  object-fit: cover;
+  background: var(--asphalt-alt); /* holds the slot while loading */
 }
 
 /* ==========================================================================

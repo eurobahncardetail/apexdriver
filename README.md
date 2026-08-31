@@ -27,6 +27,36 @@ python -m http.server 8000
 | `index.html` | The whole page — nav, hero, how-it-works, fleet, pricing, trust+FAQ, contact, footer |
 | `styles.css` | Design tokens (`:root`) plus per-section styles, in section order |
 | `assets/logo.svg` | The chevron/apex logo mark, rebuilt as SVG from the reference's CSS `clip-path` bars |
+| `assets/photos/` | Web-derived car photography — WebP with a JPEG fallback, two widths each |
+
+## Photography
+
+Derived from the originals in the parent folder. The fleet is genuinely two
+cars, so they map onto the two fleet cards:
+
+| Slot | Source | Car |
+| --- | --- | --- |
+| Hero | `IMG_6483.jpeg` | Purple Huracán, head-on, headlights lit, dark building behind |
+| Huracán 01 | `IMG_6487.jpeg` | Green Huracán, front three-quarter |
+| Huracán 02 | `IMG_6500.jpeg` | Purple Huracán, front three-quarter |
+
+Every original is a portrait phone photo, so each is cropped to the specified
+4:3 landscape at 62% down the frame — the point that centres the car without
+clipping the roof. Served as `<picture>` with WebP plus a JPEG fallback, at
+two widths with `sizes` matched to the actual column widths. Total 1.2 MB.
+
+**EXIF is stripped** (sharp omits it unless asked). These are personal phone
+photos and carried GPS coordinates; the published files do not.
+
+To regenerate after swapping a source or changing a crop, edit and run
+`tools/build-photos.js`:
+
+```bash
+npm install sharp && node tools/build-photos.js
+```
+
+`sharp` is not a project dependency — the site itself has none. It is only
+needed to rebuild these files.
 
 ## Design tokens
 
@@ -43,11 +73,6 @@ To retune the display width, change `--display-width` in `styles.css`. Archivo's
 `wdth` axis runs 62–125 and the font link requests that full range.
 
 ## Outstanding
-
-**Assets needed** — currently dashed placeholder blocks marked in the markup:
-
-- Hero photo: Huracán, front 3/4, dark garage or road backdrop (4:3)
-- Fleet photos: Huracán 01 and Huracán 02 (4:3)
 
 **Placeholder content** — marked `TODO` in `index.html`:
 
