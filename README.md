@@ -43,7 +43,9 @@ cars, so they map onto the two fleet cards:
 Every original is a portrait phone photo, so each is cropped to the specified
 4:3 landscape at 62% down the frame — the point that centres the car without
 clipping the roof. Served as `<picture>` with WebP plus a JPEG fallback, at
-two widths with `sizes` matched to the actual column widths. Total 1.2 MB.
+two widths with `sizes` matched to how each is used - `100vw` for the
+full-bleed hero background, the actual column widths for the fleet cards.
+Total 1.2 MB.
 
 **EXIF is stripped** (sharp omits it unless asked). These are personal phone
 photos and carried GPS coordinates; the published files do not.
