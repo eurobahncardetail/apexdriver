@@ -50,11 +50,30 @@ IBM Plex Sans (body), IBM Plex Mono (numerals, prices, captions).
 - Real Instagram handle (`@apexdriver` is a placeholder)
 - Footer phone, email, and waiver link
 
-**One spec conflict to settle** — the handoff README disagrees with itself on the
-Driver III card fill. Its token list says `#1C1D1F`; its section 5 and the visual
-reference both say `#141517`. Built with `#141517`, which makes that card sit flush
-against the section background. If it should read as a distinct card, change
-`--tier-3-bg` in `styles.css` to `var(--asphalt-alt)`.
+## Deliberate departures from the handoff
+
+Three changes were made after a design review and approved. Each is commented at
+the point of change in the source.
+
+**Pricing card tones run dark-to-light**, so visual prominence climbs with price
+and Driver III is the most visible card rather than the least. This is the
+reference file's own `tierToneDirection: dark-to-light` option, not an override.
+It also settles the handoff's internal conflict on Driver III — the token list
+named `#1C1D1F` as a card fill while section 5 said `#141517`, which is the
+section background, so any card wearing it had no edge. Fills are now
+`#1C1D1F` / `#26272A` / `#3A3C40` for I / II / III, measuring 1.08 / 1.22 / 1.65
+against the section.
+
+**Driver X's route line runs off the card edge.** Every other tier's line encodes
+its duration (30/45/60 min → 90/140/190 of the 200-unit viewBox). Driver X has no
+fixed duration and previously borrowed Driver III's 190, claiming a number it
+doesn't have. It now bleeds past the padding and is cut flat by the dashed
+border: open-ended, which is what the tier means.
+
+**How It Works runs in chronological order** — 01 redeem, 02 meet, 03 choose,
+04 drive. The steps were numbered but out of sequence: "Redeem when ready" sat at
+04, describing the booking that happens before anyone meets in Frederick. Copy is
+unchanged; only the order moved. The section now ends on the drive.
 
 ## Responsive
 

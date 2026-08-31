@@ -16,14 +16,17 @@
   --chrome:       #D8D9DB; /* link hover, light-mode borders/dividers */
   --paper-white:  #F7F7F5; /* body text on dark, light band bg */
 
-  /* Pricing card fills - lightest tier gets the lightest card.
-     NOTE: the handoff README is self-inconsistent on Driver III. The token
-     list names #1C1D1F; section 5 and the visual reference both say #141517.
-     Using #141517 (2 of 3 sources). Swap to var(--asphalt-alt) here to
-     separate the card from the section background instead. */
-  --tier-1-bg: var(--card-darkest);
+  /* Pricing card fills - prominence climbs with price, so the flagship tier is
+     the most visible card rather than the least.
+     This is the reference file's own `tierToneDirection: dark-to-light`
+     option, not an override of the design. It also settles the handoff's
+     internal conflict over Driver III: the token list names #1C1D1F as a card
+     fill while section 5 says #141517, and #141517 is the section background,
+     so any card wearing it has no edge. Asphalt Alt is used instead and no
+     card now matches the surface behind it. */
+  --tier-1-bg: var(--asphalt-alt);
   --tier-2-bg: var(--card-dark);
-  --tier-3-bg: var(--asphalt);
+  --tier-3-bg: var(--card-darkest);
 
   /* Typography */
   --font-display: Anton, "Arial Narrow", sans-serif;
@@ -362,6 +365,16 @@ img, svg { display: block; max-width: 100%; }
   background: transparent;
   border: 1px dashed var(--steel);
   box-shadow: none;
+}
+
+/* Every other tier's route line encodes its duration (30/45/60 min maps to
+   90/140/190 of the 200-unit viewBox). Driver X has no fixed duration, so it
+   has no length to encode - it previously borrowed Driver III's 190, claiming
+   a number it doesn't have. Instead its line runs off the card edge and meets
+   the dashed border: open-ended, which is what the tier actually means. */
+.tier--x .tier__line {
+  width: calc(100% + 24px); /* bleed through the card's right padding */
+  max-width: none;          /* base `svg { max-width: 100% }` would clamp it */
 }
 
 .tier__top {

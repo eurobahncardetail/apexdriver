@@ -212,9 +212,11 @@
                 <span class="tier__numeral">X</span>
                 <span class="tier__price">CUSTOM</span>
               </div>
+              <!-- No stroke-linecap and a full-width x2: the line is cut flat
+                   by the card edge rather than terminating in a rounded stop. -->
               <svg class="tier__line" viewBox="0 0 200 20" aria-hidden="true" focusable="false">
                 <circle cx="6" cy="10" r="3" fill="currentColor"></circle>
-                <line x1="14" y1="10" x2="190" y2="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round"></line>
+                <line x1="14" y1="10" x2="200" y2="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"></line>
               </svg>
             </div>
             <div>
