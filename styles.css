@@ -28,11 +28,22 @@
   --tier-2-bg: var(--card-dark);
   --tier-3-bg: var(--card-darkest);
 
-  /* Typography */
-  --font-display: Anton, "Arial Narrow", sans-serif;
-  --font-ui:      "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  /* Typography
+     Display and UI are one superfamily at two widths. Archivo's wdth axis runs
+     62-125; the display sits at the expanded end and labels at the default, so
+     the width jump - not a second typeface - is what separates them.
+     Replaced Anton and Space Grotesk, both of which read as category defaults.
+     IBM Plex Sans and Mono are unchanged. */
+  --font-display: Archivo, "Arial Narrow", sans-serif;
+  --font-ui:      Archivo, "Helvetica Neue", Arial, sans-serif;
   --font-body:    "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
   --font-mono:    "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+
+  /* font-stretch drives the wdth axis; it is the standard property for it. */
+  --display-width:   125%;
+  --display-weight:  700;
+  --display-tracking: -0.005em; /* expanded caps need slightly less air */
+  --label-weight:    600;       /* Archivo 600 carries Space Grotesk 700's weight */
 
   /* Layout */
   --max-width:    1400px;
@@ -121,8 +132,10 @@ img, svg { display: block; max-width: 100%; }
 
 .section-title {
   font-family: var(--font-display);
+  font-stretch: var(--display-width);
+  letter-spacing: var(--display-tracking);
   font-size: clamp(32px, 4vw, 48px);
-  font-weight: 400;
+  font-weight: var(--display-weight);
   line-height: 0.98;
   text-transform: uppercase;
 }
@@ -134,7 +147,7 @@ img, svg { display: block; max-width: 100%; }
   background: var(--paper-white);
   color: var(--void-black);
   font-family: var(--font-ui);
-  font-weight: 700;
+  font-weight: var(--label-weight);
   font-size: 14px;
   letter-spacing: 0.08em;
   padding: 16px 32px;
@@ -189,7 +202,7 @@ img, svg { display: block; max-width: 100%; }
 
 .nav__wordmark {
   font-family: var(--font-ui);
-  font-weight: 700;
+  font-weight: var(--label-weight);
   font-size: 16px;
   letter-spacing: 0.06em;
 }
@@ -222,10 +235,18 @@ img, svg { display: block; max-width: 100%; }
 
 .hero__title {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(48px, 7vw, 92px);
+  font-stretch: var(--display-width);
+  letter-spacing: var(--display-tracking);
+  font-weight: var(--display-weight);
+  /* Re-derived for the expanded face. The handoff's clamp(48px, 7vw, 92px) was
+     set for Anton, which is very condensed; at width 125 "THE WHEEL." is 7.9x
+     the font size, so 92px overflowed the 1.1fr column by 48px and broke the
+     two-line hero. Solved against the narrowest point of the two-column range
+     (~901px, just above the stack breakpoint) where the column is tightest
+     relative to viewport. Optically this is not smaller - expanded caps at 82px
+     carry more mass than condensed caps at 92px. */
+  font-size: clamp(34px, 5.8vw, 82px);
   line-height: 0.98;
-  letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 
@@ -267,7 +288,7 @@ img, svg { display: block; max-width: 100%; }
 
 .step__title {
   font-family: var(--font-ui);
-  font-weight: 700;
+  font-weight: var(--label-weight);
   font-size: 15px;
   letter-spacing: 0.04em;
 }
@@ -320,7 +341,7 @@ img, svg { display: block; max-width: 100%; }
   margin-top: 14px;
   font-family: var(--font-ui);
 }
-.car__name { font-weight: 700; font-size: 16px; letter-spacing: 0.03em; }
+.car__name { font-weight: var(--label-weight); font-size: 16px; letter-spacing: 0.03em; }
 .car__spec { font-family: var(--font-mono); font-size: 13px; color: var(--steel); }
 
 /* ==========================================================================
@@ -386,7 +407,9 @@ img, svg { display: block; max-width: 100%; }
 
 .tier__numeral {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-stretch: var(--display-width);
+  letter-spacing: var(--display-tracking);
+  font-weight: var(--display-weight);
   font-size: 56px;
   line-height: 1;
 }
@@ -413,7 +436,7 @@ img, svg { display: block; max-width: 100%; }
 .tier:hover .tier__line line,
 .tier:focus-visible .tier__line line { stroke-dashoffset: -16; }
 
-.tier__name { font-family: var(--font-ui); font-weight: 700; font-size: 16px; letter-spacing: 0.03em; }
+.tier__name { font-family: var(--font-ui); font-weight: var(--label-weight); font-size: 16px; letter-spacing: 0.03em; }
 .tier__duration { font-family: var(--font-mono); font-size: 13px; color: var(--steel); margin-top: 4px; }
 .tier__cue {
   font-family: var(--font-ui);
@@ -447,7 +470,7 @@ img, svg { display: block; max-width: 100%; }
   margin-top: 24px;
 }
 
-.trust__headline { font-family: var(--font-ui); font-weight: 700; font-size: 16px; letter-spacing: 0.03em; }
+.trust__headline { font-family: var(--font-ui); font-weight: var(--label-weight); font-size: 16px; letter-spacing: 0.03em; }
 .trust__body { font-size: 15px; line-height: 1.5; color: var(--graphite); margin-top: 8px; }
 
 .faq { max-width: 820px; }
@@ -466,7 +489,7 @@ img, svg { display: block; max-width: 100%; }
   align-items: baseline;
   gap: 16px;
   font-family: var(--font-ui);
-  font-weight: 700;
+  font-weight: var(--label-weight);
   font-size: 15px;
 }
 .faq__q::-webkit-details-marker { display: none; }
@@ -510,7 +533,9 @@ img, svg { display: block; max-width: 100%; }
 
 .contact__title {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-stretch: var(--display-width);
+  letter-spacing: var(--display-tracking);
+  font-weight: var(--display-weight);
   font-size: clamp(32px, 5vw, 64px);
   line-height: 0.98;
   text-transform: uppercase;

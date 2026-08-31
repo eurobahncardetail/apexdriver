@@ -34,8 +34,13 @@ All colors, fonts, and layout constants live as custom properties at the top of
 `styles.css`. The palette is deliberately grayscale — no accent color anywhere;
 color is meant to come only from the car photography.
 
-Fonts load from Google Fonts: Anton (display), Space Grotesk (UI/labels),
-IBM Plex Sans (body), IBM Plex Mono (numerals, prices, captions).
+Fonts load from Google Fonts: **Archivo** variable (display at `font-stretch:
+125%`, UI/labels at the default 100%), IBM Plex Sans (body), IBM Plex Mono
+(numerals, prices, captions). Display and UI are one superfamily at two widths,
+so the width jump — not a second typeface — is what separates them.
+
+To retune the display width, change `--display-width` in `styles.css`. Archivo's
+`wdth` axis runs 62–125 and the font link requests that full range.
 
 ## Outstanding
 
@@ -69,6 +74,18 @@ its duration (30/45/60 min → 90/140/190 of the 200-unit viewBox). Driver X has
 fixed duration and previously borrowed Driver III's 190, claiming a number it
 doesn't have. It now bleeds past the padding and is cut flat by the dashed
 border: open-ended, which is what the tier means.
+
+**Anton and Space Grotesk were replaced by Archivo** at two widths. Both read as
+category defaults — Anton is the ubiquitous free impact face, Space Grotesk one
+of the most recognizable "safe" choices in current design. Going wide where the
+category goes condensed is the point. IBM Plex Sans and Mono are unchanged.
+
+The hero type scale was re-derived as part of this: `clamp(48px, 7vw, 92px)` was
+set for Anton, which is very condensed. At width 125 the string "THE WHEEL." is
+7.9× the font size, so 92px overflowed the hero column by 48px and broke the
+two-line headline. It is now `clamp(34px, 5.8vw, 82px)`, solved against the
+tightest point of the two-column range (~901px). Verified two lines and no
+horizontal overflow from 320px to 1440px.
 
 **How It Works runs in chronological order** — 01 redeem, 02 meet, 03 choose,
 04 drive. The steps were numbered but out of sequence: "Redeem when ready" sat at
