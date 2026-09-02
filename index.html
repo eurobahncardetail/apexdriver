@@ -92,12 +92,12 @@
       <div class="hero__scrim" aria-hidden="true"></div>
 
       <div class="wrap hero__inner">
-        <p class="mono hero__eyebrow seq" style="--i:0">Frederick County, Maryland &nbsp;·&nbsp; Public roads &nbsp;·&nbsp; You drive</p>
+        <p class="mono hero__eyebrow seq" style="--i:0">Frederick County, MD &nbsp;·&nbsp; Public roads &nbsp;·&nbsp; You drive</p>
         <h1 class="display hero__title">
           <span class="seq" style="--i:1"><span class="ad-stamp-paper">Your hands.</span></span>
           <span class="seq" style="--i:2"><span class="ad-stamp-paper">Our keys.</span></span>
         </h1>
-        <p class="body hero__sub seq" style="--i:3">A Lamborghini Huracán Tecnica. An instructor beside you. Thirty to sixty minutes of the best backroads in Maryland.</p>
+        <p class="body hero__sub seq" style="--i:3">A Lamborghini Huracán Tecnica. An instructor beside you. 30 to 60 minutes of the best backroads in Maryland.</p>
         <div class="hero__cta seq" style="--i:4">
           <a class="btn btn--primary" href="#pricing">Choose your drive</a>
           <a class="link link--paper" href="#route">See the route</a>
@@ -178,7 +178,7 @@
             </svg>
 
             <div class="route__side">
-              <div class="route__readout">
+              <div class="route__readout" aria-live="polite">
                 <div class="stat stat--lg"><div class="stat__n"><span id="routeMiles">27</span><span class="stat__u">mi</span></div><div class="mono stat__l">Approx. distance</div></div>
                 <div class="stat stat--lg"><div class="stat__n"><span id="routeMins">45</span><span class="stat__u">min</span></div><div class="mono stat__l">At the wheel</div></div>
               </div>
@@ -208,7 +208,7 @@
             </article>
 
             <article class="tier tier--featured" data-tier="2" data-miles="27" data-mins="45" data-at="0.58" role="radio" aria-checked="true" tabindex="0">
-              <span class="mono tier__flag">Most booked</span>
+              <span class="mono tier__flag">Our pick</span>
               <h3 class="h3">Driver II</h3>
               <div class="tier__price"><span class="tier__cur">$</span>795</div>
               <p class="mono tier__meta">45 min at the wheel · about 27 mi</p>
@@ -226,6 +226,7 @@
               <div class="tier__price"><span class="tier__cur">$</span>995</div>
               <p class="mono tier__meta">60 min at the wheel · about 36 mi</p>
               <p class="body-sm">The full loop. Over the ridge, down the far side, and home through the covered bridge with the sun going.</p>
+              <!-- PLACEHOLDER: the follow car is an assumed operational detail. Confirm with the client. -->
               <ul class="tier__list mono">
                 <li>Everything in Driver II</li>
                 <li>The full loop, no turnaround</li>
@@ -555,6 +556,7 @@
             <textarea class="input" id="f-note" name="note" rows="3"></textarea>
           </div>
           <p class="mono form__error" id="formError" hidden>Add your name and a working email address.</p>
+          <p class="mono form__done" id="formDone" hidden>Your email app should open with the request filled in. If it did not, write to hello@apexdriver.com.</p>
           <div class="field--wide form__actions">
             <button class="btn btn--primary" type="submit">Send the request</button>
             <span class="mono on-ink-3">No payment now.</span>

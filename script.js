@@ -11,11 +11,14 @@
   /* ---------- 1. nav ---------- */
   var nav = document.getElementById('nav');
   var hero = document.querySelector('.hero');
-  function setNav() {
-    nav.classList.toggle('nav--solid', window.scrollY > hero.offsetHeight - 80);
+  if (hasIO) {
+    /* Solid once the hero's bottom edge passes under the nav. */
+    new IntersectionObserver(function (entries) {
+      nav.classList.toggle('nav--solid', !entries[0].isIntersecting);
+    }, { rootMargin: '-72px 0px 0px 0px', threshold: 0 }).observe(hero);
+  } else {
+    nav.classList.add('nav--solid');
   }
-  setNav();
-  window.addEventListener('scroll', setNav, { passive: true });
 
   if (hasIO) {
     var links = {};
@@ -169,5 +172,6 @@
     window.location.href = 'mailto:hello@apexdriver.com'
       + '?subject=' + encodeURIComponent('Booking request: ' + form.tier.value)
       + '&body=' + encodeURIComponent(lines.join('\n'));
+    document.getElementById('formDone').hidden = false;
   });
 })();
