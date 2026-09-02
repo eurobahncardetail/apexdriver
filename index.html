@@ -3,20 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apex Driver — Self-drive and ride-along supercar experiences, Frederick, MD</title>
-  <meta name="description" content="Drive a supercar on public roads near Frederick, Maryland, or ride along with a pro driver. A fleet of exotics, gift vouchers, private and corporate bookings.">
-  <meta name="theme-color" content="#FFFFFF">
-
+  <title>Apex Driver — Drive a Lamborghini on Frederick County backroads</title>
+  <meta name="description" content="You drive a Lamborghini Huracán Tecnica on the scenic public backroads of Frederick County, Maryland, with an instructor beside you. 30, 45 or 60 minutes. From $495.">
+  <meta name="theme-color" content="#111114">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
 
-  <!-- Fonts: the <link> form of tokens/fonts.css. Anton (display), Archivo with
-       its width axis (UI, section heads, stats), IBM Plex Sans (body),
-       IBM Plex Mono (data). Archivo is the display fallback if Anton fails. -->
+  <meta property="og:title" content="Apex Driver — Your hands. Our keys.">
+  <meta property="og:description" content="Drive a Lamborghini Huracán Tecnica on Frederick County backroads. 30, 45 or 60 minutes with an instructor beside you. From $495.">
+  <meta property="og:image" content="assets/photos/hero-ridge-2400.jpg">
+  <meta property="og:type" content="website">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo:wdth,wght@62..125,100..900&amp;family=IBM+Plex+Sans:wght@400;500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 
-  <!-- Brand System v3 tokens, verbatim from the handoff, then the page styles. -->
+  <link rel="preload" as="image" href="assets/photos/hero-ridge-1600.webp" imagesrcset="assets/photos/hero-ridge-900.webp 900w, assets/photos/hero-ridge-1600.webp 1600w, assets/photos/hero-ridge-2400.webp 2400w" imagesizes="100vw">
+
   <link rel="stylesheet" href="tokens/colors.css">
   <link rel="stylesheet" href="tokens/typography.css">
   <link rel="stylesheet" href="tokens/spacing.css">
@@ -25,507 +27,555 @@
   <link rel="stylesheet" href="styles.css">
 
   <script>
-    /* Arms the section reveals and the circuit draw before first paint. Without
-       JS, without IntersectionObserver, or with reduced motion on, nothing is
-       hidden and nothing animates. */
+    /* Arms the load sequence and scroll reveals before first paint. Without JS,
+       without IntersectionObserver, or with reduced motion on, nothing is hidden. */
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
       document.documentElement.classList.add('ad-motion');
     }
   </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Do I actually drive, or is it a ride-along?", "acceptedAnswer": {"@type": "Answer", "text": "You drive. An instructor sits in the passenger seat the whole time."}},
+      {"@type": "Question", "name": "Is it on a track?", "acceptedAnswer": {"@type": "Answer", "text": "No. Every drive is on public backroads in Frederick County, Maryland. Speed limits apply; the roads do the work."}},
+      {"@type": "Question", "name": "Can I bring someone?", "acceptedAnswer": {"@type": "Answer", "text": "The car has two seats and one of them is the instructor's. Guests are welcome at the start point and can ride along in the follow car on Driver III."}},
+      {"@type": "Question", "name": "What if it rains?", "acceptedAnswer": {"@type": "Answer", "text": "We reschedule at no charge. Wet roads and a rear-wheel-drive V10 are not a good afternoon."}}
+    ]
+  }
+  </script>
 </head>
 <body>
 
-  <!-- =====================================================================
-       NAV — paper, hairline beneath, current item marked with a red rule
-       ===================================================================== -->
-  <nav class="nav" aria-label="Primary">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- ===================================================================
+       NAV — transparent over the hero, paper once the page scrolls
+       =================================================================== -->
+  <nav class="nav" id="nav" aria-label="Primary">
     <div class="wrap nav__inner">
-      <a class="lockup" href="#top" aria-label="Apex Driver — home">
+      <a class="lockup" href="#top" aria-label="Apex Driver, home">
         <span class="mark" aria-hidden="true"></span>
         <span class="wordmark">Apex Driver</span>
       </a>
       <div class="nav__links label">
+        <a href="#drive" data-spy>The drive</a>
+        <a href="#pricing" data-spy>Pricing</a>
         <a href="#fleet" data-spy>The fleet</a>
-        <a href="#experiences" data-spy>Experiences</a>
-        <a href="#routes" data-spy>Routes</a>
-        <a href="#vouchers">Vouchers</a>
-        <!-- Booking mechanism undecided: this points at the how-it-works section. -->
-        <a class="btn btn--primary" href="#book">Book</a>
+        <a href="#know" data-spy>Know before</a>
+        <a href="#faq" data-spy>FAQ</a>
       </div>
+      <a class="btn btn--primary nav__cta" href="#book">Book a drive</a>
     </div>
   </nav>
 
-  <main id="top">
+  <main id="main">
 
-    <!-- ===================================================================
-         HERO — the one gradient on the page
-         ===================================================================== -->
-    <header class="hero">
+    <!-- =================================================================
+         HERO — the Huracán on the ridge road at dusk
+         ================================================================= -->
+    <header class="hero" id="top">
       <div class="hero__photo">
         <picture>
           <source type="image/webp"
-                  srcset="assets/photos/hero-huracan-800.webp 800w,
-                          assets/photos/hero-huracan-1600.webp 1600w"
+                  srcset="assets/photos/hero-ridge-900.webp 900w,
+                          assets/photos/hero-ridge-1600.webp 1600w,
+                          assets/photos/hero-ridge-2400.webp 2400w"
                   sizes="100vw">
-          <img src="assets/photos/hero-huracan-1600.jpg"
-               width="1600" height="1200"
-               alt="A purple Lamborghini Huracán head-on at dusk, headlights lit."
+          <img src="assets/photos/hero-ridge-2400.jpg" width="2400" height="1350"
+               alt="A purple Lamborghini Huracán Tecnica, headlights on, cresting a two-lane country road at dusk with the Catoctin ridge behind it."
                fetchpriority="high" decoding="async">
         </picture>
       </div>
-      <div class="hero__grad" aria-hidden="true"></div>
+      <div class="hero__scrim" aria-hidden="true"></div>
 
-      <!-- Circuit ornament. Paper, not orange: nothing inside the gradient is orange. -->
-      <div class="hero__ornament" aria-hidden="true">
-        <svg viewBox="0 0 400 240">
-          <path d="M 56 176 L 120 60 C 124 52 134 48 142 53 L 196 84 C 204 89 214 87 218 79 L 232 52 C 237 42 249 39 258 45 L 330 88 C 342 95 344 110 334 118 L 300 146 C 291 153 291 165 300 171 L 322 190 C 332 199 330 214 318 217 C 308 220 299 214 297 205 L 292 182 C 289 170 277 165 268 172 L 240 194 C 231 201 219 199 213 190 L 196 164 C 189 154 176 153 168 162 L 138 196 C 130 205 117 205 110 197 L 58 190 C 48 188 48 180 56 176 Z" fill="none" stroke="currentColor" stroke-width="11" stroke-linejoin="round" stroke-linecap="round"/>
-          <line x1="79" y1="134" x2="98" y2="145" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
-        </svg>
-      </div>
-
-      <div class="hero__inner">
-        <p class="mono hero__eyebrow">Self-drive · public road<br>Frederick, Maryland</p>
-        <h1 class="display hero__title ad-stamp-paper">Take<br>the wheel.</h1>
-        <div class="hero__row on-ink">
-          <div class="stat stat--md">
-            <div class="stat__n">630</div>
-            <div class="mono stat__l">Horsepower</div>
-          </div>
-          <div class="stat stat--md">
-            <div class="stat__n">2.9<span class="stat__u">s</span></div>
-            <div class="mono stat__l">0–60 mph</div>
-          </div>
-          <a class="btn btn--paper" href="#book">Book a drive</a>
-          <div class="stat stat--sm">
-            <div class="stat__n">06</div>
-            <div class="mono stat__l">Cars in the fleet</div>
-          </div>
+      <div class="wrap hero__inner">
+        <p class="mono hero__eyebrow seq" style="--i:0">Frederick County, Maryland &nbsp;·&nbsp; Public roads &nbsp;·&nbsp; You drive</p>
+        <h1 class="display hero__title">
+          <span class="seq" style="--i:1"><span class="ad-stamp-paper">Your hands.</span></span>
+          <span class="seq" style="--i:2"><span class="ad-stamp-paper">Our keys.</span></span>
+        </h1>
+        <p class="body hero__sub seq" style="--i:3">A Lamborghini Huracán Tecnica. An instructor beside you. Thirty to sixty minutes of the best backroads in Maryland.</p>
+        <div class="hero__cta seq" style="--i:4">
+          <a class="btn btn--primary" href="#pricing">Choose your drive</a>
+          <a class="link link--paper" href="#route">See the route</a>
         </div>
       </div>
 
-      <div class="wm" aria-hidden="true">
-        <span class="mark"></span>
-        <span class="wordmark">Apex Driver</span>
+      <div class="hero__strip seq" style="--i:5" aria-label="Key figures">
+        <div class="wrap hero__strip-inner">
+          <div class="stat stat--sm on-ink"><div class="stat__n">631</div><div class="mono stat__l">Horsepower</div></div>
+          <div class="stat stat--sm on-ink"><div class="stat__n">V10</div><div class="mono stat__l">No turbos</div></div>
+          <div class="stat stat--sm on-ink"><div class="stat__n">8,500</div><div class="mono stat__l">Redline, rpm</div></div>
+          <div class="stat stat--sm on-ink"><div class="stat__n">30–60</div><div class="mono stat__l">Minutes at the wheel</div></div>
+          <div class="stat stat--sm on-ink"><div class="stat__n stat__n--accent">$495</div><div class="mono stat__l">And up</div></div>
+        </div>
       </div>
     </header>
 
-    <!-- ===================================================================
-         01 — THE FLEET
-         Two Huracáns are real, photographed and in service. The other four
-         cards are placeholders: the fleet beyond the Huracáns is not
-         finalised and no photography exists. Swap the make, specs and
-         photograph per card once the client confirms the list.
-         ===================================================================== -->
-    <section class="band" id="fleet">
-      <div class="wrap band__inner ad-reveal">
-        <div class="band__head">
-          <span class="mono">01 — The fleet</span>
-          <span class="rule" aria-hidden="true"></span>
-          <span class="mono">Six cars · V8, V10, flat-six and V12</span>
+    <!-- =================================================================
+         THE DRIVE — what it actually is, in one dark screen
+         ================================================================= -->
+    <section class="band band--ink" id="drive">
+      <div class="wrap drive ad-reveal">
+        <div class="drive__copy">
+          <p class="mono eyebrow on-ink">The drive</p>
+          <h2 class="h2 on-ink">Not a track. Not a parking lot. A road.</h2>
+          <p class="body on-ink-2">Frederick County has the best driving roads within an hour of Washington. Ridge climbs with proper switchbacks, valley straights between stone walls, a covered bridge or two. We meet in Frederick, run a briefing, and hand you the keys.</p>
+          <p class="body on-ink-2">The instructor rides with you the whole way. They know every corner and every pothole, and they will tell you when to breathe.</p>
+          <ul class="ticks on-ink-2">
+            <li>Rear-wheel drive, naturally aspirated, 8,500 rpm</li>
+            <li>Speed limits apply. The roads are the point</li>
+            <li>Photos of you with the car, included</li>
+          </ul>
         </div>
-        <div class="band__intro">
-          <h2 class="h2">Six cars.<br>Pick one.</h2>
-          <p class="body">Every drive runs with a lead car ahead and a chase car behind, whichever one you take. Two drivers can book two cars and run the route nose to tail.</p>
-        </div>
-
-        <div class="grid">
-
-          <article class="card">
-            <div class="shot">
-              <picture>
-                <source type="image/webp"
-                        srcset="assets/photos/huracan-01-650.webp 650w,
-                                assets/photos/huracan-01-1300.webp 1300w"
-                        sizes="min(100vw, 512px)">
-                <img src="assets/photos/huracan-01-1300.jpg" width="1300" height="975"
-                     alt="The green Lamborghini Huracán, front three-quarter view, on a paved plaza."
-                     loading="lazy" decoding="async">
-              </picture>
-              <div class="wm wm--ink" aria-hidden="true"><span class="mark"></span><span class="wordmark">Apex Driver</span></div>
-            </div>
-            <div class="card__body">
-              <div class="card__title">
-                <h3 class="h3">Lamborghini Huracán</h3>
-                <span class="mono">No. 01 · Green</span>
-              </div>
-              <div class="specs">
-                <div class="stat stat--sm"><div class="stat__n">630</div><div class="mono stat__l">hp</div></div>
-                <div class="stat stat--sm"><div class="stat__n">V10</div><div class="mono stat__l">5.2 L</div></div>
-                <div class="stat stat--sm"><div class="stat__n">2.9<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
-              </div>
-              <p class="body-sm">Ten cylinders, no turbos, redline at 8,500. You hear it before you feel it.</p>
-              <a class="label link card__cta" href="#book">Drive this one</a>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="shot">
-              <picture>
-                <source type="image/webp"
-                        srcset="assets/photos/huracan-02-650.webp 650w,
-                                assets/photos/huracan-02-1300.webp 1300w"
-                        sizes="min(100vw, 512px)">
-                <img src="assets/photos/huracan-02-1300.jpg" width="1300" height="975"
-                     alt="The purple Lamborghini Huracán, front three-quarter view, on a tree-lined street."
-                     loading="lazy" decoding="async">
-              </picture>
-              <div class="wm wm--ink" aria-hidden="true"><span class="mark"></span><span class="wordmark">Apex Driver</span></div>
-            </div>
-            <div class="card__body">
-              <div class="card__title">
-                <h3 class="h3">Lamborghini Huracán</h3>
-                <span class="mono">No. 02 · Purple</span>
-              </div>
-              <div class="specs">
-                <div class="stat stat--sm"><div class="stat__n">630</div><div class="mono stat__l">hp</div></div>
-                <div class="stat stat--sm"><div class="stat__n">V10</div><div class="mono stat__l">5.2 L</div></div>
-                <div class="stat stat--sm"><div class="stat__n">2.9<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
-              </div>
-              <p class="body-sm">Same V10, second set of keys. Book both and run the route together.</p>
-              <a class="label link card__cta" href="#book">Drive this one</a>
-            </div>
-          </article>
-
-          <!-- PLACEHOLDER: make, model, specs and photograph to be confirmed. -->
-          <article class="card">
-            <div class="shot shot--placeholder">
-              <span class="mono">Placeholder<br>Photograph to come</span>
-            </div>
-            <div class="card__body">
-              <div class="card__title">
-                <h3 class="h3">Ferrari 488 GTB</h3>
-                <span class="mono">No. 03 · Placeholder model</span>
-              </div>
-              <div class="specs">
-                <div class="stat stat--sm"><div class="stat__n">661</div><div class="mono stat__l">hp</div></div>
-                <div class="stat stat--sm"><div class="stat__n">V8</div><div class="mono stat__l">3.9 L</div></div>
-                <div class="stat stat--sm"><div class="stat__n">3.0<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
-              </div>
-              <p class="body-sm">Twin-turbo, 661 hp, and it still finds a way to sound angry.</p>
-              <a class="label link card__cta" href="#book">Drive this one</a>
-            </div>
-          </article>
-
-          <!-- PLACEHOLDER: make, model, specs and photograph to be confirmed. -->
-          <article class="card">
-            <div class="shot shot--placeholder">
-              <span class="mono">Placeholder<br>Photograph to come</span>
-            </div>
-            <div class="card__body">
-              <div class="card__title">
-                <h3 class="h3">Porsche 911 GT3</h3>
-                <span class="mono">No. 04 · Placeholder model</span>
-              </div>
-              <div class="specs">
-                <div class="stat stat--sm"><div class="stat__n">502</div><div class="mono stat__l">hp</div></div>
-                <div class="stat stat--sm"><div class="stat__n">F6</div><div class="mono stat__l">4.0 L</div></div>
-                <div class="stat stat--sm"><div class="stat__n">3.2<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
-              </div>
-              <p class="body-sm">No turbos, 9,000 rpm, and the most talkative steering in the fleet.</p>
-              <a class="label link card__cta" href="#book">Drive this one</a>
-            </div>
-          </article>
-
-          <!-- PLACEHOLDER: make, model, specs and photograph to be confirmed. -->
-          <article class="card">
-            <div class="shot shot--placeholder">
-              <span class="mono">Placeholder<br>Photograph to come</span>
-            </div>
-            <div class="card__body">
-              <div class="card__title">
-                <h3 class="h3">McLaren 720S</h3>
-                <span class="mono">No. 05 · Placeholder model</span>
-              </div>
-              <div class="specs">
-                <div class="stat stat--sm"><div class="stat__n">710</div><div class="mono stat__l">hp</div></div>
-                <div class="stat stat--sm"><div class="stat__n">V8</div><div class="mono stat__l">4.0 L</div></div>
-                <div class="stat stat--sm"><div class="stat__n">2.8<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
-              </div>
-              <p class="body-sm">710 hp and a carbon tub. The quickest thing here from 0 to 60.</p>
-              <a class="label link card__cta" href="#book">Drive this one</a>
-            </div>
-          </article>
-
-          <!-- PLACEHOLDER: make, model, specs and photograph to be confirmed. -->
-          <article class="card">
-            <div class="shot shot--placeholder">
-              <span class="mono">Placeholder<br>Photograph to come</span>
-            </div>
-            <div class="card__body">
-              <div class="card__title">
-                <h3 class="h3">Aston Martin DBS</h3>
-                <span class="mono">No. 06 · Placeholder model</span>
-              </div>
-              <div class="specs">
-                <div class="stat stat--sm"><div class="stat__n">715</div><div class="mono stat__l">hp</div></div>
-                <div class="stat stat--sm"><div class="stat__n">V12</div><div class="mono stat__l">5.2 L</div></div>
-                <div class="stat stat--sm"><div class="stat__n">3.4<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
-              </div>
-              <p class="body-sm">Twelve cylinders, 664 lb-ft, and a long straight to use them on.</p>
-              <a class="label link card__cta" href="#book">Drive this one</a>
-            </div>
-          </article>
-
-        </div>
+        <figure class="drive__photo">
+          <picture>
+            <source type="image/webp"
+                    srcset="assets/photos/drive-cockpit-800.webp 800w,
+                            assets/photos/drive-cockpit-1200.webp 1200w,
+                            assets/photos/drive-cockpit-2000.webp 2000w"
+                    sizes="(min-width: 900px) 55vw, 100vw">
+            <img src="assets/photos/drive-cockpit-2000.jpg" width="2000" height="1125"
+                 alt="From the driver's seat of a Huracán: hands on the Alcantara wheel, the tachometer high, a tree-lined road curving ahead."
+                 loading="lazy" decoding="async">
+          </picture>
+          <figcaption class="mono">Sport mode. Second gear. Somewhere above Gambrill.</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- ===================================================================
-         02 — EXPERIENCES
-         Orange budget on this screen: the one orange stat on the ink card.
-         Its button is therefore paper, not orange. No prices are shown:
-         none have been agreed for the new product structure. The durations
-         are placeholders for the client to confirm.
-         ===================================================================== -->
-    <section class="band" id="experiences">
-      <div class="wrap band__inner ad-reveal">
+    <!-- =================================================================
+         PRICING — the route grows with the tier. The page's signature.
+         Route names are real Frederick County roads; mileage figures are
+         PLACEHOLDERS until the client confirms the actual routes.
+         ================================================================= -->
+    <section class="band" id="pricing">
+      <div class="wrap ad-reveal">
         <div class="band__head">
-          <span class="mono">02 — Experiences</span>
-          <span class="rule" aria-hidden="true"></span>
-        </div>
-        <div class="band__intro">
-          <h2 class="h2">Four ways in</h2>
-          <p class="body">Drive it, ride in it, give it, or book the whole fleet for an afternoon.</p>
-        </div>
-
-        <div class="grid">
-
-          <article class="card card--pad card--ink on-ink">
-            <div class="card__ornament" aria-hidden="true">
-              <svg viewBox="0 0 400 240">
-                <path d="M 56 176 L 120 60 C 124 52 134 48 142 53 L 196 84 C 204 89 214 87 218 79 L 232 52 C 237 42 249 39 258 45 L 330 88 C 342 95 344 110 334 118 L 300 146 C 291 153 291 165 300 171 L 322 190 C 332 199 330 214 318 217 C 308 220 299 214 297 205 L 292 182 C 289 170 277 165 268 172 L 240 194 C 231 201 219 199 213 190 L 196 164 C 189 154 176 153 168 162 L 138 196 C 130 205 117 205 110 197 L 58 190 C 48 188 48 180 56 176 Z" fill="none" stroke="currentColor" stroke-width="11" stroke-linejoin="round" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <span class="mono">Self-drive · public road</span>
-            <div class="stat stat--lg stat--accent">
-              <div class="stat__n">90<span class="stat__u">min</span></div>
-              <div class="mono stat__l">Behind the wheel</div>
-            </div>
-            <h3 class="h3">Your hands, our keys.</h3>
-            <p class="body-sm">Ninety minutes, a lead car ahead and a chase car behind, and a route that opens up once you are through town.</p>
-            <a class="btn btn--paper card__cta" href="#book">Book a drive</a>
-          </article>
-
-          <article class="card card--pad">
-            <span class="mono">Ride-along · pro driver</span>
-            <div class="stat stat--lg">
-              <div class="stat__n">45<span class="stat__u">min</span></div>
-              <div class="mono stat__l">In the passenger seat</div>
-            </div>
-            <h3 class="h3">Sit right and hold on.</h3>
-            <p class="body-sm">Passenger seat, someone who does this every week, and no responsibility for the car.</p>
-            <a class="btn btn--secondary card__cta" href="#book">Book a seat</a>
-          </article>
-
-          <article class="card card--pad" id="vouchers">
-            <span class="mono">Gift voucher</span>
-            <div class="stat stat--lg">
-              <div class="stat__n">12<span class="stat__u">mo</span></div>
-              <div class="mono stat__l">To redeem</div>
-            </div>
-            <h3 class="h3">Give someone a V10.</h3>
-            <p class="body-sm">Any experience, no date fixed at purchase. They pick the car and the day.</p>
-            <a class="btn btn--secondary card__cta" href="#book">Buy a voucher</a>
-          </article>
-
-          <article class="card card--pad">
-            <span class="mono">Private · corporate</span>
-            <div class="stat stat--lg">
-              <div class="stat__n">06</div>
-              <div class="mono stat__l">Cars, one afternoon</div>
-            </div>
-            <h3 class="h3">Your afternoon, your pick of the fleet.</h3>
-            <p class="body-sm">Take the whole fleet out at once. One route, one car per driver, lead and chase cars included.</p>
-            <a class="btn btn--tertiary card__cta" href="#book">Ask about a group</a>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================
-         03 — HOW IT WORKS
-         The circuit flattened into the booking progress line. UI only: the
-         booking mechanism is undecided, so the state shown is illustrative.
-         This band is the page's one spatter ground; everything under 24px on
-         it sits on a solid paper plate.
-         ===================================================================== -->
-    <section class="band ad-spatter-paper" id="book">
-      <div class="wrap band__inner ad-reveal">
-        <div class="band__head">
-          <span class="mono plate">03 — How it works</span>
-          <span class="rule" aria-hidden="true"></span>
-        </div>
-        <div class="band__intro">
-          <h2 class="h2">Four steps</h2>
-          <p class="body plate">Car, route, date, pay. It takes less time than the drive.</p>
+          <div>
+            <p class="mono eyebrow">Pricing</p>
+            <h2 class="h2">How far up the road<br>do you want to go?</h2>
+          </div>
+          <p class="body band__lede">Every drive is the same car, the same instructor, the same start in Frederick. What changes is how much road you get. Pick a tier and watch the route.</p>
         </div>
 
-        <div class="card card--pad">
-          <span class="mono">Booking progress</span>
-          <ol class="progress" aria-label="Booking steps">
-            <li class="step step--done">
-              <svg class="step__dot" viewBox="0 0 13 13" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.75"/></svg>
-              <span class="label">Pick a car</span>
-              <span class="step__line" aria-hidden="true"></span>
-            </li>
-            <li class="step step--current" aria-current="step">
-              <svg class="step__dot" viewBox="0 0 13 13" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.75"/></svg>
-              <span class="label">Route</span>
-              <span class="step__line" aria-hidden="true"></span>
-            </li>
-            <li class="step step--ahead">
-              <svg class="step__dot" viewBox="0 0 13 13" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.75"/></svg>
-              <span class="label">Date</span>
-              <span class="step__line" aria-hidden="true"></span>
-            </li>
-            <li class="step step--ahead">
-              <svg class="step__dot" viewBox="0 0 13 13" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.75"/></svg>
-              <span class="label">Pay</span>
-            </li>
-          </ol>
-        </div>
-
-        <div class="grid steps">
-          <article class="card">
-            <div class="card__body">
-              <span class="mono">01</span>
-              <h3 class="label">Pick a car</h3>
-              <p class="body-sm">Any of the six. Two drivers can book two cars and run the route together.</p>
-            </div>
-          </article>
-          <article class="card">
-            <div class="card__body">
-              <span class="mono">02</span>
-              <h3 class="label">Route</h3>
-              <p class="body-sm">Route 01 for now: 42 miles, start and finish in Frederick. More routes as the fleet grows.</p>
-            </div>
-          </article>
-          <article class="card">
-            <div class="card__body">
-              <span class="mono">03</span>
-              <h3 class="label">Date</h3>
-              <p class="body-sm">Pick a day. If the weather turns, we move it.</p>
-            </div>
-          </article>
-          <article class="card">
-            <div class="card__body">
-              <span class="mono">04</span>
-              <h3 class="label">Pay</h3>
-              <p class="body-sm">Online, in one step. Your confirmation and a copy of the waiver follow by email.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================
-         04 — THE ROUTE
-         Full circuit, drawn once on scroll. Start-finish is the single red
-         bar; there are no checkpoint dots on the track. Route name, mileage
-         and duration are the spec's example figures, for the client to
-         replace with the surveyed route.
-         ===================================================================== -->
-    <section class="band" id="routes">
-      <div class="wrap band__inner ad-reveal">
-        <div class="band__head">
-          <span class="mono">04 — The route</span>
-          <span class="rule" aria-hidden="true"></span>
-        </div>
-        <div class="route">
-          <div class="route__fig">
-            <svg viewBox="0 0 400 240" role="img" aria-label="Route 01, a closed loop with two long straights, a hairpin, a chicane and two fast kinks. Start and finish marked in red.">
-              <path class="ad-draw" d="M 56 176 L 120 60 C 124 52 134 48 142 53 L 196 84 C 204 89 214 87 218 79 L 232 52 C 237 42 249 39 258 45 L 330 88 C 342 95 344 110 334 118 L 300 146 C 291 153 291 165 300 171 L 322 190 C 332 199 330 214 318 217 C 308 220 299 214 297 205 L 292 182 C 289 170 277 165 268 172 L 240 194 C 231 201 219 199 213 190 L 196 164 C 189 154 176 153 168 162 L 138 196 C 130 205 117 205 110 197 L 58 190 C 48 188 48 180 56 176 Z" fill="none" stroke="currentColor" stroke-width="11" stroke-linejoin="round" stroke-linecap="round"/>
-              <line x1="79" y1="134" x2="98" y2="145" stroke="#E10600" stroke-width="5" stroke-linecap="round"/>
+        <div class="pricing" id="route">
+          <!-- The route diagram. One path; each tier draws it further. -->
+          <div class="route" aria-label="Route diagram: the road drawn as far as each tier reaches">
+            <svg class="route__svg" viewBox="0 0 640 460" role="img" aria-hidden="true">
+              <path class="route__ghost" d="M320 420 C 270 405, 215 370, 205 320 C 198 285, 232 268, 215 240 C 200 214, 150 222, 140 196 C 131 172, 200 172, 192 148 C 185 126, 128 132, 130 108 C 132 84, 205 92, 270 88 C 340 84, 430 70, 490 100 C 540 126, 528 190, 510 240 C 494 284, 530 320, 500 360 C 470 396, 380 412, 320 420 Z"/>
+              <path class="route__paint" id="routePath" d="M320 420 C 270 405, 215 370, 205 320 C 198 285, 232 268, 215 240 C 200 214, 150 222, 140 196 C 131 172, 200 172, 192 148 C 185 126, 128 132, 130 108 C 132 84, 205 92, 270 88 C 340 84, 430 70, 490 100 C 540 126, 528 190, 510 240 C 494 284, 530 320, 500 360 C 470 396, 380 412, 320 420 Z"/>
+              <path class="route__gap" d="M320 420 C 270 405, 215 370, 205 320 C 198 285, 232 268, 215 240 C 200 214, 150 222, 140 196 C 131 172, 200 172, 192 148 C 185 126, 128 132, 130 108 C 132 84, 205 92, 270 88 C 340 84, 430 70, 490 100 C 540 126, 528 190, 510 240 C 494 284, 530 320, 500 360 C 470 396, 380 412, 320 420 Z"/>
+              <!-- start / finish bar -->
+              <line class="route__start" x1="306" y1="410" x2="334" y2="430"/>
+              <!-- turnaround markers, placed by script along the path -->
+              <g class="route__mark" data-at="0.30"><circle r="7"/><circle class="route__mark-core" r="2.5"/></g>
+              <g class="route__mark" data-at="0.58"><circle r="7"/><circle class="route__mark-core" r="2.5"/></g>
+              <g class="route__mark" data-at="1"><circle r="7"/><circle class="route__mark-core" r="2.5"/></g>
             </svg>
-          </div>
-          <div class="route__copy">
-            <h2 class="h2">Route 01</h2>
-            <p class="body">Ninety minutes of real road: two long straights, a hairpin you will remember, and a chicane that rewards getting the entry right. Starts and ends in Frederick, Maryland. A lead car ahead, a chase car behind, radio in the cabin.</p>
-            <div class="route__stats">
-              <div class="stat stat--md stat--accent">
-                <div class="stat__n">42</div>
-                <div class="mono stat__l">Miles</div>
+
+            <div class="route__side">
+              <div class="route__readout">
+                <div class="stat stat--lg"><div class="stat__n"><span id="routeMiles">27</span><span class="stat__u">mi</span></div><div class="mono stat__l">Approx. distance</div></div>
+                <div class="stat stat--lg"><div class="stat__n"><span id="routeMins">45</span><span class="stat__u">min</span></div><div class="mono stat__l">At the wheel</div></div>
               </div>
-              <div class="stat stat--md">
-                <div class="stat__n">90<span class="stat__u">min</span></div>
-                <div class="mono stat__l">Door to door</div>
+              <div class="route__labels mono">
+                <span class="route__label route__label--start">Start · Frederick</span>
+                <span class="route__label route__label--1" data-tier="1">Driver I turns here · Harmony Rd</span>
+                <span class="route__label route__label--2" data-tier="2">Driver II turns here · Gambrill Park Rd</span>
+                <span class="route__label route__label--3" data-tier="3">Driver III comes home by the bridge</span>
               </div>
-              <div class="stat stat--md">
-                <div class="stat__n">02</div>
-                <div class="mono stat__l">Escort cars</div>
-              </div>
+              <p class="mono route__note">Sample route. Roads vary with the day and the weather.</p>
             </div>
+          </div>
+
+          <!-- Tier cards -->
+          <div class="tiers" role="radiogroup" aria-label="Choose a drive">
+            <article class="tier" data-tier="1" data-miles="18" data-mins="30" data-at="0.30" role="radio" aria-checked="false" tabindex="0">
+              <h3 class="h3">Driver I</h3>
+              <div class="tier__price"><span class="tier__cur">$</span>495</div>
+              <p class="mono tier__meta">30 min at the wheel · about 18 mi</p>
+              <p class="body-sm">The valley. Stone walls, long sightlines, and enough straight road to hear what 8,500 rpm sounds like.</p>
+              <ul class="tier__list mono">
+                <li>Huracán Tecnica</li>
+                <li>Instructor beside you</li>
+                <li>Briefing and photos</li>
+              </ul>
+              <a class="btn btn--secondary tier__cta" href="#book" data-book="Driver I">Book Driver I</a>
+            </article>
+
+            <article class="tier tier--featured" data-tier="2" data-miles="27" data-mins="45" data-at="0.58" role="radio" aria-checked="true" tabindex="0">
+              <span class="mono tier__flag">Most booked</span>
+              <h3 class="h3">Driver II</h3>
+              <div class="tier__price"><span class="tier__cur">$</span>795</div>
+              <p class="mono tier__meta">45 min at the wheel · about 27 mi</p>
+              <p class="body-sm">The valley, then the mountain. Gambrill Park Road climbs the ridge in a run of proper switchbacks. This is the one.</p>
+              <ul class="tier__list mono">
+                <li>Everything in Driver I</li>
+                <li>The ridge climb, both ways</li>
+                <li>A stop at the overlook</li>
+              </ul>
+              <a class="btn btn--primary tier__cta" href="#book" data-book="Driver II">Book Driver II</a>
+            </article>
+
+            <article class="tier" data-tier="3" data-miles="36" data-mins="60" data-at="1" role="radio" aria-checked="false" tabindex="0">
+              <h3 class="h3">Driver III</h3>
+              <div class="tier__price"><span class="tier__cur">$</span>995</div>
+              <p class="mono tier__meta">60 min at the wheel · about 36 mi</p>
+              <p class="body-sm">The full loop. Over the ridge, down the far side, and home through the covered bridge with the sun going.</p>
+              <ul class="tier__list mono">
+                <li>Everything in Driver II</li>
+                <li>The full loop, no turnaround</li>
+                <li>Guest rides in the follow car</li>
+              </ul>
+              <a class="btn btn--secondary tier__cta" href="#book" data-book="Driver III">Book Driver III</a>
+            </article>
+          </div>
+        </div>
+
+        <!-- Driver X -->
+        <aside class="tierx">
+          <div class="tierx__copy">
+            <h3 class="h3">Driver X</h3>
+            <p class="body">Something else in mind. Two cars nose to tail. A whole afternoon. A route that ends at your table for dinner. A group from work. Tell us what it is and we will price it.</p>
+          </div>
+          <a class="btn btn--secondary" href="#book" data-book="Driver X">Ask about Driver X</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         THE FLEET — two Huracáns in service; three more planned.
+         Cars 03 to 05 are PLACEHOLDERS: swap make, spec and photo when the
+         client confirms the real list.
+         ================================================================= -->
+    <section class="band band--bone" id="fleet">
+      <div class="wrap ad-reveal">
+        <div class="band__head">
+          <div>
+            <p class="mono eyebrow">The fleet</p>
+            <h2 class="h2">Two Huracáns.<br>Verde and viola.</h2>
+          </div>
+          <p class="body band__lede">Both Tecnicas. Same V10, same rear-wheel drive, two colours you can see from the next county. You pick the one you drive.</p>
+        </div>
+
+        <div class="fleet-main">
+          <article class="car">
+            <div class="car__shot">
+              <picture>
+                <source type="image/webp"
+                        srcset="assets/photos/viola-farm-600.webp 600w,
+                                assets/photos/viola-farm-1000.webp 1000w,
+                                assets/photos/viola-farm-1600.webp 1600w"
+                        sizes="(min-width: 900px) 50vw, 100vw">
+                <img src="assets/photos/viola-farm-1600.jpg" width="1600" height="1200"
+                     alt="The purple Lamborghini Huracán Tecnica on a farm road beside a dry-stone wall, the Catoctin ridge behind."
+                     loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <div class="car__body">
+              <div class="car__title">
+                <h3 class="h3">Huracán Tecnica</h3>
+                <span class="mono">No. 01 · Viola Pasifae</span>
+              </div>
+              <div class="specs">
+                <div class="stat stat--sm"><div class="stat__n stat__n--accent">631</div><div class="mono stat__l">hp</div></div>
+                <div class="stat stat--sm"><div class="stat__n">V10</div><div class="mono stat__l">5.2 L</div></div>
+                <div class="stat stat--sm"><div class="stat__n">3.2<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+                <div class="stat stat--sm"><div class="stat__n">202</div><div class="mono stat__l">mph</div></div>
+              </div>
+              <p class="body-sm">Ten cylinders, no turbos, the last of the line. You hear it before you feel it.</p>
+            </div>
+          </article>
+
+          <article class="car">
+            <div class="car__shot">
+              <picture>
+                <source type="image/webp"
+                        srcset="assets/photos/verde-bridge-600.webp 600w,
+                                assets/photos/verde-bridge-1000.webp 1000w,
+                                assets/photos/verde-bridge-1600.webp 1600w"
+                        sizes="(min-width: 900px) 50vw, 100vw">
+                <img src="assets/photos/verde-bridge-1600.jpg" width="1600" height="1200"
+                     alt="The green Lamborghini Huracán Tecnica at the mouth of a red covered bridge on a misty morning."
+                     loading="lazy" decoding="async">
+              </picture>
+            </div>
+            <div class="car__body">
+              <div class="car__title">
+                <h3 class="h3">Huracán Tecnica</h3>
+                <span class="mono">No. 02 · Verde Selvans</span>
+              </div>
+              <div class="specs">
+                <div class="stat stat--sm"><div class="stat__n stat__n--accent">631</div><div class="mono stat__l">hp</div></div>
+                <div class="stat stat--sm"><div class="stat__n">V10</div><div class="mono stat__l">5.2 L</div></div>
+                <div class="stat stat--sm"><div class="stat__n">3.2<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+                <div class="stat stat--sm"><div class="stat__n">202</div><div class="mono stat__l">mph</div></div>
+              </div>
+              <p class="body-sm">Same V10, second set of keys. Book both for Driver X and run the route nose to tail.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="fleet-next">
+          <div class="fleet-next__head">
+            <h3 class="h3">Next in the fleet</h3>
+            <span class="mono">Three more cars. Three different engines.</span>
+          </div>
+          <div class="grid-3">
+            <!-- PLACEHOLDER car: confirm with client -->
+            <article class="card">
+              <div class="card__shot">
+                <picture>
+                  <source type="image/webp" srcset="assets/photos/fleet-296-650.webp 650w, assets/photos/fleet-296-1300.webp 1300w" sizes="(min-width: 900px) 33vw, 100vw">
+                  <img src="assets/photos/fleet-296-1300.jpg" width="1300" height="975" alt="A red Ferrari 296 GTB on a country road at golden hour." loading="lazy" decoding="async">
+                </picture>
+                <span class="mono card__tag">Planned</span>
+              </div>
+              <div class="card__body">
+                <div class="car__title"><h4 class="h4">Ferrari 296 GTB</h4><span class="mono">No. 03</span></div>
+                <div class="specs specs--tight">
+                  <div class="stat stat--xs"><div class="stat__n">819</div><div class="mono stat__l">hp</div></div>
+                  <div class="stat stat--xs"><div class="stat__n">V6</div><div class="mono stat__l">Hybrid</div></div>
+                  <div class="stat stat--xs"><div class="stat__n">2.9<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+                </div>
+              </div>
+            </article>
+            <!-- PLACEHOLDER car: confirm with client -->
+            <article class="card">
+              <div class="card__shot">
+                <picture>
+                  <source type="image/webp" srcset="assets/photos/fleet-gt3-650.webp 650w, assets/photos/fleet-gt3-1300.webp 1300w" sizes="(min-width: 900px) 33vw, 100vw">
+                  <img src="assets/photos/fleet-gt3-1300.jpg" width="1300" height="975" alt="A chalk-grey Porsche 911 GT3 on a leaf-strewn forest road." loading="lazy" decoding="async">
+                </picture>
+                <span class="mono card__tag">Planned</span>
+              </div>
+              <div class="card__body">
+                <div class="car__title"><h4 class="h4">Porsche 911 GT3</h4><span class="mono">No. 04</span></div>
+                <div class="specs specs--tight">
+                  <div class="stat stat--xs"><div class="stat__n">502</div><div class="mono stat__l">hp</div></div>
+                  <div class="stat stat--xs"><div class="stat__n">F6</div><div class="mono stat__l">9,000 rpm</div></div>
+                  <div class="stat stat--xs"><div class="stat__n">3.2<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+                </div>
+              </div>
+            </article>
+            <!-- PLACEHOLDER car: confirm with client -->
+            <article class="card">
+              <div class="card__shot">
+                <picture>
+                  <source type="image/webp" srcset="assets/photos/fleet-750s-650.webp 650w, assets/photos/fleet-750s-1300.webp 1300w" sizes="(min-width: 900px) 33vw, 100vw">
+                  <img src="assets/photos/fleet-750s-1300.jpg" width="1300" height="975" alt="A black McLaren 750S beside a weathered barn and hay bales." loading="lazy" decoding="async">
+                </picture>
+                <span class="mono card__tag">Planned</span>
+              </div>
+              <div class="card__body">
+                <div class="car__title"><h4 class="h4">McLaren 750S</h4><span class="mono">No. 05</span></div>
+                <div class="specs specs--tight">
+                  <div class="stat stat--xs"><div class="stat__n">740</div><div class="mono stat__l">hp</div></div>
+                  <div class="stat stat--xs"><div class="stat__n">V8</div><div class="mono stat__l">Twin turbo</div></div>
+                  <div class="stat stat--xs"><div class="stat__n">2.7<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================================================================
-         05 — BEFORE YOU DRIVE
-         DRAFT. No legal or safety copy pattern exists yet. These line items
-         are placeholders for the client to confirm or replace: minimum age,
-         licence, deposit amount, waiver, weather policy. None of the numbers
-         below are final.
-         ===================================================================== -->
-    <section class="band" id="terms">
-      <div class="wrap band__inner ad-reveal">
+    <!-- =================================================================
+         HOW IT WORKS — a real sequence, so it is numbered
+         ================================================================= -->
+    <section class="band" id="how">
+      <div class="wrap ad-reveal">
         <div class="band__head">
-          <span class="mono">05 — Before you drive</span>
-          <span class="rule" aria-hidden="true"></span>
-          <span class="mono flag">Draft · numbers pending client sign-off</span>
+          <div>
+            <p class="mono eyebrow">How it works</p>
+            <h2 class="h2">Four steps.<br>One of them is the good part.</h2>
+          </div>
         </div>
-        <div class="band__intro">
-          <h2 class="h2">The short version</h2>
-          <p class="body">The full terms come with your booking. These are the ones that decide whether you can drive.</p>
+        <ol class="steps">
+          <li class="step">
+            <span class="step__n">1</span>
+            <h3 class="h4">Pick a drive and a date</h3>
+            <p class="body-sm">Choose Driver I, II or III. Tell us a date and which car. We confirm within a day.</p>
+          </li>
+          <li class="step">
+            <span class="step__n">2</span>
+            <h3 class="h4">Meet us in Frederick</h3>
+            <p class="body-sm">Twenty minutes: waiver, licence check, the briefing, seat and mirrors. Then the start button.</p>
+          </li>
+          <li class="step step--live">
+            <span class="step__n">3</span>
+            <h3 class="h4">Drive</h3>
+            <p class="body-sm">Your hands, our instructor beside you. The valley first, the ridge if you booked it. Nobody hurries you.</p>
+          </li>
+          <li class="step">
+            <span class="step__n">4</span>
+            <h3 class="h4">Photos, keys, debrief</h3>
+            <p class="body-sm">We shoot you with the car at the turnaround and send the photos that evening.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         KNOW BEFORE YOU BOOK — line items awaiting client sign-off.
+         Ages, deductible, refund window: PLACEHOLDERS until confirmed.
+         ================================================================= -->
+    <section class="band band--bone" id="know">
+      <div class="wrap ad-reveal">
+        <div class="band__head">
+          <div>
+            <p class="mono eyebrow">Know before you book</p>
+            <h2 class="h2">The short version.</h2>
+          </div>
+          <p class="body band__lede">Everything the waiver says, in plain words. Ask us about anything that is not here.</p>
         </div>
         <dl class="terms">
-          <div class="term">
-            <dt class="label term__k">Minimum age</dt>
-            <dd class="body-sm term__v">25 to drive. 18 to ride along. Under 18 rides with a parent or guardian in the chase car.</dd>
-          </div>
-          <div class="term">
-            <dt class="label term__k">Licence</dt>
-            <dd class="body-sm term__v">A full, valid driver's licence held for at least 3 years. Bring it on the day. No licence, no drive.</dd>
-          </div>
-          <div class="term">
-            <dt class="label term__k">Deposit</dt>
-            <dd class="body-sm term__v">A refundable security deposit is held on a card before you drive and released after. The amount is set per car and confirmed at booking.</dd>
-          </div>
-          <div class="term">
-            <dt class="label term__k">Waiver</dt>
-            <dd class="body-sm term__v">Every driver and passenger signs a waiver on the day. You get a copy to read with your confirmation.</dd>
-          </div>
-          <div class="term">
-            <dt class="label term__k">Weather</dt>
-            <dd class="body-sm term__v">Rain, ice or snow and we move your date. No charge to rebook.</dd>
-          </div>
+          <div class="term"><dt class="label">Age</dt><dd class="body-sm">21 or over to drive. Guests in the follow car, 12 and up.</dd></div>
+          <div class="term"><dt class="label">Licence</dt><dd class="body-sm">A valid licence in your own name, held for at least two years. Bring it on the day.</dd></div>
+          <div class="term"><dt class="label">Instructor</dt><dd class="body-sm">In the passenger seat for the whole drive. Briefing before, coaching during, debrief after.</dd></div>
+          <div class="term"><dt class="label">Insurance</dt><dd class="body-sm">Included. Your liability for damage is capped at a deductible confirmed in writing when you book.</dd></div>
+          <div class="term"><dt class="label">Weather</dt><dd class="body-sm">Rain, ice or fog and we reschedule at no charge. We call it the evening before.</dd></div>
+          <div class="term"><dt class="label">Changes</dt><dd class="body-sm">Move your date any time up to 72 hours before. Full refund up to 7 days before.</dd></div>
+          <div class="term"><dt class="label">Waiver</dt><dd class="body-sm">Signed on the day, before the briefing. We send a copy in advance so there are no surprises.</dd></div>
+          <div class="term"><dt class="label">Vouchers</dt><dd class="body-sm">Any tier can be bought as a gift. Valid for 12 months from purchase.</dd></div>
         </dl>
+        <p class="mono terms__note">Subject to the booking terms. Figures confirmed at booking.</p>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         FAQ
+         ================================================================= -->
+    <section class="band" id="faq">
+      <div class="wrap ad-reveal">
+        <div class="band__head">
+          <div>
+            <p class="mono eyebrow">Questions</p>
+            <h2 class="h2">Asked before.</h2>
+          </div>
+        </div>
+        <div class="faq">
+          <details class="faq__item" open>
+            <summary class="faq__q">Do I actually drive, or is it a ride-along?</summary>
+            <p class="body-sm faq__a">You drive. An instructor sits in the passenger seat the whole time. If you would rather ride, book Driver X and say so.</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">Is it on a track?</summary>
+            <p class="body-sm faq__a">No. Every drive is on public backroads in Frederick County. Speed limits apply. The roads do the work, and they are very good roads.</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">Can I bring someone?</summary>
+            <p class="body-sm faq__a">The car has two seats and one of them is the instructor's. Guests are welcome at the start point, and on Driver III they ride in the follow car for the whole loop.</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">What if it rains?</summary>
+            <p class="body-sm faq__a">We reschedule at no charge. A wet road and a rear-wheel-drive V10 are not a good afternoon, and we would rather you came back on a dry one.</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">Which car do I get?</summary>
+            <p class="body-sm faq__a">You choose when you book: the purple Huracán or the green one. They are mechanically identical. If you want both, that is Driver X.</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">Do I need my own insurance?</summary>
+            <p class="body-sm faq__a">No. Cover is included in the price. Your liability is capped at a deductible we confirm in writing before you pay.</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">Can I drive a manual?</summary>
+            <p class="body-sm faq__a">The Tecnica is a seven-speed dual-clutch with paddles. There is no clutch pedal, and you will not miss it above 6,000 rpm.</p>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">Is it a gift?</summary>
+            <p class="body-sm faq__a">It can be. Any tier is available as a voucher, valid for a year. We send it as a printable card the same day.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         BOOK — the closing screen. Booking mechanism undecided: this form
+         composes an email. Swap for the real widget when chosen.
+         ================================================================= -->
+    <section class="book" id="book">
+      <div class="book__photo">
+        <picture>
+          <source type="image/webp"
+                  srcset="assets/photos/road-dusk-900.webp 900w,
+                          assets/photos/road-dusk-1600.webp 1600w,
+                          assets/photos/road-dusk-2400.webp 2400w"
+                  sizes="100vw">
+          <img src="assets/photos/road-dusk-2400.jpg" width="2400" height="1029"
+               alt="" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="book__scrim" aria-hidden="true"></div>
+      <div class="wrap book__inner ad-reveal">
+        <div class="book__copy">
+          <p class="mono eyebrow on-ink">Book a drive</p>
+          <h2 class="display-2 on-ink"><span class="ad-stamp-paper">Pick a date.</span></h2>
+          <p class="body on-ink-2">Tell us the tier, the car and a date or two. We reply within a day with a time and the short list of what to bring.</p>
+          <p class="mono on-ink-3">Or write to <a class="link link--paper" href="mailto:hello@apexdriver.com">hello@apexdriver.com</a></p>
+        </div>
+        <form class="form" id="bookForm" novalidate>
+          <div class="field">
+            <label class="label" for="f-name">Name</label>
+            <input class="input" id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label class="label" for="f-email">Email</label>
+            <input class="input" id="f-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label class="label" for="f-tier">Drive</label>
+            <select class="input" id="f-tier" name="tier">
+              <option>Driver I · 30 min · $495</option>
+              <option selected>Driver II · 45 min · $795</option>
+              <option>Driver III · 60 min · $995</option>
+              <option>Driver X · custom</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="label" for="f-car">Car</label>
+            <select class="input" id="f-car" name="car">
+              <option>Viola, the purple one</option>
+              <option>Verde, the green one</option>
+              <option>Either</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="label" for="f-date">Preferred date</label>
+            <input class="input" id="f-date" name="date" type="date">
+          </div>
+          <div class="field field--wide">
+            <label class="label" for="f-note">Anything else</label>
+            <textarea class="input" id="f-note" name="note" rows="3"></textarea>
+          </div>
+          <p class="mono form__error" id="formError" hidden>Add your name and a working email address.</p>
+          <div class="field--wide form__actions">
+            <button class="btn btn--primary" type="submit">Send the request</button>
+            <span class="mono on-ink-3">No payment now.</span>
+          </div>
+        </form>
       </div>
     </section>
 
   </main>
 
-  <!-- =====================================================================
-       FOOTER — paper, hairline top, mark and copy
-       ===================================================================== -->
   <footer class="footer">
     <div class="wrap footer__inner">
-      <div class="lockup">
+      <a class="lockup" href="#top" aria-label="Apex Driver, home">
         <span class="mark" aria-hidden="true"></span>
         <span class="wordmark">Apex Driver</span>
-      </div>
-      <div class="footer__links mono">
-        <span>Frederick, Maryland</span>
-        <!-- TODO: real waiver, terms and contact destinations -->
-        <a href="#terms">Terms</a>
-        <a href="#terms">Waiver</a>
-        <a href="#book">Contact</a>
-      </div>
-      <span class="mono">© 2026 Apex Driver · Self-drive &amp; ride-along · Vouchers · Corporate</span>
+      </a>
+      <p class="mono">Frederick, Maryland · Public roads · You drive</p>
+      <p class="mono">© 2026 Apex Driver</p>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

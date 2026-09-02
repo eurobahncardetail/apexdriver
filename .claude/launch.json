@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "apexdriver",
-      "runtimeExecutable": "node",
+      "runtimeExecutable": "C:/Program Files/nodejs/node.exe",
       "runtimeArgs": [".claude/dev-server.js"],
       "port": 4173
     }
