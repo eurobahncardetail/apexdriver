@@ -1,8 +1,8 @@
-/* Apex Driver — page behaviour.
-   1. Nav: transparent over the hero, paper after; current item follows scroll.
-   2. Hero load sequence and per-section reveals (gated on html.ad-motion).
-   3. The route diagram: one path, drawn as far as the chosen tier reaches.
-   4. Book links preselect the tier; the form composes an email. */
+/* Apex Driver v3 — page behaviour.
+   1. Nav: glass over the hero, darker glass after; current item follows scroll.
+   2. Load sequence and section reveals (gated on html.ad-motion).
+   3. Ambient video: lazy, plays only while on screen, only when motion is wanted.
+   4. Booking: drive links preselect the tier; the form composes an email. */
 (function () {
   var root = document.documentElement;
   var motion = root.classList.contains('ad-motion');
@@ -11,18 +11,17 @@
   /* ---------- 1. nav ---------- */
   var nav = document.getElementById('nav');
   var hero = document.querySelector('.hero');
-  if (hasIO) {
-    /* Solid once the hero's bottom edge passes under the nav. */
+  if (hasIO && hero) {
     new IntersectionObserver(function (entries) {
       nav.classList.toggle('nav--solid', !entries[0].isIntersecting);
-    }, { rootMargin: '-72px 0px 0px 0px', threshold: 0 }).observe(hero);
+    }, { rootMargin: '-96px 0px 0px 0px', threshold: 0 }).observe(hero);
   } else {
     nav.classList.add('nav--solid');
   }
 
   if (hasIO) {
     var links = {};
-    document.querySelectorAll('.nav__links a[data-spy]').forEach(function (a) {
+    document.querySelectorAll('.nav__link[data-spy]').forEach(function (a) {
       links[a.getAttribute('href').slice(1)] = a;
     });
     var spy = new IntersectionObserver(function (entries) {
@@ -38,102 +37,44 @@
     });
   }
 
-  /* ---------- 2. reveals ---------- */
+  /* ---------- 2. sequence + reveals ---------- */
   if (motion) {
-    document.querySelectorAll('.seq').forEach(function (el) { el.classList.add('is-in'); });
+    requestAnimationFrame(function () {
+      document.querySelectorAll('.seq').forEach(function (el) { el.classList.add('is-in'); });
+    });
     var reveal = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
         e.target.classList.add('is-in');
         reveal.unobserve(e.target);
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
-    document.querySelectorAll('.ad-reveal').forEach(function (el) { reveal.observe(el); });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(function (el) { reveal.observe(el); });
   }
 
-  /* ---------- 3. the route ---------- */
-  var path = document.getElementById('routePath');
-  var svg = path && path.ownerSVGElement;
-  var tiers = Array.prototype.slice.call(document.querySelectorAll('.tier'));
-  var milesEl = document.getElementById('routeMiles');
-  var minsEl = document.getElementById('routeMins');
-  var marks = Array.prototype.slice.call(document.querySelectorAll('.route__mark'));
-  var labels = Array.prototype.slice.call(document.querySelectorAll('.route__label[data-tier]'));
-  var gap = document.querySelector('.route__gap');
-  var armed = false;
-
-  if (path && svg) {
-    var L = path.getTotalLength();
-    [path, gap].forEach(function (p) {
-      p.style.strokeDasharray = L;
-      p.style.strokeDashoffset = L;
-    });
-    marks.forEach(function (m) {
-      var pt = path.getPointAtLength(L * parseFloat(m.getAttribute('data-at')));
-      m.setAttribute('transform', 'translate(' + pt.x.toFixed(1) + ' ' + pt.y.toFixed(1) + ')');
-    });
-
-    var selected = tiers.filter(function (t) { return t.getAttribute('aria-checked') === 'true'; })[0] || tiers[1];
-
-    function swapNumber(el, value) {
-      if (el.textContent === value) return;
-      var n = el.parentNode;
-      n.classList.add('is-swap');
-      setTimeout(function () { el.textContent = value; n.classList.remove('is-swap'); }, motion ? 120 : 0);
-    }
-
-    function drawTo(tier) {
-      if (!armed) return;
-      var at = parseFloat(tier.getAttribute('data-at'));
-      var n = parseInt(tier.getAttribute('data-tier'), 10);
-      path.style.strokeDashoffset = L * (1 - at);
-      gap.style.strokeDashoffset = L * (1 - at);
-      marks.forEach(function (m) {
-        m.classList.toggle('is-on', parseFloat(m.getAttribute('data-at')) <= at + 0.001);
+  /* ---------- 3. ambient video ---------- */
+  var videos = Array.prototype.slice.call(document.querySelectorAll('video.ambient'));
+  var saveData = navigator.connection && navigator.connection.saveData;
+  if (motion && hasIO && !saveData) {
+    var vio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) {
+          if (!v.src) {
+            v.src = v.getAttribute('data-src');
+            v.addEventListener('playing', function () { v.classList.add('is-playing'); }, { once: true });
+            v.addEventListener('error', function () { v.remove(); }, { once: true });
+          }
+          var p = v.play();
+          if (p && p.catch) p.catch(function () { /* autoplay refused: the poster stays */ });
+        } else if (v.src) {
+          v.pause();
+        }
       });
-      labels.forEach(function (l) {
-        l.classList.toggle('is-on', parseInt(l.getAttribute('data-tier'), 10) <= n);
-      });
-      swapNumber(milesEl, tier.getAttribute('data-miles'));
-      swapNumber(minsEl, tier.getAttribute('data-mins'));
-    }
-
-    function select(tier) {
-      selected = tier;
-      tiers.forEach(function (t) { t.setAttribute('aria-checked', t === tier ? 'true' : 'false'); });
-      drawTo(tier);
-    }
-
-    tiers.forEach(function (t, i) {
-      t.addEventListener('click', function (e) {
-        if (e.target.closest('a')) return; /* the book button is its own action */
-        select(t);
-      });
-      t.addEventListener('mouseenter', function () { drawTo(t); });
-      t.addEventListener('mouseleave', function () { drawTo(selected); });
-      t.addEventListener('focus', function () { drawTo(t); });
-      t.addEventListener('blur', function () { drawTo(selected); });
-      t.addEventListener('keydown', function (e) {
-        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); select(t); }
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); var nx = tiers[(i + 1) % tiers.length]; nx.focus(); select(nx); }
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); var pv = tiers[(i - 1 + tiers.length) % tiers.length]; pv.focus(); select(pv); }
-      });
-    });
-
-    /* Draw once the diagram is on screen. Without motion, draw immediately. */
-    function arm() { armed = true; drawTo(selected); }
-    if (motion && hasIO) {
-      var once = new IntersectionObserver(function (entries) {
-        if (!entries.some(function (e) { return e.isIntersecting; })) return;
-        arm();
-        once.disconnect();
-      }, { threshold: 0.35 });
-      once.observe(svg);
-    } else {
-      [path, gap].forEach(function (p) { p.style.transition = 'none'; });
-      marks.forEach(function (m) { m.style.transition = 'none'; });
-      arm();
-    }
+    }, { rootMargin: '120px 0px', threshold: 0.05 });
+    videos.forEach(function (v) { vio.observe(v); });
+  } else {
+    videos.forEach(function (v) { v.remove(); });
   }
 
   /* ---------- 4. booking ---------- */
@@ -165,6 +106,7 @@
       'Drive: ' + form.tier.value,
       'Car: ' + form.car.value,
       'Preferred date: ' + (form.date.value || 'flexible'),
+      'Gift: ' + form.gift.value,
       '',
       form.note.value.trim()
     ];
