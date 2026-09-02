@@ -1,8 +1,8 @@
-# Apex Driver — v2
+# Apex Driver — v3
 
-Second build of the landing site for Apex Driver, a supercar driving-experience
-company in Frederick, MD. One page: hero, the drive, pricing with the route
-diagram, the fleet, how it works, know before you book, FAQ, booking form.
+Third build of the landing site for Apex Driver, a supercar driving-experience
+company in Frederick, MD. One page: hero, the road, the drives, the cars, know before you book, FAQ,
+and the drive home with the booking form on it. Documented in `docs/Apex Driver Brand System v5.md`.
 
 The v1 page lives on the `full-bleed-hero` branch. The brand handoff is outside
 the repo at `../../design_handoff_landing_page/`. v2 keeps its type, colour and

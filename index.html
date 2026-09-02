@@ -10,22 +10,32 @@
 
   <meta property="og:title" content="Apex Driver — You drive. We ride shotgun.">
   <meta property="og:description" content="A Lamborghini Huracán Tecnica on Frederick County backroads. 30, 45 or 60 minutes with an instructor beside you. From $495.">
-  <meta property="og:image" content="assets/v3/hero-ridge-2400.jpg">
+  <meta property="og:image" content="https://eurobahncardetail.github.io/apexdriver/assets/v3/hero-ridge-2400.jpg">
+  <meta property="og:url" content="https://eurobahncardetail.github.io/apexdriver/">
   <meta property="og:type" content="website">
+  <link rel="canonical" href="https://eurobahncardetail.github.io/apexdriver/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Manrope:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&amp;family=Manrope:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 
-  <link rel="preload" as="image" href="assets/v3/hero-ridge-1600.webp" imagesrcset="assets/v3/hero-ridge-900.webp 900w, assets/v3/hero-ridge-1600.webp 1600w, assets/v3/hero-ridge-2400.webp 2400w" imagesizes="100vw">
-  <link rel="stylesheet" href="styles.css?v=3.3">
+  <link rel="preload" as="image" media="(min-width: 641px)" href="assets/v3/hero-ridge-1600.webp" imagesrcset="assets/v3/hero-ridge-900.webp 900w, assets/v3/hero-ridge-1600.webp 1600w, assets/v3/hero-ridge-2400.webp 2400w" imagesizes="100vw">
+  <link rel="preload" as="image" media="(max-width: 640px)" href="assets/v3/hero-ridge-tall-800.webp" imagesrcset="assets/v3/hero-ridge-tall-800.webp 800w, assets/v3/hero-ridge-tall-1200.webp 1200w" imagesizes="100vw">
+  <link rel="stylesheet" href="styles.css?v=3.4">
 
   <script>
-    /* Arms the load sequence, reveals and ambient video before first paint.
-       Without JS, or with reduced motion on, nothing is hidden and posters stay still. */
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
-      document.documentElement.classList.add('ad-motion');
-    }
+    /* Arms the hero sequence, reveals and ambient video before first paint.
+       Without JS, or with reduced motion on, nothing is hidden and posters stay still.
+       The hero sequence is pure CSS and waits for the display face (or 900ms),
+       so it never depends on script.js and never swaps fonts mid-rise. */
+    (function () {
+      var root = document.documentElement;
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+      root.classList.add('ad-motion');
+      var go = function () { root.classList.add('ad-fonts'); };
+      setTimeout(go, 900);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(go);
+    })();
   </script>
 
   <script type="application/ld+json">
@@ -59,8 +69,32 @@
       <a class="nav__link" href="#know" data-spy>Know before</a>
       <a class="nav__link" href="#faq" data-spy>Questions</a>
     </div>
-    <a class="pill pill--verde nav__cta" href="#book">Book a drive</a>
+    <!-- Glass over the hero, paper after it: verde belongs to the one in-flow primary. -->
+    <a class="pill pill--glass nav__cta" href="#drives">Book a drive</a>
+    <button class="pill pill--glass nav__menu" type="button" aria-expanded="false" aria-controls="sheet">Menu</button>
   </nav>
+
+  <!-- Phone menu: the five section links in display type on ink glass. -->
+  <div class="sheet" id="sheet" hidden>
+    <div class="sheet__top">
+      <span class="lockup"><span class="mark" aria-hidden="true"></span>Apex Driver</span>
+      <button class="pill pill--glass sheet__close" type="button" aria-label="Close menu">Close</button>
+    </div>
+    <nav class="sheet__links" aria-label="Sections">
+      <a class="sheet__link display" href="#road">The road</a>
+      <a class="sheet__link display" href="#drives">Drives</a>
+      <a class="sheet__link display" href="#fleet">The cars</a>
+      <a class="sheet__link display" href="#know">Know before</a>
+      <a class="sheet__link display" href="#faq">Questions</a>
+    </nav>
+    <a class="pill pill--verde sheet__cta" href="#drives">Choose your drive</a>
+  </div>
+
+  <!-- Phone booking bar: appears once the hero has scrolled away. -->
+  <div class="bar" id="bar" aria-label="Book">
+    <span class="bar__text"><strong>From $495</strong> <span class="mono">30 · 45 · 60 min</span></span>
+    <a class="pill pill--paper pill--sm" href="#drives">Choose your drive</a>
+  </div>
 
   <div class="page" id="top">
   <main id="main" style="display: contents">
@@ -71,6 +105,8 @@
     <header class="card hero">
       <div class="media" aria-hidden="true">
         <picture>
+          <source type="image/webp" media="(max-width: 640px)" srcset="assets/v3/hero-ridge-tall-800.webp 800w, assets/v3/hero-ridge-tall-1200.webp 1200w" sizes="100vw">
+          <source type="image/jpeg" media="(max-width: 640px)" srcset="assets/v3/hero-ridge-tall-1200.jpg">
           <source type="image/webp" srcset="assets/v3/hero-ridge-900.webp 900w, assets/v3/hero-ridge-1600.webp 1600w, assets/v3/hero-ridge-2400.webp 2400w" sizes="100vw">
           <img src="assets/v3/hero-ridge-2400.jpg" width="2400" height="1339" alt="The purple Lamborghini Huracán Tecnica on the crest of a ridge road at golden hour, sun breaking through the oaks, the Catoctin valley hazy behind." fetchpriority="high" decoding="async">
         </picture>
@@ -85,10 +121,10 @@
             <span class="seq" style="--i:2; display:block">You drive.</span>
             <span class="seq quiet" style="--i:3; display:block">We ride shotgun.</span>
           </h1>
-          <p class="hero__sub seq" style="--i:4">A Lamborghini Huracán Tecnica, an instructor in the passenger seat, and an hour of the best backroads in Maryland.</p>
+          <p class="hero__sub seq" style="--i:4">A Lamborghini Huracán Tecnica, an instructor in the passenger seat, and 30, 45 or 60 minutes of the best backroads in Maryland.</p>
           <div class="hero__cta seq" style="--i:5">
             <a class="pill pill--verde" href="#drives">Choose your drive</a>
-            <a class="pill pill--glass" href="#road">See the road</a>
+            <a class="pill pill--glass" href="#gift">Give it as a gift</a>
           </div>
         </div>
 
@@ -97,22 +133,22 @@
             <span>Three drives, one road</span>
             <span>From $495</span>
           </div>
-          <a class="ticket__row" href="#drives" data-pick="1">
+          <a class="ticket__row" href="#drives" data-book="Driver I">
             <span class="ticket__name">Driver I</span>
             <span class="ticket__meta mono">30 min · the valley</span>
             <span class="ticket__price">$495</span>
           </a>
-          <a class="ticket__row" href="#drives" data-pick="2">
-            <span class="ticket__name"><span class="dot" aria-hidden="true"></span>Driver II <span class="mono dim">· most booked</span></span>
+          <a class="ticket__row" href="#drives" data-book="Driver II">
+            <span class="ticket__name"><span class="dot" aria-hidden="true"></span>Driver II <span class="mono dim">· our pick</span></span>
             <span class="ticket__meta mono">45 min · the ridge</span>
             <span class="ticket__price">$795</span>
           </a>
-          <a class="ticket__row" href="#drives" data-pick="3">
+          <a class="ticket__row" href="#drives" data-book="Driver III">
             <span class="ticket__name">Driver III</span>
             <span class="ticket__meta mono">60 min · the full loop</span>
             <span class="ticket__price">$995</span>
           </a>
-          <p class="ticket__foot mono">Insurance included · No payment until we confirm</p>
+          <p class="ticket__foot mono">Insurance included · No payment until we confirm<br>Any drive as a gift voucher, valid 12 months</p>
         </aside>
       </div>
     </header>
@@ -153,8 +189,8 @@
           <p class="lede">Same car, same instructor, same start in Frederick. What changes is how much road you get. Every drive includes insurance, the briefing and photos.</p>
         </div>
 
-        <div class="chapters__grid reveal-stagger" role="list">
-          <a class="chapter" href="#book" data-book="Driver I" data-tier="1" role="listitem">
+        <div class="chapters__grid reveal-stagger">
+          <a class="chapter" href="#book" data-book="Driver I" data-tier="1" aria-label="Book Driver I, the valley, 30 minutes, $495">
             <div class="media" aria-hidden="true">
               <picture>
                 <source type="image/webp" srcset="assets/v3/ch-valley-700.webp 700w, assets/v3/ch-valley-1200.webp 1200w" sizes="(min-width: 1100px) 25vw, (min-width: 560px) 50vw, 100vw">
@@ -173,7 +209,7 @@
             </div>
           </a>
 
-          <a class="chapter chapter--pick" href="#book" data-book="Driver II" data-tier="2" role="listitem">
+          <a class="chapter chapter--pick" href="#book" data-book="Driver II" data-tier="2" aria-label="Book Driver II, the ridge, 45 minutes, $795, our pick">
             <div class="media" aria-hidden="true">
               <picture>
                 <source type="image/webp" srcset="assets/v3/ch-ridge-700.webp 700w, assets/v3/ch-ridge-1200.webp 1200w" sizes="(min-width: 1100px) 25vw, (min-width: 560px) 50vw, 100vw">
@@ -183,17 +219,17 @@
             </div>
             <div class="chapter__scrim" aria-hidden="true"></div>
             <div class="chapter__top">
-              <div class="chapter__kicker mono"><span>Driver II</span><span class="chip chip--verde" style="height:28px;padding:0 10px;font-size:11px">Most booked</span></div>
+              <div class="chapter__kicker mono"><span>Driver II <span class="chip chip--verde chip--xs">Our pick</span></span><span>45 min</span></div>
               <h3 class="h3 chapter__title">The ridge</h3>
               <p class="chapter__desc">The valley, then the mountain. Gambrill Park Road climbs in a run of proper switchbacks. This is the one.</p>
             </div>
             <div class="chapter__bottom">
-              <div class="chapter__price"><span class="n"><small>$</small>795</span><span class="m mono">45 min · about 27 mi</span></div>
+              <div class="chapter__price"><span class="n"><small>$</small>795</span><span class="m mono">about 27 mi</span></div>
               <span class="pill pill--verde">Book Driver II</span>
             </div>
           </a>
 
-          <a class="chapter" href="#book" data-book="Driver III" data-tier="3" role="listitem">
+          <a class="chapter" href="#book" data-book="Driver III" data-tier="3" aria-label="Book Driver III, the full loop, 60 minutes, $995">
             <div class="media" aria-hidden="true">
               <picture>
                 <source type="image/webp" srcset="assets/v3/ch-bridge-700.webp 700w, assets/v3/ch-bridge-1200.webp 1200w" sizes="(min-width: 1100px) 25vw, (min-width: 560px) 50vw, 100vw">
@@ -212,7 +248,7 @@
             </div>
           </a>
 
-          <a class="chapter" href="#book" data-book="Driver X" data-tier="x" role="listitem">
+          <a class="chapter" href="#book" data-book="Driver X" data-tier="x" aria-label="Ask about Driver X, a custom drive">
             <div class="media" aria-hidden="true">
               <picture>
                 <source type="image/webp" srcset="assets/v3/ch-x-700.webp 700w, assets/v3/ch-x-1200.webp 1200w" sizes="(min-width: 1100px) 25vw, (min-width: 560px) 50vw, 100vw">
@@ -242,12 +278,21 @@
       <div class="wrap">
         <div class="band__head">
           <h2 class="display h2">Two Huracáns. Verde and viola.</h2>
-          <p class="lede">Both Tecnicas. Same V10, same rear-wheel drive, two colours you can see from the next county. You pick the one you drive.</p>
+          <div>
+            <p class="lede">Both Tecnicas. Same V10, same rear-wheel drive, two colors you can see from the next county. You pick the one you drive.</p>
+            <!-- The specs once, for both cars: they are mechanically identical. -->
+            <div class="specs specs--light" aria-label="Specifications, both cars">
+              <span class="spec">631 <span class="mono">hp</span></span>
+              <span class="spec">V10 <span class="mono">5.2 L</span></span>
+              <span class="spec">3.2s <span class="mono">0–60</span></span>
+              <span class="spec">8,500 <span class="mono">rpm redline</span></span>
+            </div>
+          </div>
         </div>
 
         <div class="fleet__grid reveal-stagger">
           <article class="car">
-            <div class="media" aria-hidden="true">
+            <div class="media">
               <picture>
                 <source type="image/webp" srcset="assets/v3/fleet-viola-800.webp 800w, assets/v3/fleet-viola-1400.webp 1400w" sizes="(min-width: 760px) 50vw, 100vw">
                 <img src="assets/v3/fleet-viola-1400.jpg" width="1400" height="1738" alt="The purple Huracán Tecnica on a farm lane beside a weathered barn and hay bales, dust in the golden light." loading="lazy" decoding="async">
@@ -259,23 +304,17 @@
                 <h3 class="h3">Huracán Tecnica</h3>
                 <span class="mono">Viola Pasifae</span>
               </div>
-              <div class="specs">
-                <span class="spec">631 <span class="mono">hp</span></span>
-                <span class="spec">V10 <span class="mono">5.2 L</span></span>
-                <span class="spec">3.2s <span class="mono">0–60</span></span>
-                <span class="spec">202 <span class="mono">mph</span></span>
-              </div>
               <p class="car__line">Ten cylinders, no turbos, the last of the line. You hear it before you feel it.</p>
             </div>
           </article>
 
           <article class="car">
-            <div class="media" aria-hidden="true">
+            <div class="media">
               <picture>
                 <source type="image/webp" srcset="assets/v3/fleet-verde-800.webp 800w, assets/v3/fleet-verde-1400.webp 1400w" sizes="(min-width: 760px) 50vw, 100vw">
                 <img src="assets/v3/fleet-verde-1400.jpg" width="1400" height="1738" alt="The green Huracán Tecnica, headlights on, on a wet forest road in the fog with yellow leaves on the asphalt." loading="lazy" decoding="async">
               </picture>
-              <video class="ambient" data-src="assets/v3/fleet-verde.mp4" muted loop playsinline preload="none" tabindex="-1"></video>
+              <video class="ambient" data-src="assets/v3/fleet-verde.mp4" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
             </div>
             <span class="chip chip--glass car__tag">No. 02 · In service</span>
             <div class="car__panel">
@@ -283,36 +322,13 @@
                 <h3 class="h3">Huracán Tecnica</h3>
                 <span class="mono">Verde Selvans</span>
               </div>
-              <div class="specs">
-                <span class="spec">631 <span class="mono">hp</span></span>
-                <span class="spec">V10 <span class="mono">5.2 L</span></span>
-                <span class="spec">3.2s <span class="mono">0–60</span></span>
-                <span class="spec">202 <span class="mono">mph</span></span>
-              </div>
               <p class="car__line">Same V10, second set of keys. Book both for Driver X and run the route nose to tail.</p>
             </div>
           </article>
         </div>
 
-        <div class="next">
-          <div class="next__head">
-            <h3 class="h3">Next in the fleet</h3>
-            <p class="body-sm muted">Three more cars, three different engines. Planned, not yet in the garage.</p>
-          </div>
-          <!-- PLACEHOLDER cars: confirm with client -->
-          <article class="next__item">
-            <img src="assets/photos/fleet-296-650.webp" width="96" height="72" alt="" loading="lazy" decoding="async">
-            <div><h4 class="h4">Ferrari 296 GTB</h4><span class="mono">No. 03 · 819 hp · V6 hybrid</span></div>
-          </article>
-          <article class="next__item">
-            <img src="assets/photos/fleet-gt3-650.webp" width="96" height="72" alt="" loading="lazy" decoding="async">
-            <div><h4 class="h4">Porsche 911 GT3</h4><span class="mono">No. 04 · 502 hp · 9,000 rpm</span></div>
-          </article>
-          <article class="next__item">
-            <img src="assets/photos/fleet-750s-650.webp" width="96" height="72" alt="" loading="lazy" decoding="async">
-            <div><h4 class="h4">McLaren 750S</h4><span class="mono">No. 05 · 740 hp · twin turbo</span></div>
-          </article>
-        </div>
+        <!-- PLACEHOLDER cars 03 to 05: one line until the client confirms them. -->
+        <p class="fleet__next mono muted">Next in the fleet: Ferrari 296 GTB · Porsche 911 GT3 · McLaren 750S. Planned, not yet in the garage.</p>
       </div>
     </section>
 
@@ -327,7 +343,7 @@
           <p class="lede">Everything the waiver says, in plain words. Ask us about anything that is not here.</p>
         </div>
 
-        <div class="promises reveal-stagger">
+        <div class="promises">
           <div class="promise">
             <h3 class="h3">Insurance is included.</h3>
             <div>
@@ -357,7 +373,7 @@
           <li class="step">
             <span class="step__n mono">Step 2</span>
             <h3 class="h4">Meet us in Frederick</h3>
-            <p>Twenty minutes: waiver, licence check, the briefing, seat and mirrors. Then the start button.</p>
+            <p>Twenty minutes: waiver, license check, the briefing, seat and mirrors. Then the start button.</p>
           </li>
           <li class="step step--live">
             <span class="step__n mono">Step 3</span>
@@ -367,17 +383,17 @@
           <li class="step">
             <span class="step__n mono">Step 4</span>
             <h3 class="h4">Photos, keys, debrief</h3>
-            <p>We shoot you with the car at the turnaround and send the photos that evening.</p>
+            <p>We photograph you with the car at the turnaround and send the pictures that evening.</p>
           </li>
         </ol>
 
         <dl class="terms">
           <div class="term"><dt>Age</dt><dd>21 or over to drive. Guests in the follow car, 12 and up.</dd></div>
-          <div class="term"><dt>Licence</dt><dd>A valid licence in your own name, held for at least two years. Bring it on the day.</dd></div>
+          <div class="term"><dt>License</dt><dd>A valid license in your own name, held for at least two years. Bring it on the day.</dd></div>
           <div class="term"><dt>Changes</dt><dd>Move your date any time up to 72 hours before. Full refund up to 7 days before.</dd></div>
           <div class="term"><dt>Waiver</dt><dd>Signed on the day, before the briefing. We send a copy in advance so there are no surprises.</dd></div>
           <div class="term"><dt>Guests</dt><dd>Welcome at the start point. On Driver III they ride in the follow car for the whole loop.</dd></div>
-          <div class="term"><dt>Vouchers</dt><dd>Any drive can be bought as a gift. Valid for 12 months from purchase.</dd></div>
+          <div class="term" id="gift"><dt>Gifts</dt><dd>Any drive can be bought as a voucher, valid for 12 months from purchase. We send it as a printable card the same day. Pick "Yes, send a voucher" on the form.</dd></div>
         </dl>
         <p class="terms__note mono">Subject to the booking terms. Figures confirmed at booking.</p>
       </div>
@@ -427,53 +443,47 @@
     </section>
 
     <!-- =================================================================
-         CLOSER — the road at blue hour, fireflies over the field
+         BOOK — the drive home at blue hour, fireflies over the field,
+         and the request form on the photograph. Booking mechanism
+         undecided: this composes an email. Swap for the real widget
+         when chosen.
          ================================================================= -->
-    <section class="card closer" aria-label="Book a drive">
+    <section class="card book" id="book">
       <div class="media" aria-hidden="true">
         <picture>
+          <source type="image/webp" media="(max-width: 640px)" srcset="assets/v3/close-fireflies-tall-800.webp 800w, assets/v3/close-fireflies-tall-1200.webp 1200w" sizes="100vw">
+          <source type="image/jpeg" media="(max-width: 640px)" srcset="assets/v3/close-fireflies-tall-1200.jpg">
           <source type="image/webp" srcset="assets/v3/close-fireflies-900.webp 900w, assets/v3/close-fireflies-1600.webp 1600w, assets/v3/close-fireflies-2400.webp 2400w" sizes="100vw">
           <img src="assets/v3/close-fireflies-2400.jpg" width="2400" height="1339" alt="" loading="lazy" decoding="async">
         </picture>
         <video class="ambient" data-src="assets/v3/close-fireflies.mp4" muted loop playsinline preload="none" tabindex="-1"></video>
       </div>
-      <div class="closer__scrim" aria-hidden="true"></div>
-      <div class="closer__top">
+      <div class="book__scrim" aria-hidden="true"></div>
+      <div class="book__top">
         <span class="chip chip--glass">The drive home</span>
-        <a class="pill pill--paper" href="#book">Book a drive <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 11L11 3M5 3h6v6"/></svg></a>
       </div>
-      <div class="closer__bottom">
-        <h2 class="display h1">Pick a date.</h2>
-        <p class="closer__note">Tell us the drive, the car and a date or two. We reply within a day with a time and the short list of what to bring.</p>
-      </div>
-    </section>
-
-    <!-- =================================================================
-         BOOK — the request form. Booking mechanism undecided: this
-         composes an email. Swap for the real widget when chosen.
-         ================================================================= -->
-    <section class="card book" id="book">
-      <div class="wrap">
-        <div class="book__grid">
-          <div class="book__copy">
-            <h2 class="display h2">Book a drive. No payment now.</h2>
-            <p>Send the request and we come back within a day with a time. You pay when the date is confirmed, and the deductible is in writing before you do.</p>
-            <p class="mono on-dark-3">Or write to <a href="mailto:hello@apexdriver.com">hello@apexdriver.com</a></p>
-          </div>
+      <div class="book__grid">
+        <div class="book__copy">
+          <h2 class="display h1">Pick a date.</h2>
+          <p>Tell us the drive, the car and a date or two. We reply within a day with a time and the short list of what to bring. You pay when the date is confirmed, and the deductible is in writing before you do.</p>
+          <p class="mono on-dark-3">Or write to <a href="mailto:hello@apexdriver.com">hello@apexdriver.com</a></p>
+        </div>
+        <div class="form__panel">
           <form class="form" id="bookForm" novalidate>
             <div class="field">
               <label class="label" for="f-name">Name</label>
-              <input class="input" id="f-name" name="name" type="text" autocomplete="name" required>
+              <input class="input" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="formError">
             </div>
             <div class="field">
               <label class="label" for="f-email">Email</label>
-              <input class="input" id="f-email" name="email" type="email" autocomplete="email" required>
+              <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="formError">
             </div>
             <div class="field">
               <label class="label" for="f-tier">Drive</label>
-              <select class="input" id="f-tier" name="tier">
+              <select class="input" id="f-tier" name="tier" required aria-describedby="formError">
+                <option value="" selected>Choose a drive</option>
                 <option>Driver I · 30 min · $495</option>
-                <option selected>Driver II · 45 min · $795</option>
+                <option>Driver II · 45 min · $795</option>
                 <option>Driver III · 60 min · $995</option>
                 <option>Driver X · custom</option>
               </select>
@@ -501,25 +511,26 @@
               <label class="label" for="f-note">Anything else</label>
               <textarea class="input" id="f-note" name="note" rows="3"></textarea>
             </div>
-            <p class="mono form__error" id="formError" hidden>Add your name and a working email address.</p>
-            <p class="body-sm form__done" id="formDone" hidden>Your email app should open with the request filled in. If it did not, write to hello@apexdriver.com.</p>
+            <p class="mono form__error" id="formError" role="alert" hidden>Add your name, a working email address and the drive you want.</p>
+            <p class="body-sm form__done" id="formDone" role="status" hidden>Your email app should open with the request filled in. If it did not, write to hello@apexdriver.com.</p>
             <div class="field--wide form__actions">
               <button class="pill pill--verde" type="submit">Send the request</button>
               <span class="mono on-dark-3">We reply within a day</span>
             </div>
           </form>
         </div>
-
-        <footer class="footer">
-          <p class="mono">© 2026 Apex Driver · Frederick, Maryland</p>
-          <a class="lockup" href="#top" aria-label="Apex Driver, home"><span class="mark" aria-hidden="true"></span>Apex Driver</a>
-          <div class="footer__links">
-            <a class="pill pill--outline" href="https://instagram.com" rel="noopener">Instagram</a>
-            <a class="pill pill--outline" href="mailto:hello@apexdriver.com">Email</a>
-          </div>
-        </footer>
       </div>
     </section>
+
+    <!-- PLACEHOLDER: the Instagram handle is the client's. -->
+    <footer class="card footer">
+      <p class="mono">© 2026 Apex Driver · Frederick, Maryland</p>
+      <a class="lockup" href="#top" aria-label="Apex Driver, home"><span class="mark" aria-hidden="true"></span>Apex Driver</a>
+      <div class="footer__links">
+        <a class="pill pill--outline" href="https://instagram.com" rel="noopener">Instagram</a>
+        <a class="pill pill--outline" href="mailto:hello@apexdriver.com">Email</a>
+      </div>
+    </footer>
 
   </main>
   </div>

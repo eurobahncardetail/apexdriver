@@ -4,6 +4,8 @@ Exotic and supercar driving experiences on the public backroads of Frederick Cou
 
 This document describes the system as it stands on the v3 landing page (branch `v3`, live at https://eurobahncardetail.github.io/apexdriver/, 2026-09-02). It replaces Brand System v4. Where v4 and this file disagree, this file wins. The rendered page is the visual source of truth.
 
+Revised the same day after a design review: one verde primary per screen is now true (the fixed nav button is glass, then paper); phones get a portrait hero, a menu sheet and a booking bar instead of the ticket; the closer and the form are one card; the fleet shows its specs once; "Most booked" became "Our pick".
+
 ---
 
 ## 00 — What changed from v4
@@ -48,23 +50,23 @@ Custom properties at the top of `styles.css`.
 
 ### Budget
 
-- Verde is the only chromatic colour the page adds. It appears as one button per screen, the "Most booked" chip, the "8,500 rpm" chip, the live step's rule, and browser surfaces. It is never a heading, a panel or a large fill.
+- Verde is the only chromatic colour the page adds. It appears as one button per screen (always the one in the flow: the fixed nav button is glass over the hero and paper after it, and the phone booking bar's button is paper), the "Our pick" chip, the "8,500 rpm" chip, the live step's rule, and browser surfaces. It is never a heading, a panel or a large fill.
 - The two cars supply every other colour. Viola belongs to photographs only; nothing in the UI is purple.
 - Dark grounds are ink or moss. Moss is used once, for the trust section, so it reads as a change of room.
 
 ### Scrims
 
-Photographs under type get plain ink gradients, no hue. Hero: a 38% top band for the nav, a 78% bottom band for the headline and ticket, a 34% left band. Chapter cards: 66% top, 82% bottom. Closer: 72% bottom only.
+Photographs under type get plain ink gradients, no hue. Hero: a 38% top band for the nav, a 78% bottom band for the headline and ticket, a 34% left band; under 960px, where the ticket stacks and the headline sits higher, the bottom band deepens to 90% and reaches 78% of the height. Chapter cards: 66% top, 82% bottom. Book card: 34% top, 90% bottom running to the top, because the form sits on it.
 
 ---
 
 ## 02 — Type
 
-Google Fonts CDN: `Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800`, `Manrope:wght@400;500;600;700`, `DM+Mono:wght@400;500`.
+Google Fonts CDN: `Bricolage+Grotesque:opsz,wght@12..96,600..800` (the page uses no width axis and no weight under 600), `Manrope:wght@400;500;600;700`, `DM+Mono:wght@400;500`.
 
 | Role | Face | Size | Notes |
 | --- | --- | --- | --- |
-| `.display.h1` | Bricolage 800, opsz 96, wdth 100 | `clamp(50px, 8.6vw, 140px)`, lh 0.9, tracking −0.022em, uppercase | Hero and closer. The closer runs to `clamp(56px, 10.5vw, 168px)`. |
+| `.display.h1` | Bricolage 800, opsz 96, wdth 100 | `clamp(50px, 8.6vw, 140px)`, lh 0.9, tracking −0.022em, uppercase | Hero and the book card. Nothing on the page is larger than the hero. |
 | `.display.h2` | same | `clamp(34px, 4.8vw, 68px)` | Section heads. `text-wrap: balance`, no manual breaks. |
 | `.display.statement` | same | `clamp(34px, 5vw, 84px)` | The road statement. Two lines in `--stone`, the last line filled with the road. |
 | `.h3` | Bricolage 700, opsz 40 | 26px (chapter titles 30px, promises 28px) | Card and car names |
@@ -93,9 +95,11 @@ body                 ink
    ├ .band#fleet     mist
    ├ .trust#know     card, moss
    ├ .band#faq       mist
-   ├ .closer         card, photograph
-   └ .book           card, ink; contains the footer
+   ├ .book           card, photograph (the drive home), the form on a glass panel
+   └ .footer         card, ink
 ```
+
+Fixed on top of everything: the nav (three pills; under 900px the lockup and a Menu pill), and under 900px the booking bar at the bottom, which appears once the hero has scrolled away and steps aside while the book card or the footer is on screen.
 
 - `--gap: 12px` (8px under 640px) is the only spacing between cards. Cards never touch and never overlap.
 - Radii: page 32px, cards 24px, glass panels 20px, small cards 18px, inputs 16px, pills and chips 999px. Under 640px the page drops to 24px and cards to 20px.
@@ -111,14 +115,14 @@ All nine photographs were generated on 2026-09-02 with Nano Banana 2 at 2K, usin
 
 | File | Frame | Where | Moves |
 | --- | --- | --- | --- |
-| `hero-ridge` | 16:9 | Hero | Dust and pollen in the sun shafts, 10 s |
+| `hero-ridge` | 16:9, plus a 2:3 crop (`-tall`) for phones | Hero | Dust and pollen in the sun shafts, 10 s (not on phones, where the still is the portrait crop) |
 | `ch-valley` | 3:4 | Driver I | — |
 | `ch-ridge` | 3:4 | Driver II | Dust motes in the light, 5 s |
 | `ch-bridge` | 3:4 | Driver III | — |
 | `ch-x` | 3:4 | Driver X | — |
 | `fleet-viola` | 4:5 | Car No. 01 | — |
 | `fleet-verde` | 4:5 | Car No. 02 | Drizzle, fog, ripples, 5 s |
-| `close-fireflies` | 16:9 | Closer | Fireflies and ground mist, 5 s |
+| `close-fireflies` | 16:9, plus a 2:3 crop (`-tall`) for phones | Book card | Fireflies and ground mist, 5 s (not on phones) |
 | `road-gold` | 16:9 | Inside the letters of "A road." | Leaves and light, 5 s, as an animated WebP |
 
 The look, so new assets match: Frederick County in late September, last golden hour or blue hour; narrow two-lane road with a double yellow centreline and no shoulder; stone walls, split-rail fences, hay bales, covered bridges, the Catoctin ridge in haze; oaks and tulip poplars; volumetric light, dust or pollen in the beams; realistic colour, light haze, fine grain, no HDR, no motion blur, no people, no text. Car front three-quarter from a low camera, filling the lower half of a portrait frame so the top half can hold a title.
@@ -140,47 +144,55 @@ Generation notes for the next batch: reuse the reference media ids recorded in t
 
 ### Nav
 
-Fixed, three floating pills at the top inset: the lockup, the section links, the verde "Book a drive". Glass (ink 34%, blur 16px, 22% white line) over the hero; ink at 82% once the hero scrolls under it. Links hide below 900px; the lockup and the button stay. Current section gets a 14% white fill.
+Fixed, three floating pills at the top inset: the lockup, the section links, and "Book a drive", which goes to the drives (the drive cards are the only route to the form). Glass (ink 34%, blur 16px, 22% white line) over the hero; the link group turns ink at 82% and the button turns paper once the hero scrolls under it, so the verde primary is always the one in the flow. Current section gets a 14% white fill. Below 900px the links and the button give way to a "Menu" pill that opens the sheet.
+
+### Menu sheet (phones)
+
+Full-screen ink at 90% with blur. The lockup and a "Close" pill on top, the five section links in display type at `clamp(36px, 10vw, 56px)`, and a verde "Choose your drive" at the bottom. Escape closes it; focus moves to the first link on open and back to the Menu pill on close.
+
+### Booking bar (phones)
+
+Below 900px, a fixed pill at the bottom inset: "From $495" with the three durations in mono, and a paper "Choose your drive" pill. It slides up once the hero has scrolled away and slides back while the book card, the footer or the menu sheet is on screen. Under 480px the durations are dropped so the bar fits.
 
 ### Pills
 
-`.pill` is every button and button-shaped link: 48px tall, 22px sides, Manrope 600 14px. Variants: `--verde` (primary), `--glass` (on photographs), `--paper` (white on photographs, the closer), `--ink`, `--outline` (footer). Hover swaps colour in 180ms; active scales to 0.98. No lift, no shadow.
+`.pill` is every button and button-shaped link: 48px tall, 22px sides, Manrope 600 14px. Variants: `--verde` (primary), `--glass` (on photographs), `--paper` (white on photographs and the fixed nav after the hero), `--ink`, `--outline` (footer), `--sm` (40px, the booking bar). Hover swaps colour in 180ms; active scales to 0.98. No lift, no shadow.
 
 ### Chips
 
-`.chip` is a tag, 36px, Bricolage 600 uppercase: ink on mist (the road names), `--verde` for the one emphasised tag, `--glass` over photographs (the hero's three, the fleet's "No. 01 · In service").
+`.chip` is a tag, 36px, Bricolage 600 uppercase: ink on mist (the road names), `--verde` for the one emphasised tag, `--glass` over photographs (the same ink-at-34% glass as the nav, so it holds up over bright sky: the hero's three, the fleet's "No. 01 · In service", the book card's "The drive home"). `--xs` is the 24px version inside a card kicker ("Our pick").
 
 ### Ticket (hero)
 
-A 340px glass panel listing the three drives with time, route and price, each row a link to the drives section. The "most booked" row carries a verde dot. Footer line: "Insurance included · No payment until we confirm." On phones it stacks under the buttons.
+A 340px glass panel listing the three drives with time, route and price, each row a link to the drives section that also preselects the drive on the form. The "our pick" row carries a verde dot. Two footer lines: "Insurance included · No payment until we confirm" and "Any drive as a gift voucher, valid 12 months". Between 640 and 960px it stacks under the buttons; under 640px it is hidden and the booking bar and the drive cards carry the prices.
 
 ### Chapter cards (pricing)
 
-Four 3:4 cards in a row, each a photograph and a link to the form. Top: a mono kicker (drive name, minutes or the "Most booked" chip), the `.h3` title, one sentence. Bottom: the price at 44px with the mileage in mono, and a full-width pill. Driver II gets the verde pill and the moving photograph; the others get glass pills. Hover scales the photograph 4.5% over 900ms. Two columns under 1100px, one under 560px. Cards set `width: 100%` because an aspect-ratio box with a `min-height` would otherwise transfer that height into a minimum width and overflow the grid.
+Four 3:4 cards in a row, each a photograph and a link to the form with an `aria-label` that reads as a sentence ("Book Driver II, the ridge, 45 minutes, $795, our pick"). Top: a mono kicker with the drive name left and the minutes right, always in the same two places; Driver II adds the "Our pick" chip after its name. Then the `.h3` title and one sentence. Bottom: the price at 44px with the mileage in mono (the row wraps rather than overflows), and a full-width pill. Driver II gets the verde pill and the moving photograph; the others get glass pills. Hover scales the photograph 4.5% over 900ms, only on devices with a hover. Two columns under 1100px, one under 560px. Cards set `width: 100%` because an aspect-ratio box with a `min-height` would otherwise transfer that height into a minimum width and overflow the grid.
 
 ### Fleet cards
 
-Two 4:5 photographs with a glass panel at the bottom: name, colour in mono, four spec pills (number in Manrope 700, unit in mono), one line of body. A glass chip at the top-left carries the fleet number and status. Planned cars are small paper rows: a 96×72 thumbnail, the name, a mono spec line.
+The specs appear once, beside the section head on mist (paper pills: 631 hp, V10 5.2 L, 3.2s 0–60, 8,500 rpm redline; no top speed, because the roads do the work). Two 4:5 photographs with a glass panel at the bottom: name, colour in mono, one line of body. A glass chip at the top-left carries the fleet number and status. The photographs are content, not decoration, so their alt text is read. Planned cars are one mono line under the grid until they are real.
 
 ### Trust card (moss)
 
-The one moss card holds three things in order: three promise cards (`--moss-2`, an `.h3` and one paragraph each), the four steps (a `1px` rule on top, the live step's rule in verde, a mono "Step n" because the order is real), and the terms as a two-column `<dl>` with 110px labels. A sentence-case mono note closes it.
+The one moss card holds three things in order: three promise cards (`--moss-2`, an `.h3` and one paragraph each, no entrance), the four steps (a `1px` rule on top, the live step's rule in verde, a mono "Step n" because the order is real), and the terms as a two-column `<dl>` with 110px labels. The "Gifts" term carries `id="gift"` and is where the hero's "Give it as a gift" lands. A sentence-case mono note closes it.
 
 ### FAQ
 
 Heading left, `<details>` list right. Question in Manrope 700 18px; a 34px circle with a drawn `+` that rotates 45° and fills `--mist-2` when open. First item open by default.
 
-### Closer
+### Book card
 
-A photograph card, 80vh, the closing headline at the bottom-left, the note at the bottom-right, a glass chip top-left and a paper "Book a drive ↗" pill top-right.
+The closer and the form are one card: the fireflies photograph, 92vh, a glass chip "The drive home" top-left, and at the bottom a two-column grid: "Pick a date." at the hero's size with the booking copy and the email on the left, the form on a glass panel (ink 52%, blur 18px, 20px radius) on the right, 560px wide. One column under 900px.
 
 ### Form
 
-On ink only. Inputs 54px, 16px radius, 6% white fill, 16% white border; hover 32%; focus verde border and 9% fill; invalid gets a coral border (`#FF7A59`). Selects use a drawn white chevron. Labels are `.label` in `--on-dark-3`. Error and success lines span the grid. Two columns, one under 520px. The submit is a verde pill, followed by "We reply within a day."
+On the glass panel. Inputs 54px, 16px radius, 6% white fill, 16% white border; hover 32%; focus a 2px verde ring (border plus a 1px shadow) and 9% fill; invalid gets the same ring in coral (`#FF7A59`) plus `aria-invalid`. The drive select starts on "Choose a drive" and is required; the ticket rows and the drive cards preselect it. The date input's `min` is today. Selects use a drawn white chevron. Labels are `.label` in `--on-dark-3`. The error line is a live region and names all three required fields; error and success lines span the grid. Two columns, one under 520px. The submit is a verde pill, followed by "We reply within a day."
 
 ### Footer
 
-Inside the booking card, above a `--line-dark` rule: the mono copyright left, the lockup centred, outline pills right.
+Its own ink card under the book card, 22px of vertical padding: the mono copyright left, the lockup centred, outline pills right. On phones it carries extra bottom padding so the booking bar never covers the links.
 
 ---
 
@@ -188,13 +200,14 @@ Inside the booking card, above a `--line-dark` rule: the mono copyright left, th
 
 One curve, `cubic-bezier(0.2, 0, 0.2, 1)`, deceleration only. 160–180ms for colour swaps, 240ms for the FAQ marker, 640ms for entrances, 900ms for photographs and video fades.
 
-- **Hero load sequence.** Seven elements (nav, chips, line one, line two, sub copy, buttons, ticket) rise 14px and fade in over 640ms, 100ms apart, starting 140ms after load. Once per visit.
+- **Hero load sequence.** Seven elements (nav, chips, line one, line two, sub copy, buttons, ticket) rise 14px and fade in over 640ms, 100ms apart, starting 140ms after the display face has loaded (or after 900ms, whichever comes first). Once per visit. It is a CSS animation armed by the inline head script, so it does not depend on `script.js` and never swaps fonts mid-rise.
 - **Chapter stagger.** The four drive cards and the two fleet cards rise once when their grid enters the viewport, 80ms apart. Nothing else on the page has an entrance.
 - **Ambient loops.** See §04. This is where the page's life is, and it is why the entrances stay few.
-- **Hover.** Photographs scale; pills swap colour; ticket rows tint.
+- **Hover.** Photographs scale, only under `(hover: hover) and (pointer: fine)`; pills swap colour; ticket rows tint.
+- **Booking bar.** Slides 320ms on the one curve; no transition under reduced motion.
 - `prefers-reduced-motion`: no sequence, no stagger, no video, no photograph scale, and the road statement shows a still frame in its letters.
 
-Without JavaScript nothing is hidden: hidden states are applied only after a script confirms motion is wanted (`html.ad-motion`).
+Without JavaScript nothing is hidden: the hero sequence's hidden state is applied only by the inline script when motion is wanted (`html.ad-motion`), and the section reveals' hidden state only once `script.js` is running (`html.ad-js`).
 
 ---
 
@@ -210,15 +223,16 @@ All `max-width`:
 
 | Width | What changes |
 | --- | --- |
-| 1100px | Chapter cards go to two columns; planned cars to two |
-| 960px | The hero ticket drops under the copy |
-| 900px | Nav links hide; promises stack; steps to two columns; terms to one; the form and copy stack |
+| 1100px | Chapter cards go to two columns |
+| 960px | The hero ticket drops under the copy; the hero's bottom band deepens |
+| 900px | Nav links and nav button give way to the Menu pill; the booking bar appears; promises stack; steps to two columns; terms to one; the form and copy stack |
 | 860px | The road statement and copy stack, statement left-aligned |
-| 760px | Fleet cards stack; closer text stacks |
+| 760px | Fleet cards stack |
 | 720px | Footer centres |
-| 640px | Page radius 24, card radius 20, gap 8, section heads stack, hero fills the viewport |
+| 640px | Page radius 24, card radius 20, gap 8, section heads stack, hero fills the viewport with the portrait crop, the ticket hides, the hero and book loops are not loaded |
 | 560px | Chapter cards to one column |
 | 520px | Form to one column; steps to one |
+| 480px | The booking bar drops the durations |
 
 ---
 
@@ -235,10 +249,11 @@ Lines in use on the page:
 - "Know before you book."
 - "Insurance is included." / "An instructor rides with you." / "Rain means a new date."
 - "Asked before."
-- "Pick a date." (closer)
-- "Book a drive. No payment now."
+- "Pick a date." (the book card)
 
-Buttons say what they do: "Choose your drive", "See the road", "Book Driver II", "Ask about Driver X", "Send the request".
+Buttons say what they do: "Choose your drive", "Give it as a gift", "Book Driver II", "Ask about Driver X", "Send the request". "Our pick" marks Driver II; "Most booked" is retired until there is a booking history to back it.
+
+American spelling throughout (license, colors): the audience is in Maryland.
 
 ---
 
