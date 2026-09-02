@@ -1,0 +1,35 @@
+:root {
+  /* base — six values, nothing between them */
+  --paper: #FFFFFF;
+  --bone: #F4F4F2;
+  --hairline: #E6E6E4;
+  --ink: #0B0B10;
+  --ink-2: #3A3A42;
+  --ink-3: #6B6B73;
+  --ink-4: #9A9A9E;
+  --race-red: #E10600;
+  --street-orange: #FF6A13;
+  --orange-ink: #B23A00;
+
+  /* semantic */
+  --surface-page: var(--paper);
+  --surface-panel: var(--bone);
+  --surface-dark: var(--ink);
+  --border-hairline: var(--hairline);
+  --border-strong: var(--ink);
+  --text-strong: var(--ink);
+  --text-body: var(--ink-2);
+  --text-muted: var(--ink-3);
+  --text-disabled: var(--ink-4);
+  --text-on-dark: var(--paper);
+  --accent: var(--street-orange);      /* ink grounds, CTA fill, 24px+ display */
+  --accent-on-paper: var(--orange-ink); /* any orange as text on paper — 6:1 */
+  --live: var(--race-red);              /* active state, start-finish, rules */
+  --cta-bg: var(--street-orange);
+  --cta-fg: var(--ink);
+
+  /* gradients — one instance per screen, photography only */
+  --grad-race: linear-gradient(118deg, #FF6A13 0%, #E10600 45%, #0B0B10 100%);
+  --grad-race-overlay: linear-gradient(118deg, rgba(255,106,19,0.55) 0%, rgba(225,6,0,0.72) 45%, rgba(11,11,16,0.9) 100%);
+  --grad-scrim: linear-gradient(180deg, rgba(11,11,16,0) 0%, rgba(11,11,16,0.82) 100%);
+}

@@ -1,0 +1,39 @@
+:root {
+  --font-display: Anton, "Arial Narrow", sans-serif;
+  --font-ui: Archivo, "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* display — Anton, stamped, uppercase */
+  --size-display: clamp(44px, 11.5vw, 168px);
+  --size-display-2: clamp(32px, 6.2vw, 84px);
+  --lh-display: 0.94;
+  --tracking-display: -0.004em;
+
+  /* section heads — Archivo wdth 112 */
+  --size-section: clamp(24px, 3.6vw, 42px);
+  --lh-section: 0.98;
+  --wdth-section: 112;
+  --wght-section: 700;
+
+  /* stat numbers — Archivo wdth 112 / wght 800 */
+  --size-stat: clamp(44px, 5.4vw, 72px);
+  --lh-stat: 0.9;
+  --tracking-stat: -0.02em;
+
+  /* body */
+  --size-body: 17px;
+  --size-body-sm: 15px;
+  --lh-body: 1.55;
+
+  /* labels & data */
+  --size-label: 11px;
+  --size-mono: 12px;
+  --size-mono-lg: 13px;
+  --tracking-label: 0.1em;
+  --wdth-label: 100;
+  --wght-label: 600;
+  --lh-mono: 1.65;
+
+  --size-min: 11px; /* nothing smaller, on any ground */
+}

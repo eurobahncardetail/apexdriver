@@ -1,142 +1,99 @@
 # Apex Driver
 
-Single-page marketing homepage for Apex Driver — gift vouchers redeemable for a
-Lamborghini Huracán driving experience on back roads near Frederick, MD.
+Single-page landing site for Apex Driver, a supercar driving-experience company
+in Frederick, MD: self-drive on public-road routes, ride-along with a pro
+driver, gift vouchers, private and corporate bookings.
 
-Built from the design handoff at
-`../Apex Driver brief discussion/design_handoff_apex_driver_website/`.
+Built on **Apex Driver Brand System v3**. The handoff lives outside the repo at
+`../../design_handoff_landing_page/`: read `Apex Driver Brand System v3.md`
+first, and use `Apex Driver Brand System v3.dc.html` as the visual source of
+truth for spacing, type and colour.
 
 ## Stack
 
-Static HTML + CSS. No build step, no dependencies, no JavaScript — the only
-interactive behavior in the design (FAQ accordions, anchor scrolling) is native
-browser behavior via `<details>`/`<summary>` and `scroll-behavior: smooth`.
-
-## Running it
-
-Open `index.html` directly in a browser, or serve the folder:
+Static HTML, CSS and one small script. No build step, no dependencies.
 
 ```bash
-python -m http.server 8000
+node .claude/dev-server.js
 ```
+
+Then open <http://localhost:4173>. Opening `index.html` directly also works.
 
 ## Files
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The whole page — nav, hero, how-it-works, fleet, pricing, trust+FAQ, contact, footer |
-| `styles.css` | Design tokens (`:root`) plus per-section styles, in section order |
-| `assets/logo.svg` | The chevron/apex logo mark, rebuilt as SVG from the reference's CSS `clip-path` bars |
-| `assets/photos/` | Web-derived car photography — WebP with a JPEG fallback, two widths each |
+| `index.html` | The whole page: nav, hero, fleet, experiences, how it works, route, terms, footer |
+| `styles.css` | Page styles. Every value references a token |
+| `script.js` | Nav current-item rule, per-section reveal, the circuit draw |
+| `tokens/*.css` | The brand system's custom properties, copied verbatim from the handoff |
+| `assets/mark.svg`, `assets/circuit.svg` | Brand mark and the circuit motif |
+| `assets/grain-*.png` | The two stamp tiles clipped to display type at 40px and up |
+| `assets/spatter-*.png` | The 500px surface tile, used on the how-it-works band |
+| `assets/photos/` | The client's own car photography, WebP with JPEG fallback |
+| `tools/build-photos.js` | Regenerates the photo crops with sharp |
+| `docs/` | Notes from the earlier grayscale build, kept for history |
+
+`tokens/fonts.css` is an `@import`; the page uses the equivalent `<link>` in
+`index.html` so the fonts start loading before the CSS does.
+
+## The system, in the rules that are easiest to break
+
+- **Nothing is rounded, nothing has a shadow.** `--radius` is 0.
+- **Four colours, three neutrals.** Paper carries the page. One gradient per
+  screen (the hero). One orange stat *or* one orange button per screen, never
+  both. Inside the gradient nothing is orange; type and the CTA go paper.
+- **One motion curve**, `cubic-bezier(0.2, 0, 0.2, 1)`, deceleration only.
+  Hover changes colour or a hairline. Reveals fire per section, never per
+  element. The circuit draws once. No parallax.
+- **Anton is stamped only at 40px and up** and never on a spatter ground. On
+  spatter, anything under 24px sits on a solid paper plate (`.plate`).
+- **Ten spacing steps**: 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96 / 140.
+- **No breakpoints.** Layout is `auto-fit` and `clamp()`. The only `@media`
+  rules are `prefers-reduced-motion`.
+- **No icons.** State is colour and rules; the one graphic is the circuit.
+
+## Motion
+
+An inline script in `<head>` adds `ad-motion` to `<html>` only when reduced
+motion is off and IntersectionObserver exists. Every reveal and the circuit
+draw are gated on that class, so without it the page renders finished. With
+reduced motion on there is no reveal and no draw.
 
 ## Photography
 
-Derived from the originals in the parent folder. The fleet is genuinely two
-cars, so they map onto the two fleet cards:
+Three photographs exist, the client's own, cropped to 4:3 at 62% down the
+frame and served at two widths. EXIF is stripped; the originals carry GPS.
 
 | Slot | Source | Car |
 | --- | --- | --- |
-| Hero | `IMG_6483.jpeg` | Purple Huracán, head-on, headlights lit, dark building behind |
-| Huracán 01 | `IMG_6487.jpeg` | Green Huracán, front three-quarter |
-| Huracán 02 | `IMG_6500.jpeg` | Purple Huracán, front three-quarter |
+| Hero | `IMG_6483.jpeg` | Purple Huracán, head-on, under the gradient |
+| Fleet No. 01 | `IMG_6487.jpeg` | Green Huracán, front three-quarter, clean |
+| Fleet No. 02 | `IMG_6500.jpeg` | Purple Huracán, front three-quarter, clean |
 
-Every original is a portrait phone photo, so each is cropped to the specified
-4:3 landscape at 62% down the frame — the point that centres the car without
-clipping the roof. Served as `<picture>` with WebP plus a JPEG fallback, at
-two widths with `sizes` matched to how each is used - `100vw` for the
-full-bleed hero background, the actual column widths for the fleet cards.
-Total 1.2 MB.
-
-**EXIF is stripped** (sharp omits it unless asked). These are personal phone
-photos and carried GPS coordinates; the published files do not.
-
-To regenerate after swapping a source or changing a crop, edit and run
-`tools/build-photos.js`:
+To regenerate after swapping a source, edit and run `tools/build-photos.js`:
 
 ```bash
 npm install sharp && node tools/build-photos.js
 ```
 
-`sharp` is not a project dependency — the site itself has none. It is only
-needed to rebuild these files.
+## Placeholders and open questions
 
-## Design tokens
+Marked in `index.html` with comments at the point of use.
 
-All colors, fonts, and layout constants live as custom properties at the top of
-`styles.css`. The palette is deliberately grayscale — no accent color anywhere;
-color is meant to come only from the car photography.
-
-Fonts load from Google Fonts: **Archivo** variable (display at `font-stretch:
-125%`, UI/labels at the default 100%), IBM Plex Sans (body), IBM Plex Mono
-(numerals, prices, captions). Display and UI are one superfamily at two widths,
-so the width jump — not a second typeface — is what separates them.
-
-To retune the display width, change `--display-width` in `styles.css`. Archivo's
-`wdth` axis runs 62–125 and the font link requests that full range.
-
-## Outstanding
-
-**Placeholder content** — marked `TODO` in `index.html`:
-
-- Booking destination for the "BOOK A VOUCHER" button and the tier cards
-- Real Instagram handle (`@apexdriver` is a placeholder)
-- Footer phone, email, and waiver link
-
-## Deliberate departures from the handoff
-
-Three changes were made after a design review and approved. Each is commented at
-the point of change in the source.
-
-**Pricing card tones run dark-to-light**, so visual prominence climbs with price
-and Driver III is the most visible card rather than the least. This is the
-reference file's own `tierToneDirection: dark-to-light` option, not an override.
-It also settles the handoff's internal conflict on Driver III — the token list
-named `#1C1D1F` as a card fill while section 5 said `#141517`, which is the
-section background, so any card wearing it had no edge. Fills are now
-`#1C1D1F` / `#26272A` / `#3A3C40` for I / II / III, measuring 1.08 / 1.22 / 1.65
-against the section.
-
-**Driver X's route line runs off the card edge.** Every other tier's line encodes
-its duration (30/45/60 min → 90/140/190 of the 200-unit viewBox). Driver X has no
-fixed duration and previously borrowed Driver III's 190, claiming a number it
-doesn't have. It now bleeds past the padding and is cut flat by the dashed
-border: open-ended, which is what the tier means.
-
-**Anton and Space Grotesk were replaced by Archivo** at two widths. Both read as
-category defaults — Anton is the ubiquitous free impact face, Space Grotesk one
-of the most recognizable "safe" choices in current design. Going wide where the
-category goes condensed is the point. IBM Plex Sans and Mono are unchanged.
-
-The hero type scale was re-derived as part of this: `clamp(48px, 7vw, 92px)` was
-set for Anton, which is very condensed. At width 125 the string "THE WHEEL." is
-7.9× the font size, so 92px overflowed the hero column by 48px and broke the
-two-line headline. It is now `clamp(34px, 5.8vw, 82px)`, solved against the
-tightest point of the two-column range (~901px). Verified two lines and no
-horizontal overflow from 320px to 1440px.
-
-**The How It Works route line draws itself** — the page's one motion moment, and
-the only animation beyond hover feedback. The handoff's reference file defined
-`@keyframes dashdraw` and never applied it; this finishes that intent. The dashed
-curve draws from the dot at 01 to the arrowhead at 04 over 1.5s while each step's
-number and hairline resolve in cadence, staggered at 0/30/60/90% of the draw.
-
-It is entirely opt-in: every rule is gated on a `js-motion` class that only
-exists when JS ran and reduced motion is off, so without either the section
-renders finished. The pre-animation state is dimmer than spec and the end state
-*is* spec — the animation never overshoots the design. Titles and body copy never
-move or fade; only the line, the arrowhead, and the numbers and hairlines resolve.
-
-**How It Works runs in chronological order** — 01 redeem, 02 meet, 03 choose,
-04 drive. The steps were numbered but out of sequence: "Redeem when ready" sat at
-04, describing the booking that happens before anyone meets in Frederick. Copy is
-unchanged; only the order moved. The section now ends on the drive.
-
-## Responsive
-
-The handoff flagged that mobile was not designed per-breakpoint. Collapses used:
-
-- **1024px** — pricing tiers 4 → 2 columns
-- **900px** — hero and how-it-works stack to 1 column; trust block 3 → 2 columns
-- **640px** — fleet, pricing, and trust all drop to 1 column
-
-`THE FLEET` keeps its specified `white-space: nowrap` at every width.
+- **Fleet cards 03 to 06** are placeholder makes, specs and striped image
+  blocks. The real fleet beyond the two Huracáns is not finalised and no
+  photography exists. Each card is labelled "Placeholder model" on the page.
+- **Prices** are not shown. None have been agreed for the self-drive /
+  ride-along / voucher / corporate structure. The experience cards carry a
+  duration stat instead; the 90 and 45 minute figures are placeholders.
+- **Route 01** uses the spec's example figures (42 miles, 90 minutes) with a
+  Frederick start and finish. Replace with the surveyed route.
+- **Before you drive** is draft legal copy, flagged on the page as pending
+  client sign-off. Minimum age, licence period, deposit, waiver and weather
+  policy all need confirming.
+- **Booking** is UI only. The progress line shows an illustrative state; every
+  CTA points at the how-it-works section until a mechanism is chosen.
+- **Footer links** for terms, waiver and contact point at page anchors.
+- **No form or input** exists in the system, so there is no newsletter or
+  contact field.

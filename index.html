@@ -3,416 +3,529 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apex Driver — Supercar Driving Experience Gift Vouchers | Frederick, MD</title>
-  <meta name="description" content="Gift vouchers for a Lamborghini Huracán driving experience on local back roads near Frederick, Maryland. Pilot it yourself or ride as copilot while a pro drives.">
+  <title>Apex Driver — Self-drive and ride-along supercar experiences, Frederick, MD</title>
+  <meta name="description" content="Drive a supercar on public roads near Frederick, Maryland, or ride along with a pro driver. A fleet of exotics, gift vouchers, private and corporate bookings.">
+  <meta name="theme-color" content="#FFFFFF">
 
-  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
 
+  <!-- Fonts: the <link> form of tokens/fonts.css. Anton (display), Archivo with
+       its width axis (UI, section heads, stats), IBM Plex Sans (body),
+       IBM Plex Mono (data). Archivo is the display fallback if Anton fails. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Archivo is variable on both width and weight; the wdth axis is what the
-       display size uses (125 = expanded). Labels sit at the default 100. -->
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Archivo:wdth,wght@62..125,100..900&amp;family=IBM+Plex+Sans:wght@400;500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 
+  <!-- Brand System v3 tokens, verbatim from the handoff, then the page styles. -->
+  <link rel="stylesheet" href="tokens/colors.css">
+  <link rel="stylesheet" href="tokens/typography.css">
+  <link rel="stylesheet" href="tokens/spacing.css">
+  <link rel="stylesheet" href="tokens/motion.css">
+  <link rel="stylesheet" href="tokens/surfaces.css">
   <link rel="stylesheet" href="styles.css">
 
   <script>
-    /* The page's one motion moment: the How It Works route line draws itself
-       once, with the four steps resolving in cadence. Everything here is
-       opt-in - the class below is what arms the animation, so without JS,
-       without IntersectionObserver, or with reduced motion the section simply
-       renders in its final state. Runs in <head> so the armed state is set
-       before first paint rather than flashing after it. */
-    (function () {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      if (!('IntersectionObserver' in window)) return;
-
-      var root = document.documentElement;
-      root.classList.add('js-motion');
-
-      document.addEventListener('DOMContentLoaded', function () {
-        var how = document.getElementById('how');
-        if (!how) { root.classList.remove('js-motion'); return; }
-
-        var io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('is-drawn');
-            io.unobserve(entry.target); // fires once; replaying on every pass is noise
-          });
-        }, {
-          /* Threshold alone would never fire when the section is taller than
-             the viewport. This triggers once its top crosses 75% of the fold,
-             at any section height. */
-          rootMargin: '0px 0px -25% 0px',
-          threshold: 0
-        });
-
-        io.observe(how);
-      });
-    })();
+    /* Arms the section reveals and the circuit draw before first paint. Without
+       JS, without IntersectionObserver, or with reduced motion on, nothing is
+       hidden and nothing animates. */
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      document.documentElement.classList.add('ad-motion');
+    }
   </script>
 </head>
 <body>
 
-  <!-- ===================================================================
-       1. NAV
-       =================================================================== -->
-  <nav class="nav">
-    <a class="nav__brand" href="#top" aria-label="Apex Driver — home">
-      <img src="assets/logo.svg" alt="" width="30" height="26" aria-hidden="true">
-      <span class="nav__wordmark">APEX DRIVER</span>
-    </a>
-    <div class="nav__links">
-      <a href="#how">HOW IT WORKS</a>
-      <a href="#fleet">FLEET</a>
-      <a href="#pricing">PRICING</a>
-      <a href="#safety">SAFETY</a>
-      <a href="#faq">FAQ</a>
+  <!-- =====================================================================
+       NAV — paper, hairline beneath, current item marked with a red rule
+       ===================================================================== -->
+  <nav class="nav" aria-label="Primary">
+    <div class="wrap nav__inner">
+      <a class="lockup" href="#top" aria-label="Apex Driver — home">
+        <span class="mark" aria-hidden="true"></span>
+        <span class="wordmark">Apex Driver</span>
+      </a>
+      <div class="nav__links label">
+        <a href="#fleet" data-spy>The fleet</a>
+        <a href="#experiences" data-spy>Experiences</a>
+        <a href="#routes" data-spy>Routes</a>
+        <a href="#vouchers">Vouchers</a>
+        <!-- Booking mechanism undecided: this points at the how-it-works section. -->
+        <a class="btn btn--primary" href="#book">Book</a>
+      </div>
     </div>
   </nav>
 
   <main id="top">
 
-    <!-- =================================================================
-         2. HERO
-         ================================================================= -->
-    <section class="hero">
-      <div class="hero__media">
+    <!-- ===================================================================
+         HERO — the one gradient on the page
+         ===================================================================== -->
+    <header class="hero">
+      <div class="hero__photo">
         <picture>
           <source type="image/webp"
                   srcset="assets/photos/hero-huracan-800.webp 800w,
                           assets/photos/hero-huracan-1600.webp 1600w"
                   sizes="100vw">
-          <img class="hero__img" src="assets/photos/hero-huracan-1600.jpg"
+          <img src="assets/photos/hero-huracan-1600.jpg"
                width="1600" height="1200"
-               alt="A purple Lamborghini Huracán head-on at dusk, headlights lit, against a dark building."
+               alt="A purple Lamborghini Huracán head-on at dusk, headlights lit."
                fetchpriority="high" decoding="async">
         </picture>
       </div>
-      <div class="hero__copy">
-        <h1 class="hero__title">GIVE THEM<br>THE WHEEL.</h1>
-        <p class="hero__sub">A Huracán. A lead car ahead, a chase car behind. They choose: drive it, or ride along while a pro does.</p>
-        <a class="btn" href="#pricing">GIVE THE DRIVE</a>
-      </div>
-    </section>
+      <div class="hero__grad" aria-hidden="true"></div>
 
-    <!-- =================================================================
-         3. HOW IT WORKS
-         ================================================================= -->
-    <section id="how" class="section shell how">
-      <div>
-        <span class="eyebrow">HOW IT WORKS</span>
-        <div class="steps">
-
-          <div class="step">
-            <span class="step__num">01</span>
-            <div>
-              <div class="step__title">REDEEM WHEN READY</div>
-              <p class="step__body">The recipient books by phone or email using the code on their voucher.</p>
-            </div>
-          </div>
-
-          <div class="step">
-            <span class="step__num">02</span>
-            <div>
-              <div class="step__title">MEET IN FREDERICK, MD</div>
-              <p class="step__body">We meet at a set point in Frederick, Maryland before every drive.</p>
-            </div>
-          </div>
-
-          <div class="step">
-            <span class="step__num">03</span>
-            <div>
-              <div class="step__title">CHOOSE PILOT OR COPILOT</div>
-              <p class="step__body">Pilot drives, with a professional alongside. Copilot rides while a professional drives.</p>
-            </div>
-          </div>
-
-          <div class="step">
-            <span class="step__num">04</span>
-            <div>
-              <div class="step__title">DRIVE BETWEEN LEAD AND CHASE</div>
-              <p class="step__body">A lead car sets the pace ahead, a chase car follows behind, on local back roads.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Route-line motif: dot (01, redeem) -> dashed curve -> chevron
-           arrowhead (04, the drive). The steps run in chronological order, so
-           the arrowhead now lands on the drive rather than on booking admin. -->
-      <div class="how__figure">
-        <svg viewBox="0 0 320 220" aria-hidden="true" focusable="false">
-          <defs>
-            <!-- The visible path is already dashed (6 6), so the usual
-                 draw-on trick - dasharray = path length, animate the offset -
-                 would destroy the dashes. Instead a solid path masks it and
-                 the mask is what draws. pathLength="1" normalises the length,
-                 so the offset runs 1 -> 0 with no measuring in JS. -->
-            <mask id="route-reveal" maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="220">
-              <path class="route__reveal"
-                    d="M24 196 C 90 196, 100 40, 170 40 S 260 130, 296 24"
-                    fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"
-                    pathLength="1" stroke-dasharray="1"></path>
-            </mask>
-          </defs>
-
-          <!-- Origin marker: present from the start, it is where the line begins -->
-          <circle cx="24" cy="196" r="5" fill="#F7F7F5"></circle>
-          <text x="14" y="212" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8A8D93">01</text>
-
-          <path d="M24 196 C 90 196, 100 40, 170 40 S 260 130, 296 24"
-                fill="none" stroke="#8A8D93" stroke-width="2"
-                stroke-dasharray="6 6" stroke-linecap="round"
-                mask="url(#route-reveal)"></path>
-
-          <!-- Scale lives on the polygon, not the <g>: a CSS transform on the
-               group would replace its translate/rotate attribute. -->
-          <g transform="translate(288,14) rotate(45)">
-            <polygon class="route__head" points="0,22 4.05,22 9,0 4.95,0" fill="#F7F7F5"></polygon>
-          </g>
-          <text class="route__head-label" x="278" y="8" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8A8D93">04</text>
+      <!-- Circuit ornament. Paper, not orange: nothing inside the gradient is orange. -->
+      <div class="hero__ornament" aria-hidden="true">
+        <svg viewBox="0 0 400 240">
+          <path d="M 56 176 L 120 60 C 124 52 134 48 142 53 L 196 84 C 204 89 214 87 218 79 L 232 52 C 237 42 249 39 258 45 L 330 88 C 342 95 344 110 334 118 L 300 146 C 291 153 291 165 300 171 L 322 190 C 332 199 330 214 318 217 C 308 220 299 214 297 205 L 292 182 C 289 170 277 165 268 172 L 240 194 C 231 201 219 199 213 190 L 196 164 C 189 154 176 153 168 162 L 138 196 C 130 205 117 205 110 197 L 58 190 C 48 188 48 180 56 176 Z" fill="none" stroke="currentColor" stroke-width="11" stroke-linejoin="round" stroke-linecap="round"/>
+          <line x1="79" y1="134" x2="98" y2="145" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/>
         </svg>
       </div>
-    </section>
 
-    <!-- =================================================================
-         4. FLEET
-         ================================================================= -->
-    <section id="fleet" class="section shell">
-      <div class="fleet__head">
-        <h2 class="section-title">THE FLEET</h2>
-        <span class="fleet__note">EXPANDING SOON</span>
-      </div>
-      <div class="fleet__grid">
-
-        <div>
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/photos/huracan-01-650.webp 650w,
-                            assets/photos/huracan-01-1300.webp 1300w"
-                    sizes="(max-width: 640px) 92vw, 45vw">
-            <img class="photo" src="assets/photos/huracan-01-1300.jpg"
-                 width="1300" height="975"
-                 alt="The green Huracán, front three-quarter view, parked on a paved plaza."
-                 loading="lazy" decoding="async">
-          </picture>
-          <div class="car__meta">
-            <span class="car__name">HURACÁN 01</span>
-            <span class="car__spec">V10 · 630HP</span>
+      <div class="hero__inner">
+        <p class="mono hero__eyebrow">Self-drive · public road<br>Frederick, Maryland</p>
+        <h1 class="display hero__title ad-stamp-paper">Take<br>the wheel.</h1>
+        <div class="hero__row on-ink">
+          <div class="stat stat--md">
+            <div class="stat__n">630</div>
+            <div class="mono stat__l">Horsepower</div>
           </div>
-        </div>
-
-        <div>
-          <picture>
-            <source type="image/webp"
-                    srcset="assets/photos/huracan-02-650.webp 650w,
-                            assets/photos/huracan-02-1300.webp 1300w"
-                    sizes="(max-width: 640px) 92vw, 45vw">
-            <img class="photo" src="assets/photos/huracan-02-1300.jpg"
-                 width="1300" height="975"
-                 alt="The purple Huracán, front three-quarter view, on a tree-lined street."
-                 loading="lazy" decoding="async">
-          </picture>
-          <div class="car__meta">
-            <span class="car__name">HURACÁN 02</span>
-            <span class="car__spec">V10 · 630HP</span>
+          <div class="stat stat--md">
+            <div class="stat__n">2.9<span class="stat__u">s</span></div>
+            <div class="mono stat__l">0–60 mph</div>
           </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- =================================================================
-         5. PRICING
-         ================================================================= -->
-    <section id="pricing" class="pricing">
-      <div class="section shell">
-        <h2 class="section-title">PICK A TIER</h2>
-        <p class="pricing__intro">Every voucher includes a professional alongside, on local roads, no track fees.</p>
-
-        <div class="tiers">
-
-          <a class="tier tier--1" href="#contact">
-            <div>
-              <div class="tier__top">
-                <span class="tier__numeral">I</span>
-                <span class="tier__price">$495</span>
-              </div>
-              <svg class="tier__line" viewBox="0 0 200 20" aria-hidden="true" focusable="false">
-                <circle cx="6" cy="10" r="3" fill="currentColor"></circle>
-                <line x1="14" y1="10" x2="90" y2="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round"></line>
-              </svg>
-            </div>
-            <div>
-              <div class="tier__name">DRIVER I</div>
-              <div class="tier__duration">30 MIN</div>
-              <div class="tier__cue">GIVE THIS DRIVE →</div>
-            </div>
-          </a>
-
-          <a class="tier tier--2" href="#contact">
-            <div>
-              <div class="tier__top">
-                <span class="tier__numeral">II</span>
-                <span class="tier__price">$795</span>
-              </div>
-              <svg class="tier__line" viewBox="0 0 200 20" aria-hidden="true" focusable="false">
-                <circle cx="6" cy="10" r="3" fill="currentColor"></circle>
-                <line x1="14" y1="10" x2="140" y2="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round"></line>
-              </svg>
-            </div>
-            <div>
-              <div class="tier__name">DRIVER II</div>
-              <div class="tier__duration">45 MIN</div>
-              <div class="tier__cue">GIVE THIS DRIVE →</div>
-            </div>
-          </a>
-
-          <a class="tier tier--3" href="#contact">
-            <div>
-              <div class="tier__top">
-                <span class="tier__numeral">III</span>
-                <span class="tier__price">$995</span>
-              </div>
-              <svg class="tier__line" viewBox="0 0 200 20" aria-hidden="true" focusable="false">
-                <circle cx="6" cy="10" r="3" fill="currentColor"></circle>
-                <line x1="14" y1="10" x2="190" y2="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" stroke-linecap="round"></line>
-              </svg>
-            </div>
-            <div>
-              <div class="tier__name">DRIVER III</div>
-              <div class="tier__duration">60 MIN</div>
-              <div class="tier__cue">GIVE THIS DRIVE →</div>
-            </div>
-          </a>
-
-          <a class="tier tier--x" href="#contact">
-            <div>
-              <div class="tier__top">
-                <span class="tier__numeral">X</span>
-                <span class="tier__price">CUSTOM</span>
-              </div>
-              <!-- No stroke-linecap and a full-width x2: the line is cut flat
-                   by the card edge rather than terminating in a rounded stop. -->
-              <svg class="tier__line" viewBox="0 0 200 20" aria-hidden="true" focusable="false">
-                <circle cx="6" cy="10" r="3" fill="currentColor"></circle>
-                <line x1="14" y1="10" x2="200" y2="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"></line>
-              </svg>
-            </div>
-            <div>
-              <div class="tier__name">DRIVER X</div>
-              <div class="tier__duration">ASK FOR DETAILS</div>
-              <div class="tier__cue">GIVE THIS DRIVE →</div>
-            </div>
-          </a>
-
+          <a class="btn btn--paper" href="#book">Book a drive</a>
+          <div class="stat stat--sm">
+            <div class="stat__n">06</div>
+            <div class="mono stat__l">Cars in the fleet</div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- =================================================================
-         6. WHY GIFT THIS + FAQ (light band)
-         ================================================================= -->
-    <section id="safety" class="light">
-      <div class="section shell">
+      <div class="wm" aria-hidden="true">
+        <span class="mark"></span>
+        <span class="wordmark">Apex Driver</span>
+      </div>
+    </header>
 
-        <div class="trust">
-          <span class="eyebrow">WHY GIFT THIS</span>
-          <div class="trust__grid">
-            <div>
-              <div class="trust__headline">INSURED, EVERY DRIVE</div>
-              <p class="trust__body">Every drive is covered. No fine print for the gift buyer to explain.</p>
-            </div>
-            <div>
-              <div class="trust__headline">A PRO IN EVERY CAR</div>
-              <p class="trust__body">Pilot or copilot, someone experienced rides along for the whole drive.</p>
-            </div>
-            <div>
-              <div class="trust__headline">NO TRACK, NO WAITLIST</div>
-              <p class="trust__body">Real roads, a set date, and a straightforward booking process.</p>
-            </div>
-          </div>
+    <!-- ===================================================================
+         01 — THE FLEET
+         Two Huracáns are real, photographed and in service. The other four
+         cards are placeholders: the fleet beyond the Huracáns is not
+         finalised and no photography exists. Swap the make, specs and
+         photograph per card once the client confirms the list.
+         ===================================================================== -->
+    <section class="band" id="fleet">
+      <div class="wrap band__inner ad-reveal">
+        <div class="band__head">
+          <span class="mono">01 — The fleet</span>
+          <span class="rule" aria-hidden="true"></span>
+          <span class="mono">Six cars · V8, V10, flat-six and V12</span>
+        </div>
+        <div class="band__intro">
+          <h2 class="h2">Six cars.<br>Pick one.</h2>
+          <p class="body">Every drive runs with a lead car ahead and a chase car behind, whichever one you take. Two drivers can book two cars and run the route nose to tail.</p>
         </div>
 
-        <div id="faq" class="faq">
-          <span class="eyebrow">FAQ</span>
-          <div class="faq__list">
+        <div class="grid">
 
-            <details class="faq__item">
-              <summary class="faq__q">
-                <span>How does my recipient redeem the voucher?</span>
-                <svg class="faq__marker" viewBox="0 0 9 12" aria-hidden="true" focusable="false">
-                    <polygon points="0,12 3.5,12 9,0 5.5,0" fill="currentColor"></polygon>
-                  </svg>
-              </summary>
-              <p class="faq__a">They receive a card, physical or digital, with a QR code. They call or email to schedule their drive. Vouchers are good for 12 months.</p>
-            </details>
+          <article class="card">
+            <div class="shot">
+              <picture>
+                <source type="image/webp"
+                        srcset="assets/photos/huracan-01-650.webp 650w,
+                                assets/photos/huracan-01-1300.webp 1300w"
+                        sizes="min(100vw, 512px)">
+                <img src="assets/photos/huracan-01-1300.jpg" width="1300" height="975"
+                     alt="The green Lamborghini Huracán, front three-quarter view, on a paved plaza."
+                     loading="lazy" decoding="async">
+              </picture>
+              <div class="wm wm--ink" aria-hidden="true"><span class="mark"></span><span class="wordmark">Apex Driver</span></div>
+            </div>
+            <div class="card__body">
+              <div class="card__title">
+                <h3 class="h3">Lamborghini Huracán</h3>
+                <span class="mono">No. 01 · Green</span>
+              </div>
+              <div class="specs">
+                <div class="stat stat--sm"><div class="stat__n">630</div><div class="mono stat__l">hp</div></div>
+                <div class="stat stat--sm"><div class="stat__n">V10</div><div class="mono stat__l">5.2 L</div></div>
+                <div class="stat stat--sm"><div class="stat__n">2.9<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+              </div>
+              <p class="body-sm">Ten cylinders, no turbos, redline at 8,500. You hear it before you feel it.</p>
+              <a class="label link card__cta" href="#book">Drive this one</a>
+            </div>
+          </article>
 
-            <details class="faq__item">
-              <summary class="faq__q">
-                <span>What's the difference between Pilot and Copilot?</span>
-                <svg class="faq__marker" viewBox="0 0 9 12" aria-hidden="true" focusable="false">
-                    <polygon points="0,12 3.5,12 9,0 5.5,0" fill="currentColor"></polygon>
-                  </svg>
-              </summary>
-              <p class="faq__a">Pilot means they drive, with a professional in the passenger seat. Copilot means a professional drives while they ride along.</p>
-            </details>
+          <article class="card">
+            <div class="shot">
+              <picture>
+                <source type="image/webp"
+                        srcset="assets/photos/huracan-02-650.webp 650w,
+                                assets/photos/huracan-02-1300.webp 1300w"
+                        sizes="min(100vw, 512px)">
+                <img src="assets/photos/huracan-02-1300.jpg" width="1300" height="975"
+                     alt="The purple Lamborghini Huracán, front three-quarter view, on a tree-lined street."
+                     loading="lazy" decoding="async">
+              </picture>
+              <div class="wm wm--ink" aria-hidden="true"><span class="mark"></span><span class="wordmark">Apex Driver</span></div>
+            </div>
+            <div class="card__body">
+              <div class="card__title">
+                <h3 class="h3">Lamborghini Huracán</h3>
+                <span class="mono">No. 02 · Purple</span>
+              </div>
+              <div class="specs">
+                <div class="stat stat--sm"><div class="stat__n">630</div><div class="mono stat__l">hp</div></div>
+                <div class="stat stat--sm"><div class="stat__n">V10</div><div class="mono stat__l">5.2 L</div></div>
+                <div class="stat stat--sm"><div class="stat__n">2.9<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+              </div>
+              <p class="body-sm">Same V10, second set of keys. Book both and run the route together.</p>
+              <a class="label link card__cta" href="#book">Drive this one</a>
+            </div>
+          </article>
 
-            <details class="faq__item">
-              <summary class="faq__q">
-                <span>Can the experience be customized?</span>
-                <svg class="faq__marker" viewBox="0 0 9 12" aria-hidden="true" focusable="false">
-                    <polygon points="0,12 3.5,12 9,0 5.5,0" fill="currentColor"></polygon>
-                  </svg>
-              </summary>
-              <p class="faq__a">Yes. Driver X covers extra time, weddings, content shoots, proms, and other custom requests.</p>
-            </details>
+          <!-- PLACEHOLDER: make, model, specs and photograph to be confirmed. -->
+          <article class="card">
+            <div class="shot shot--placeholder">
+              <span class="mono">Placeholder<br>Photograph to come</span>
+            </div>
+            <div class="card__body">
+              <div class="card__title">
+                <h3 class="h3">Ferrari 488 GTB</h3>
+                <span class="mono">No. 03 · Placeholder model</span>
+              </div>
+              <div class="specs">
+                <div class="stat stat--sm"><div class="stat__n">661</div><div class="mono stat__l">hp</div></div>
+                <div class="stat stat--sm"><div class="stat__n">V8</div><div class="mono stat__l">3.9 L</div></div>
+                <div class="stat stat--sm"><div class="stat__n">3.0<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+              </div>
+              <p class="body-sm">Twin-turbo, 661 hp, and it still finds a way to sound angry.</p>
+              <a class="label link card__cta" href="#book">Drive this one</a>
+            </div>
+          </article>
 
-            <details class="faq__item">
-              <summary class="faq__q">
-                <span>Where does the drive happen?</span>
-                <svg class="faq__marker" viewBox="0 0 9 12" aria-hidden="true" focusable="false">
-                    <polygon points="0,12 3.5,12 9,0 5.5,0" fill="currentColor"></polygon>
-                  </svg>
-              </summary>
-              <p class="faq__a">We meet in Frederick, Maryland and drive local back roads across the DC, Maryland, and Northern Virginia area.</p>
-            </details>
+          <!-- PLACEHOLDER: make, model, specs and photograph to be confirmed. -->
+          <article class="card">
+            <div class="shot shot--placeholder">
+              <span class="mono">Placeholder<br>Photograph to come</span>
+            </div>
+            <div class="card__body">
+              <div class="card__title">
+                <h3 class="h3">Porsche 911 GT3</h3>
+                <span class="mono">No. 04 · Placeholder model</span>
+              </div>
+              <div class="specs">
+                <div class="stat stat--sm"><div class="stat__n">502</div><div class="mono stat__l">hp</div></div>
+                <div class="stat stat--sm"><div class="stat__n">F6</div><div class="mono stat__l">4.0 L</div></div>
+                <div class="stat stat--sm"><div class="stat__n">3.2<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+              </div>
+              <p class="body-sm">No turbos, 9,000 rpm, and the most talkative steering in the fleet.</p>
+              <a class="label link card__cta" href="#book">Drive this one</a>
+            </div>
+          </article>
 
-          </div>
+          <!-- PLACEHOLDER: make, model, specs and photograph to be confirmed. -->
+          <article class="card">
+            <div class="shot shot--placeholder">
+              <span class="mono">Placeholder<br>Photograph to come</span>
+            </div>
+            <div class="card__body">
+              <div class="card__title">
+                <h3 class="h3">McLaren 720S</h3>
+                <span class="mono">No. 05 · Placeholder model</span>
+              </div>
+              <div class="specs">
+                <div class="stat stat--sm"><div class="stat__n">710</div><div class="mono stat__l">hp</div></div>
+                <div class="stat stat--sm"><div class="stat__n">V8</div><div class="mono stat__l">4.0 L</div></div>
+                <div class="stat stat--sm"><div class="stat__n">2.8<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+              </div>
+              <p class="body-sm">710 hp and a carbon tub. The quickest thing here from 0 to 60.</p>
+              <a class="label link card__cta" href="#book">Drive this one</a>
+            </div>
+          </article>
+
+          <!-- PLACEHOLDER: make, model, specs and photograph to be confirmed. -->
+          <article class="card">
+            <div class="shot shot--placeholder">
+              <span class="mono">Placeholder<br>Photograph to come</span>
+            </div>
+            <div class="card__body">
+              <div class="card__title">
+                <h3 class="h3">Aston Martin DBS</h3>
+                <span class="mono">No. 06 · Placeholder model</span>
+              </div>
+              <div class="specs">
+                <div class="stat stat--sm"><div class="stat__n">715</div><div class="mono stat__l">hp</div></div>
+                <div class="stat stat--sm"><div class="stat__n">V12</div><div class="mono stat__l">5.2 L</div></div>
+                <div class="stat stat--sm"><div class="stat__n">3.4<span class="stat__u">s</span></div><div class="mono stat__l">0–60</div></div>
+              </div>
+              <p class="body-sm">Twelve cylinders, 664 lb-ft, and a long straight to use them on.</p>
+              <a class="label link card__cta" href="#book">Drive this one</a>
+            </div>
+          </article>
+
         </div>
-
       </div>
     </section>
 
-    <!-- =================================================================
-         7. CONTACT / BOOK
-         ================================================================= -->
-    <section id="contact" class="contact">
-      <h2 class="contact__title">READY TO GIVE THE DRIVE?</h2>
-      <!-- TODO: point at the real booking flow -->
-      <a class="btn btn--lg" href="#">BOOK A VOUCHER</a>
-      <!-- TODO: real Instagram handle + link -->
-      <div class="contact__handle">@apexdriver</div>
+    <!-- ===================================================================
+         02 — EXPERIENCES
+         Orange budget on this screen: the one orange stat on the ink card.
+         Its button is therefore paper, not orange. No prices are shown:
+         none have been agreed for the new product structure. The durations
+         are placeholders for the client to confirm.
+         ===================================================================== -->
+    <section class="band" id="experiences">
+      <div class="wrap band__inner ad-reveal">
+        <div class="band__head">
+          <span class="mono">02 — Experiences</span>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="band__intro">
+          <h2 class="h2">Four ways in</h2>
+          <p class="body">Drive it, ride in it, give it, or book the whole fleet for an afternoon.</p>
+        </div>
+
+        <div class="grid">
+
+          <article class="card card--pad card--ink on-ink">
+            <div class="card__ornament" aria-hidden="true">
+              <svg viewBox="0 0 400 240">
+                <path d="M 56 176 L 120 60 C 124 52 134 48 142 53 L 196 84 C 204 89 214 87 218 79 L 232 52 C 237 42 249 39 258 45 L 330 88 C 342 95 344 110 334 118 L 300 146 C 291 153 291 165 300 171 L 322 190 C 332 199 330 214 318 217 C 308 220 299 214 297 205 L 292 182 C 289 170 277 165 268 172 L 240 194 C 231 201 219 199 213 190 L 196 164 C 189 154 176 153 168 162 L 138 196 C 130 205 117 205 110 197 L 58 190 C 48 188 48 180 56 176 Z" fill="none" stroke="currentColor" stroke-width="11" stroke-linejoin="round" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <span class="mono">Self-drive · public road</span>
+            <div class="stat stat--lg stat--accent">
+              <div class="stat__n">90<span class="stat__u">min</span></div>
+              <div class="mono stat__l">Behind the wheel</div>
+            </div>
+            <h3 class="h3">Your hands, our keys.</h3>
+            <p class="body-sm">Ninety minutes, a lead car ahead and a chase car behind, and a route that opens up once you are through town.</p>
+            <a class="btn btn--paper card__cta" href="#book">Book a drive</a>
+          </article>
+
+          <article class="card card--pad">
+            <span class="mono">Ride-along · pro driver</span>
+            <div class="stat stat--lg">
+              <div class="stat__n">45<span class="stat__u">min</span></div>
+              <div class="mono stat__l">In the passenger seat</div>
+            </div>
+            <h3 class="h3">Sit right and hold on.</h3>
+            <p class="body-sm">Passenger seat, someone who does this every week, and no responsibility for the car.</p>
+            <a class="btn btn--secondary card__cta" href="#book">Book a seat</a>
+          </article>
+
+          <article class="card card--pad" id="vouchers">
+            <span class="mono">Gift voucher</span>
+            <div class="stat stat--lg">
+              <div class="stat__n">12<span class="stat__u">mo</span></div>
+              <div class="mono stat__l">To redeem</div>
+            </div>
+            <h3 class="h3">Give someone a V10.</h3>
+            <p class="body-sm">Any experience, no date fixed at purchase. They pick the car and the day.</p>
+            <a class="btn btn--secondary card__cta" href="#book">Buy a voucher</a>
+          </article>
+
+          <article class="card card--pad">
+            <span class="mono">Private · corporate</span>
+            <div class="stat stat--lg">
+              <div class="stat__n">06</div>
+              <div class="mono stat__l">Cars, one afternoon</div>
+            </div>
+            <h3 class="h3">Your afternoon, your pick of the fleet.</h3>
+            <p class="body-sm">Take the whole fleet out at once. One route, one car per driver, lead and chase cars included.</p>
+            <a class="btn btn--tertiary card__cta" href="#book">Ask about a group</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         03 — HOW IT WORKS
+         The circuit flattened into the booking progress line. UI only: the
+         booking mechanism is undecided, so the state shown is illustrative.
+         This band is the page's one spatter ground; everything under 24px on
+         it sits on a solid paper plate.
+         ===================================================================== -->
+    <section class="band ad-spatter-paper" id="book">
+      <div class="wrap band__inner ad-reveal">
+        <div class="band__head">
+          <span class="mono plate">03 — How it works</span>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="band__intro">
+          <h2 class="h2">Four steps</h2>
+          <p class="body plate">Car, route, date, pay. It takes less time than the drive.</p>
+        </div>
+
+        <div class="card card--pad">
+          <span class="mono">Booking progress</span>
+          <ol class="progress" aria-label="Booking steps">
+            <li class="step step--done">
+              <svg class="step__dot" viewBox="0 0 13 13" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.75"/></svg>
+              <span class="label">Pick a car</span>
+              <span class="step__line" aria-hidden="true"></span>
+            </li>
+            <li class="step step--current" aria-current="step">
+              <svg class="step__dot" viewBox="0 0 13 13" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.75"/></svg>
+              <span class="label">Route</span>
+              <span class="step__line" aria-hidden="true"></span>
+            </li>
+            <li class="step step--ahead">
+              <svg class="step__dot" viewBox="0 0 13 13" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.75"/></svg>
+              <span class="label">Date</span>
+              <span class="step__line" aria-hidden="true"></span>
+            </li>
+            <li class="step step--ahead">
+              <svg class="step__dot" viewBox="0 0 13 13" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5.75"/></svg>
+              <span class="label">Pay</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="grid steps">
+          <article class="card">
+            <div class="card__body">
+              <span class="mono">01</span>
+              <h3 class="label">Pick a car</h3>
+              <p class="body-sm">Any of the six. Two drivers can book two cars and run the route together.</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card__body">
+              <span class="mono">02</span>
+              <h3 class="label">Route</h3>
+              <p class="body-sm">Route 01 for now: 42 miles, start and finish in Frederick. More routes as the fleet grows.</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card__body">
+              <span class="mono">03</span>
+              <h3 class="label">Date</h3>
+              <p class="body-sm">Pick a day. If the weather turns, we move it.</p>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card__body">
+              <span class="mono">04</span>
+              <h3 class="label">Pay</h3>
+              <p class="body-sm">Online, in one step. Your confirmation and a copy of the waiver follow by email.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         04 — THE ROUTE
+         Full circuit, drawn once on scroll. Start-finish is the single red
+         bar; there are no checkpoint dots on the track. Route name, mileage
+         and duration are the spec's example figures, for the client to
+         replace with the surveyed route.
+         ===================================================================== -->
+    <section class="band" id="routes">
+      <div class="wrap band__inner ad-reveal">
+        <div class="band__head">
+          <span class="mono">04 — The route</span>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="route">
+          <div class="route__fig">
+            <svg viewBox="0 0 400 240" role="img" aria-label="Route 01, a closed loop with two long straights, a hairpin, a chicane and two fast kinks. Start and finish marked in red.">
+              <path class="ad-draw" d="M 56 176 L 120 60 C 124 52 134 48 142 53 L 196 84 C 204 89 214 87 218 79 L 232 52 C 237 42 249 39 258 45 L 330 88 C 342 95 344 110 334 118 L 300 146 C 291 153 291 165 300 171 L 322 190 C 332 199 330 214 318 217 C 308 220 299 214 297 205 L 292 182 C 289 170 277 165 268 172 L 240 194 C 231 201 219 199 213 190 L 196 164 C 189 154 176 153 168 162 L 138 196 C 130 205 117 205 110 197 L 58 190 C 48 188 48 180 56 176 Z" fill="none" stroke="currentColor" stroke-width="11" stroke-linejoin="round" stroke-linecap="round"/>
+              <line x1="79" y1="134" x2="98" y2="145" stroke="#E10600" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="route__copy">
+            <h2 class="h2">Route 01</h2>
+            <p class="body">Ninety minutes of real road: two long straights, a hairpin you will remember, and a chicane that rewards getting the entry right. Starts and ends in Frederick, Maryland. A lead car ahead, a chase car behind, radio in the cabin.</p>
+            <div class="route__stats">
+              <div class="stat stat--md stat--accent">
+                <div class="stat__n">42</div>
+                <div class="mono stat__l">Miles</div>
+              </div>
+              <div class="stat stat--md">
+                <div class="stat__n">90<span class="stat__u">min</span></div>
+                <div class="mono stat__l">Door to door</div>
+              </div>
+              <div class="stat stat--md">
+                <div class="stat__n">02</div>
+                <div class="mono stat__l">Escort cars</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         05 — BEFORE YOU DRIVE
+         DRAFT. No legal or safety copy pattern exists yet. These line items
+         are placeholders for the client to confirm or replace: minimum age,
+         licence, deposit amount, waiver, weather policy. None of the numbers
+         below are final.
+         ===================================================================== -->
+    <section class="band" id="terms">
+      <div class="wrap band__inner ad-reveal">
+        <div class="band__head">
+          <span class="mono">05 — Before you drive</span>
+          <span class="rule" aria-hidden="true"></span>
+          <span class="mono flag">Draft · numbers pending client sign-off</span>
+        </div>
+        <div class="band__intro">
+          <h2 class="h2">The short version</h2>
+          <p class="body">The full terms come with your booking. These are the ones that decide whether you can drive.</p>
+        </div>
+        <dl class="terms">
+          <div class="term">
+            <dt class="label term__k">Minimum age</dt>
+            <dd class="body-sm term__v">25 to drive. 18 to ride along. Under 18 rides with a parent or guardian in the chase car.</dd>
+          </div>
+          <div class="term">
+            <dt class="label term__k">Licence</dt>
+            <dd class="body-sm term__v">A full, valid driver's licence held for at least 3 years. Bring it on the day. No licence, no drive.</dd>
+          </div>
+          <div class="term">
+            <dt class="label term__k">Deposit</dt>
+            <dd class="body-sm term__v">A refundable security deposit is held on a card before you drive and released after. The amount is set per car and confirmed at booking.</dd>
+          </div>
+          <div class="term">
+            <dt class="label term__k">Waiver</dt>
+            <dd class="body-sm term__v">Every driver and passenger signs a waiver on the day. You get a copy to read with your confirmation.</dd>
+          </div>
+          <div class="term">
+            <dt class="label term__k">Weather</dt>
+            <dd class="body-sm term__v">Rain, ice or snow and we move your date. No charge to rebook.</dd>
+          </div>
+        </dl>
+      </div>
     </section>
 
   </main>
 
-  <!-- ===================================================================
-       8. FOOTER
-       =================================================================== -->
+  <!-- =====================================================================
+       FOOTER — paper, hairline top, mark and copy
+       ===================================================================== -->
   <footer class="footer">
-    <span>APEX DRIVER</span>
-    <div class="footer__contact">
-      <!-- TODO: real phone, email, waiver link -->
-      <span>(000) 000-0000</span>
-      <span>HELLO@APEXDRIVER.COM</span>
-      <a href="#">WAIVER</a>
+    <div class="wrap footer__inner">
+      <div class="lockup">
+        <span class="mark" aria-hidden="true"></span>
+        <span class="wordmark">Apex Driver</span>
+      </div>
+      <div class="footer__links mono">
+        <span>Frederick, Maryland</span>
+        <!-- TODO: real waiver, terms and contact destinations -->
+        <a href="#terms">Terms</a>
+        <a href="#terms">Waiver</a>
+        <a href="#book">Contact</a>
+      </div>
+      <span class="mono">© 2026 Apex Driver · Self-drive &amp; ride-along · Vouchers · Corporate</span>
     </div>
-    <span>FREDERICK, MD</span>
   </footer>
 
+  <script src="script.js"></script>
 </body>
 </html>

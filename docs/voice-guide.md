@@ -1,3 +1,5 @@
+> **Superseded.** This describes the earlier grayscale build. The page now follows Apex Driver Brand System v3 (see README.md); where this file disagrees with the brand system, the brand system wins.
+
 # Apex Driver — Voice Guide
 
 Derived from the copy in the design handoff, which already holds a consistent

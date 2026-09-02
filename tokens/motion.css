@@ -1,0 +1,22 @@
+:root {
+  --t-tap: 120ms;    /* colour swaps: hover, focus, press */
+  --t-move: 220ms;   /* position or size */
+  --t-enter: 380ms;  /* section and card reveals */
+  --t-draw: 1600ms;  /* the circuit drawing itself, once per page */
+  --ease: cubic-bezier(0.2, 0, 0.2, 1); /* the only curve — deceleration */
+  --rise: 12px;      /* reveal offset */
+}
+
+@keyframes ad-rise { from { opacity: 0; transform: translateY(var(--rise)); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ad-draw { from { stroke-dashoffset: var(--path-length, 926); } to { stroke-dashoffset: 0; } }
+
+.ad-reveal { opacity: 0; }
+.ad-reveal.is-in { animation: ad-rise var(--t-enter) var(--ease) both; }
+.ad-draw { stroke-dasharray: var(--path-length, 926); stroke-dashoffset: var(--path-length, 926); }
+.ad-draw.is-in { animation: ad-draw var(--t-draw) var(--ease) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ad-reveal, .ad-reveal.is-in, .ad-draw, .ad-draw.is-in { animation: none; }
+  .ad-reveal { opacity: 1; }
+  .ad-draw { stroke-dasharray: none; stroke-dashoffset: 0; }
+}

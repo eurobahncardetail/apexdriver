@@ -1,0 +1,43 @@
+:root {
+  /* stamped display type — two photographic tiles clipped to the glyphs */
+  --stamp-coarse-light: url("../assets/grain-coarse-light.png");
+  --stamp-fine-light: url("../assets/grain-fine-light.png");
+  --stamp-coarse-dark: url("../assets/grain-coarse-dark.png");
+  --stamp-fine-dark: url("../assets/grain-fine-dark.png");
+  --stamp-coarse-size: 420px 420px;
+  --stamp-fine-size: 200px 200px;
+
+  /* spatter ground — worn road paint */
+  --spatter-dark: url("../assets/spatter-dark.png");
+  --spatter-light: url("../assets/spatter-light.png");
+  --spatter-size: 500px 500px;
+}
+
+/* Stamped display type. Solid colour is the last layer, so type survives a missing tile.
+   Off below 40px, and never on a spatter ground. */
+.ad-stamp-ink {
+  background-image: var(--stamp-coarse-light), var(--stamp-fine-light), linear-gradient(var(--ink), var(--ink));
+  background-size: var(--stamp-coarse-size), var(--stamp-fine-size), auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.ad-stamp-paper {
+  background-image: var(--stamp-coarse-dark), var(--stamp-fine-dark), linear-gradient(var(--paper), var(--paper));
+  background-size: var(--stamp-coarse-size), var(--stamp-fine-size), auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Spatter grounds. One per surface; type sits on a knockout plate unless it is 24px+ display. */
+.ad-spatter-paper {
+  background-color: var(--paper);
+  background-image: var(--spatter-dark);
+  background-size: var(--spatter-size);
+}
+.ad-spatter-ink {
+  background-color: var(--ink);
+  background-image: var(--spatter-light);
+  background-size: var(--spatter-size);
+}
