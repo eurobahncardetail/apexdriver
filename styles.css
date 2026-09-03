@@ -462,6 +462,9 @@ section[id], .card[id] { scroll-margin-top: 88px; }
 .band__head .specs { margin-top: 18px; }
 .specs--light .spec { background: var(--paper); border-color: var(--line-2); color: var(--ink); }
 .specs--light .spec .mono { color: var(--stone); }
+/* Specs per car, compact, on the glass panel. */
+.specs--card { margin-top: 14px; }
+.specs--card .spec { height: 30px; line-height: 30px; padding: 0 11px; font-size: 13px; }
 .fleet__next { margin-top: 20px; text-transform: none; letter-spacing: 0; }
 @media (max-width: 760px) { .fleet__grid { grid-template-columns: minmax(0, 1fr); } .car { min-height: 0; } }
 
