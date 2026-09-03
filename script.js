@@ -4,7 +4,8 @@
    2. Section reveals (gated on html.ad-motion and html.ad-js). The hero load
       sequence is pure CSS, see styles.css, so it never depends on this file.
    3. Ambient video: lazy, plays only while on screen, only when motion is wanted.
-   4. Booking: drive links preselect the tier; the form composes an email. */
+   4. Hero sun rays: a stack of light-only layers scrubbed by the scroll position.
+   5. Booking: drive links preselect the tier; the form composes an email. */
 (function () {
   var root = document.documentElement;
   var motion = root.classList.contains('ad-motion');
@@ -131,7 +132,88 @@
     videos.forEach(function (v) { v.remove(); });
   }
 
-  /* ---------- 4. booking ---------- */
+  /* ---------- 4. hero sun rays ----------
+     assets/v3/rays/rNN.webp are "light only" frames (each is a Kling frame minus
+     the darkest plate, see tools/build-rays.js). Drawn additively over the still,
+     so the photograph itself is never resampled. The frame index follows the
+     scroll through the hero, eased, and nothing moves while the page is still.
+     Off on phones (portrait still), under reduced motion, and on saveData. */
+  var rays = document.querySelector('.hero .rays');
+  if (rays && motion && !saveData && !phone.matches && rays.getContext) {
+    var base = rays.getAttribute('data-rays');
+    var count = parseInt(rays.getAttribute('data-count'), 10) || 0;
+    var frames = [], loaded = 0, ready = false;
+    var ctx = rays.getContext('2d');
+    var target = 0, shown = -1, current = 0, raf = 0;
+
+    /* The sun sits at 74% across and 17% down the frame; the beams pivot there.
+       As the scroll runs 0 to 1 the layer index follows it (front-loaded, since the
+       render's light settles early), and the whole light layer swings about two
+       degrees around the sun and out again, the way beams cross a windshield.
+       At 0 it is layer 0, unrotated: exactly the photograph. */
+    var SUN_X = 0.74, SUN_Y = 0.17;
+    var draw = function () {
+      raf = 0;
+      var d = target - current;
+      if (Math.abs(d) < 0.0005) current = target; else current += d * 0.1;
+      if (current === shown) return;
+      shown = current;
+      var p = current;
+      var f = Math.pow(p, 0.6) * (count - 1);
+      var i = Math.floor(f), t = f - i;
+      var a = frames[Math.min(i, count - 1)], b = frames[Math.min(i + 1, count - 1)];
+      var W = rays.width, H = rays.height;
+      var ang = Math.sin(p * Math.PI) * (3 * Math.PI / 180);
+      var sc = 1 + 0.06 * p;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.clearRect(0, 0, W, H);
+      ctx.translate(SUN_X * W, SUN_Y * H);
+      ctx.rotate(ang);
+      ctx.scale(sc, sc);
+      ctx.translate(-SUN_X * W, -SUN_Y * H);
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = 1 - t; ctx.drawImage(a, 0, 0, W, H);
+      ctx.globalAlpha = t; ctx.drawImage(b, 0, 0, W, H);
+      ctx.globalAlpha = 1;
+      if (current !== target) raf = requestAnimationFrame(draw);
+    };
+    var onScroll = function () {
+      if (!ready) return;
+      /* Progress through the hero: 0 at the top, 1 once it has scrolled away. */
+      var h = hero.offsetHeight - window.innerHeight * 0.5;
+      var p = Math.max(0, Math.min(1, window.scrollY / Math.max(1, h)));
+      target = p;
+      if (!raf) raf = requestAnimationFrame(draw);
+    };
+    var start = function () {
+      for (var k = 0; k < count; k++) {
+        var img = new Image();
+        img.decoding = 'async';
+        img.onload = function () {
+          loaded++;
+          if (loaded === count) {
+            rays.width = frames[0].naturalWidth; rays.height = frames[0].naturalHeight;
+            ready = true;
+            rays.classList.add('is-ready');
+            onScroll();
+          }
+        };
+        img.onerror = function () { rays.remove(); ready = false; };
+        img.src = base + 'r' + (k < 10 ? '0' + k : k) + '.webp';
+        frames.push(img);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+    };
+    /* After the page has loaded, so the layers never compete with the still. */
+    if (document.readyState === 'complete') setTimeout(start, 400);
+    else window.addEventListener('load', function () { setTimeout(start, 400); });
+  } else if (rays) {
+    rays.remove();
+  }
+
+  /* ---------- 5. booking ---------- */
   var tierSelect = document.getElementById('f-tier');
   document.querySelectorAll('[data-book]').forEach(function (a) {
     a.addEventListener('click', function () {

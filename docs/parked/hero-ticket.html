@@ -1,0 +1,77 @@
+<!--
+  PARKED COMPONENT — the hero "ticket" (drives and prices panel).
+
+  Removed from the hero on 2026-09-03 because it covered the car at every
+  viewport width. Kept here intact so it can go back on the page somewhere
+  else (a sticky panel beside the drives section, a gift page, the phone
+  sheet). It depends on the page tokens in styles.css (--r-panel,
+  --glass-line, --line-dark, --on-dark-3, --verde, --font-display, --ease,
+  --ease-out) and on the .mono / .dim / .dot utilities.
+
+  Behaviour it had: each row is a link to #drives carrying data-book, which
+  script.js reads to preselect the drive on the booking form. It was the
+  seventh element in the hero load sequence (class "seq", --i:6) and it was
+  hidden under 640px, where the booking bar and the drive cards carry prices.
+-->
+
+<!-- ===== markup ===== -->
+<aside class="ticket seq" style="--i:6" aria-label="Drives and prices">
+  <div class="ticket__head">
+    <span>Three drives, one road</span>
+    <span>From $495</span>
+  </div>
+  <a class="ticket__row" href="#drives" data-book="Driver I">
+    <span class="ticket__name">Driver I</span>
+    <span class="ticket__meta mono">30 min · the valley</span>
+    <span class="ticket__price">$495</span>
+  </a>
+  <a class="ticket__row" href="#drives" data-book="Driver II">
+    <span class="ticket__name"><span class="dot" aria-hidden="true"></span>Driver II <span class="mono dim">· our pick</span></span>
+    <span class="ticket__meta mono">45 min · the ridge</span>
+    <span class="ticket__price">$795</span>
+  </a>
+  <a class="ticket__row" href="#drives" data-book="Driver III">
+    <span class="ticket__name">Driver III</span>
+    <span class="ticket__meta mono">60 min · the full loop</span>
+    <span class="ticket__price">$995</span>
+  </a>
+  <p class="ticket__foot mono">Insurance included · No payment until we confirm<br>Any drive as a gift voucher, valid 12 months</p>
+</aside>
+
+<!-- ===== styles (were in styles.css under "hero") ===== -->
+<style>
+.ticket {
+  width: 340px; max-width: 100%;
+  padding: 20px 20px 16px;
+  border-radius: var(--r-panel);
+  background: rgba(12, 15, 13, 0.42); border: 1px solid var(--glass-line);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+.ticket__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: var(--on-dark-3); font-weight: 600; font-size: 13px; }
+.ticket__price { font-variant-numeric: tabular-nums; }
+.ticket__row {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 14px;
+  padding: 12px 10px; margin: 0 -10px; border-top: 1px solid var(--line-dark);
+  border-radius: 10px; text-decoration: none; color: #fff;
+  transition: background-color 160ms var(--ease), transform 140ms var(--ease-out);
+}
+.ticket__row:active { transform: scale(0.985); }
+@media (hover: hover) and (pointer: fine) { .ticket__row:hover { background: rgba(255,255,255,0.07); } }
+.ticket__name { font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.ticket__name .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verde); }
+.ticket__meta { grid-column: 1; color: var(--on-dark-3); }
+.ticket__price {
+  grid-row: 1 / span 2; grid-column: 2; align-self: center;
+  font-family: var(--font-display); font-variation-settings: "opsz" 40, "wdth" 100;
+  font-weight: 700; font-size: 24px; letter-spacing: -0.01em;
+}
+.ticket__foot { margin-top: 10px; color: var(--on-dark-3); text-transform: none; letter-spacing: 0; }
+
+/* In the hero it sat in the second column of .hero__inner
+   (grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 32px).
+   Between 640 and 960px the grid collapsed to one column and the ticket
+   went full width under the buttons; under 640px it was display: none. */
+@media (max-width: 960px) { .ticket { width: 100%; } }
+@media (max-width: 640px) { .ticket { display: none; } }
+@media (prefers-reduced-motion: reduce) { .ticket__row:active { transform: none; } }
+</style>

@@ -1,10 +1,12 @@
 # Apex Driver — Brand System v5 (the v3 landing page)
 
-Exotic and supercar driving experiences on the public backroads of Frederick County, Maryland. You drive, an instructor rides beside you. Three drives by time at the wheel (Driver I, II, III) and a custom option (Driver X). Two Lamborghini Huracán Tecnicas in service, verde and viola; three more cars planned.
+Exotic and supercar driving experiences on the public backroads of Frederick County, Maryland. You drive, an instructor rides beside you. Three drives by time at the wheel (Driver I, II, III) and a custom option (Driver X). Four cars in service (two Lamborghini Huracán Tecnicas, a Porsche 718 Cayman GT4 RS and a 911 GT3), more planned, and the fleet rotates with the season: the promise is an equally thrilling, high-performance supercar, never one particular car.
 
 This document describes the system as it stands on the v3 landing page (branch `v3`, live at https://eurobahncardetail.github.io/apexdriver/, 2026-09-02). It replaces Brand System v4. Where v4 and this file disagree, this file wins. The rendered page is the visual source of truth.
 
 Revised the same day after a design review: one verde primary per screen is now true (the fixed nav button is glass, then paper); phones get a portrait hero, a menu sheet and a booking bar instead of the ticket; the closer and the form are one card; the fleet shows its specs once; "Most booked" became "Our pick".
+
+Revised again on 2026-09-03 (hero pass): the nav says "Experiences", not "Drives"; the copy is fleet-neutral everywhere except the fleet cards (§09); the hero ticket is gone (parked in `docs/parked/hero-ticket.html`) so nothing covers the car; the hero loop is gone and the still is calmer; the only movement in the hero is the sunlight, which follows the scroll (§04, §06).
 
 ---
 
@@ -115,7 +117,7 @@ All nine photographs were generated on 2026-09-02 with Nano Banana 2 at 2K, usin
 
 | File | Frame | Where | Moves |
 | --- | --- | --- | --- |
-| `hero-ridge` | 16:9, plus a 2:3 crop (`-tall`) for phones | Hero | Dust and pollen in the sun shafts, 10 s (not on phones, where the still is the portrait crop) |
+| `hero-ridge` | 16:9, plus a 2:3 crop (`-tall`) for phones | Hero | The sunlight only, and only when you scroll: 40 light-only layers in `assets/v3/rays/` (see below). The old dust-and-pollen loop is retired; `hero-ridge.mp4` stays in the repo unused. |
 | `ch-valley` | 3:4 | Driver I | — |
 | `ch-ridge` | 3:4 | Driver II | Dust motes in the light, 5 s |
 | `ch-bridge` | 3:4 | Driver III | — |
@@ -136,6 +138,8 @@ Rules for the moving pictures:
 - Loops fade in over 900ms on top of their still, and only once they are actually playing (`.is-playing`), so nothing flashes.
 - They load lazily, play only while on screen, and are removed from the DOM entirely under `prefers-reduced-motion` or `saveData`. The still is always the fallback.
 
+**The hero sun rays (2026-09-03).** The client found the hero loop soft and "AI-looking" against the still, and wanted the light to move only when the visitor scrolls, like glare across a windshield. The build: the still went to Kling 3.0 (std, 5 s, silent) with a locked-camera prompt where only the god rays breathe; `tools/build-rays.js` then takes 40 frames, subtracts the per-pixel darkest plate so each frame is light only, masks out the car and the trunks, softens and amplifies it (gain 3.5, blur 7), and writes them as 960px WebPs, 86 KB for all forty. The still itself was re-exported minus layer 0, so still + layer 0 is exactly the old picture and the light can both grow and fade. On the page a canvas over the still draws two adjacent layers cross-faded, blended with `plus-lighter` (`screen` fallback); `script.js` maps the scroll through the hero to the layer index with an ease so it glides and stops when the page stops, and swings the whole light layer about three degrees around the sun and back, the way beams cross a windshield. The photograph is never resampled. Off on phones (portrait still), under `prefers-reduced-motion`, and on `saveData`; without JS the still is the hero. The untouched still is kept in `assets/v3/raw/hero-ridge-still-original/` (git-ignored), and the still gets `saturate(0.92) contrast(0.98)` in CSS to sit a touch quieter.
+
 Generation notes for the next batch: reuse the reference media ids recorded in the project memory; Kling `pro` mode needs the Plus plan, `std` at 5 s costs 7.5 credits; the first video submission is answered with a preset suggestion, resubmit with `declined_preset_id`.
 
 ---
@@ -144,7 +148,7 @@ Generation notes for the next batch: reuse the reference media ids recorded in t
 
 ### Nav
 
-Fixed, three floating pills at the top inset: the lockup, the section links, and "Book a drive", which goes to the drives (the drive cards are the only route to the form). Glass (ink 34%, blur 16px, 22% white line) over the hero; the link group turns ink at 82% and the button turns paper once the hero scrolls under it, so the verde primary is always the one in the flow. Current section gets a 14% white fill. Below 900px the links and the button give way to a "Menu" pill that opens the sheet.
+Fixed, three floating pills at the top inset: the lockup, the section links (The road, Experiences, The cars, Know before, Questions), and "Book a drive", which goes to the drives (the drive cards are the only route to the form). Glass (ink 34%, blur 16px, 22% white line) over the hero; the link group turns ink at 82% and the button turns paper once the hero scrolls under it, so the verde primary is always the one in the flow. Current section gets a 14% white fill. Below 900px the links and the button give way to a "Menu" pill that opens the sheet.
 
 ### Menu sheet (phones)
 
@@ -162,9 +166,9 @@ Below 900px, a fixed pill at the bottom inset: "From $495" with the three durati
 
 `.chip` is a tag, 36px, Bricolage 600 uppercase: ink on mist (the road names), `--verde` for the one emphasised tag, `--glass` over photographs (the same ink-at-34% glass as the nav, so it holds up over bright sky: the hero's three, the fleet's "No. 01 · In service", the book card's "The drive home"). `--xs` is the 24px version inside a card kicker ("Our pick").
 
-### Ticket (hero)
+### Ticket (hero) — parked
 
-A 340px glass panel listing the three drives with time, route and price, each row a link to the drives section that also preselects the drive on the form. The "our pick" row carries a verde dot. Two footer lines: "Insurance included · No payment until we confirm" and "Any drive as a gift voucher, valid 12 months". Between 640 and 960px it stacks under the buttons; under 640px it is hidden and the booking bar and the drive cards carry the prices.
+The 340px glass panel of drives and prices that sat in the hero's right column was removed on 2026-09-03 because it covered the car at every width. Markup and styles are kept intact in `docs/parked/hero-ticket.html` for reuse elsewhere (a sticky panel beside the drives, a gift page, the phone sheet). The hero is now one column: chips, the two-line title, the sub line and two buttons.
 
 ### Chapter cards (pricing)
 
@@ -200,9 +204,9 @@ Its own ink card under the book card, 22px of vertical padding: the mono copyrig
 
 One curve, `cubic-bezier(0.2, 0, 0.2, 1)`, deceleration only. 160–180ms for colour swaps, 240ms for the FAQ marker, 640ms for entrances, 900ms for photographs and video fades.
 
-- **Hero load sequence.** Seven elements (nav, chips, line one, line two, sub copy, buttons, ticket) rise 14px and fade in over 640ms, 100ms apart, starting 140ms after the display face has loaded (or after 900ms, whichever comes first). Once per visit. It is a CSS animation armed by the inline head script, so it does not depend on `script.js` and never swaps fonts mid-rise.
+- **Hero load sequence.** Six elements (nav, chips, line one, line two, sub copy, buttons) rise 14px and fade in over 640ms, 100ms apart, starting 140ms after the display face has loaded (or after 900ms, whichever comes first). Once per visit. It is a CSS animation armed by the inline head script, so it does not depend on `script.js` and never swaps fonts mid-rise.
 - **Chapter stagger.** The four drive cards and the two fleet cards rise once when their grid enters the viewport, 80ms apart. Nothing else on the page has an entrance.
-- **Ambient loops.** See §04. This is where the page's life is, and it is why the entrances stay few.
+- **Ambient loops.** See §04. This is where the page's life is, and it is why the entrances stay few. The hero has no loop; its light follows the scroll instead (§04), so nothing in the hero moves while the visitor is still.
 - **Hover.** Photographs scale, only under `(hover: hover) and (pointer: fine)`; pills swap colour; ticket rows tint.
 - **Booking bar.** Slides 320ms on the one curve; no transition under reduced motion.
 - `prefers-reduced-motion`: no sequence, no stagger, no video, no photograph scale, and the road statement shows a still frame in its letters.
@@ -240,12 +244,14 @@ All `max-width`:
 
 Unchanged in register: short declaratives, second person, real numbers, sentence case in prose, uppercase only in display, chips and labels. No exclamation marks, no emoji, none of the banned words.
 
+**Fleet-neutral copy (rule, 2026-09-03).** The fleet rotates with the season and with availability, so the page never promises a particular car. Everywhere except a fleet card, say *supercar*, *exotic*, *high-performance* or *hypercar*: not "a Lamborghini", not "the Huracán", not "V10", not "8,500 rpm". A fleet card may be as specific as it likes about its own car (make, colour name, engine, redline). Titles, meta tags, the hero, the drive cards, the trust card, the FAQ and the form all follow the rule. The guarantee, in the client's words, sits under the fleet grid and in the FAQ: an equally thrilling, high-performance supercar for you or for whoever you are gifting the drive to.
+
 Lines in use on the page:
 
 - "You drive. We ride shotgun." (hero)
 - "Not a track. Not a parking lot. A road."
 - "How far up the road do you want to go?"
-- "Two Huracáns. Verde and viola."
+- "Four cars. Not a turbo between them." (the fleet head; car-specific by design)
 - "Know before you book."
 - "Insurance is included." / "An instructor rides with you." / "Rain means a new date."
 - "Asked before."
@@ -265,7 +271,7 @@ Carried from v4, still open:
 - The follow car mentioned in Driver III, the FAQ and the terms is an assumption.
 - Legal line items: minimum age, licence tenure, deductible, refund and change windows, weather policy.
 - The booking mechanism. The form composes an email to `hello@apexdriver.com`, which does not exist yet.
-- Cars 03 to 05: make, spec, photograph.
+- Cars 05 and up: make, spec, photograph. Whether every car is paddle-shift (the FAQ assumes so).
 - Reviews and any ratings strip.
 
 New in v5:

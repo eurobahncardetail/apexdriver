@@ -32,6 +32,7 @@ Then open <http://localhost:4173>. Node 24 is installed at
 | `assets/photos/` | Client photography plus generated backroad shots, WebP with JPEG fallback |
 | `docs/competitor-research.md` | Research on seven competitor sites, 2026-09-02 |
 | `tools/build-photos.js` | Regenerates the client photo crops with sharp |
+| `tools/build-rays.js` | Builds the hero sun-ray layers (`assets/v3/rays/`) from a Kling clip; needs sharp and ffmpeg-static, see the header comment |
 
 ## Photography
 

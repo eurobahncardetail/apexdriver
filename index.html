@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apex Driver — Drive a Lamborghini on Frederick County backroads</title>
-  <meta name="description" content="You drive a Lamborghini Huracán Tecnica on the public backroads of Frederick County, Maryland, with an instructor beside you. 30, 45 or 60 minutes. From $495.">
+  <title>Apex Driver — Drive a supercar on Frederick County backroads</title>
+  <meta name="description" content="You drive an exotic, high-performance supercar on the public backroads of Frederick County, Maryland, with an instructor beside you. 30, 45 or 60 minutes. From $495.">
   <meta name="theme-color" content="#0C0F0D">
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
 
   <meta property="og:title" content="Apex Driver — You drive. We ride shotgun.">
-  <meta property="og:description" content="A Lamborghini Huracán Tecnica on Frederick County backroads. 30, 45 or 60 minutes with an instructor beside you. From $495.">
+  <meta property="og:description" content="A supercar on Frederick County backroads. 30, 45 or 60 minutes with an instructor beside you. From $495.">
   <meta property="og:image" content="https://eurobahncardetail.github.io/apexdriver/assets/v3/hero-ridge-2400.jpg">
   <meta property="og:url" content="https://eurobahncardetail.github.io/apexdriver/">
   <meta property="og:type" content="website">
@@ -21,7 +21,7 @@
 
   <link rel="preload" as="image" media="(min-width: 641px)" href="assets/v3/hero-ridge-1600.webp" imagesrcset="assets/v3/hero-ridge-900.webp 900w, assets/v3/hero-ridge-1600.webp 1600w, assets/v3/hero-ridge-2400.webp 2400w" imagesizes="100vw">
   <link rel="preload" as="image" media="(max-width: 640px)" href="assets/v3/hero-ridge-tall-800.webp" imagesrcset="assets/v3/hero-ridge-tall-800.webp 800w, assets/v3/hero-ridge-tall-1200.webp 1200w" imagesizes="100vw">
-  <link rel="stylesheet" href="styles.css?v=3.5">
+  <link rel="stylesheet" href="styles.css?v=3.6">
 
   <script>
     /* Arms the hero sequence, reveals and ambient video before first paint.
@@ -46,7 +46,7 @@
       {"@type": "Question", "name": "Do I actually drive, or is it a ride-along?", "acceptedAnswer": {"@type": "Answer", "text": "You drive. An instructor sits in the passenger seat the whole time."}},
       {"@type": "Question", "name": "Is it on a track?", "acceptedAnswer": {"@type": "Answer", "text": "No. Every drive is on public backroads in Frederick County, Maryland. Speed limits apply; the roads do the work."}},
       {"@type": "Question", "name": "Can I bring someone?", "acceptedAnswer": {"@type": "Answer", "text": "The car has two seats and one of them is the instructor's. Guests are welcome at the start point and can ride along in the follow car on Driver III."}},
-      {"@type": "Question", "name": "What if it rains?", "acceptedAnswer": {"@type": "Answer", "text": "We reschedule at no charge. Wet roads and a rear-wheel-drive V10 are not a good afternoon."}}
+      {"@type": "Question", "name": "What if it rains?", "acceptedAnswer": {"@type": "Answer", "text": "We reschedule at no charge. Wet roads and a rear-wheel-drive supercar are not a good afternoon."}}
     ]
   }
   </script>
@@ -64,7 +64,7 @@
     </div>
     <div class="nav__group nav__links">
       <a class="nav__link" href="#road" data-spy>The road</a>
-      <a class="nav__link" href="#drives" data-spy>Drives</a>
+      <a class="nav__link" href="#drives" data-spy>Experiences</a>
       <a class="nav__link" href="#fleet" data-spy>The cars</a>
       <a class="nav__link" href="#know" data-spy>Know before</a>
       <a class="nav__link" href="#faq" data-spy>Questions</a>
@@ -82,7 +82,7 @@
     </div>
     <nav class="sheet__links" aria-label="Sections">
       <a class="sheet__link display" href="#road" style="--i:0">The road</a>
-      <a class="sheet__link display" href="#drives" style="--i:1">Drives</a>
+      <a class="sheet__link display" href="#drives" style="--i:1">Experiences</a>
       <a class="sheet__link display" href="#fleet" style="--i:2">The cars</a>
       <a class="sheet__link display" href="#know" style="--i:3">Know before</a>
       <a class="sheet__link display" href="#faq" style="--i:4">Questions</a>
@@ -100,7 +100,8 @@
   <main id="main" style="display: contents">
 
     <!-- =================================================================
-         HERO — the Viola Huracán on the ridge, dust in the light
+         HERO — the ridge at golden hour. The still is the picture; the only
+         movement is the sun-ray layer, which follows the scroll (script.js).
          ================================================================= -->
     <header class="card hero">
       <div class="media" aria-hidden="true">
@@ -110,7 +111,7 @@
           <source type="image/webp" srcset="assets/v3/hero-ridge-900.webp 900w, assets/v3/hero-ridge-1600.webp 1600w, assets/v3/hero-ridge-2400.webp 2400w" sizes="100vw">
           <img src="assets/v3/hero-ridge-2400.jpg" width="2400" height="1339" alt="The purple Lamborghini Huracán Tecnica on the crest of a ridge road at golden hour, sun breaking through the oaks, the Catoctin valley hazy behind." fetchpriority="high" decoding="async">
         </picture>
-        <video class="ambient" data-src="assets/v3/hero-ridge.mp4" muted loop playsinline preload="none" tabindex="-1"></video>
+        <canvas class="rays" data-rays="assets/v3/rays/" data-count="40" aria-hidden="true"></canvas>
       </div>
       <div class="hero__scrim" aria-hidden="true"></div>
 
@@ -121,35 +122,13 @@
             <span class="seq" style="--i:2; display:block">You drive.</span>
             <span class="seq quiet" style="--i:3; display:block">We ride shotgun.</span>
           </h1>
-          <p class="hero__sub seq" style="--i:4">A Lamborghini Huracán Tecnica, an instructor in the passenger seat, and 30, 45 or 60 minutes of the best backroads in Maryland.</p>
+          <p class="hero__sub seq" style="--i:4">An exotic supercar, an instructor in the passenger seat, and 30, 45 or 60 minutes of the best backroads in Maryland.</p>
           <div class="hero__cta seq" style="--i:5">
             <a class="pill pill--verde" href="#drives">Choose your drive</a>
             <a class="pill pill--glass" href="#gift">Give it as a gift</a>
           </div>
         </div>
-
-        <aside class="ticket seq" style="--i:6" aria-label="Drives and prices">
-          <div class="ticket__head">
-            <span>Three drives, one road</span>
-            <span>From $495</span>
-          </div>
-          <a class="ticket__row" href="#drives" data-book="Driver I">
-            <span class="ticket__name">Driver I</span>
-            <span class="ticket__meta mono">30 min · the valley</span>
-            <span class="ticket__price">$495</span>
-          </a>
-          <a class="ticket__row" href="#drives" data-book="Driver II">
-            <span class="ticket__name"><span class="dot" aria-hidden="true"></span>Driver II <span class="mono dim">· our pick</span></span>
-            <span class="ticket__meta mono">45 min · the ridge</span>
-            <span class="ticket__price">$795</span>
-          </a>
-          <a class="ticket__row" href="#drives" data-book="Driver III">
-            <span class="ticket__name">Driver III</span>
-            <span class="ticket__meta mono">60 min · the full loop</span>
-            <span class="ticket__price">$995</span>
-          </a>
-          <p class="ticket__foot mono">Insurance included · No payment until we confirm<br>Any drive as a gift voucher, valid 12 months</p>
-        </aside>
+        <!-- The drives-and-prices ticket that sat here is parked in docs/parked/hero-ticket.html. -->
       </div>
     </header>
 
@@ -165,7 +144,7 @@
             <span class="chip">Catoctin ridge</span>
             <span class="chip">Stone walls</span>
             <span class="chip">The covered bridge</span>
-            <span class="chip chip--verde">8,500 rpm</span>
+            <span class="chip chip--verde">Redline</span>
           </div>
           <p class="body">Frederick County has the best driving roads within an hour of Washington. Ridge climbs with proper switchbacks, valley straights between stone walls, a covered bridge or two.</p>
           <p class="body">We meet in Frederick, run a briefing, and hand you the keys. The instructor rides with you the whole way. They know every corner and every pothole, and they will tell you when to breathe.</p>
@@ -186,7 +165,7 @@
       <div class="wrap">
         <div class="band__head">
           <h2 class="display h2">How far up the road do you want to go?</h2>
-          <p class="lede">Same car, same instructor, same start in Frederick. What changes is how much road you get. Every drive includes insurance, the briefing and photos.</p>
+          <p class="lede">Same instructor, same start in Frederick, your choice of supercar. What changes is how much road you get. Every drive includes insurance, the briefing and photos.</p>
         </div>
 
         <div class="chapters__grid reveal-stagger">
@@ -201,7 +180,7 @@
             <div class="chapter__top">
               <div class="chapter__kicker mono"><span>Driver I</span><span>30 min</span></div>
               <h3 class="h3 chapter__title">The valley</h3>
-              <p class="chapter__desc">Stone walls, long sightlines, and enough straight road to hear what 8,500 rpm sounds like.</p>
+              <p class="chapter__desc">Stone walls, long sightlines, and enough straight road to hear what a supercar sounds like at redline.</p>
             </div>
             <div class="chapter__bottom">
               <div class="chapter__price"><span class="n"><small>$</small>495</span><span class="m mono">about 18 mi</span></div>
@@ -375,6 +354,8 @@
           </article>
         </div>
 
+        <!-- The fleet-rotation guarantee. Client wording, 2026-09-03. -->
+        <p class="fleet__note">The fleet rotates. Cars come and go with the season and with what keeps the experience at its best, so the car on this page may not be the car on your date. What we guarantee is an equally thrilling, high-performance supercar for you, or for whoever you are giving the drive to.</p>
         <!-- PLACEHOLDER cars 05+: one line until the client confirms them. -->
         <p class="fleet__next mono muted">Next in the fleet: Ferrari 296 GTB · McLaren 750S. Planned, not yet in the garage.</p>
       </div>
@@ -407,7 +388,7 @@
           <div class="promise">
             <h3 class="h3">Rain means a new date.</h3>
             <div>
-              <p>Wet roads and a rear-wheel-drive V10 are not a good afternoon. We call it the evening before and reschedule at no charge.</p>
+              <p>Wet roads and a rear-wheel-drive supercar are not a good afternoon. We call it the evening before and reschedule at no charge.</p>
             </div>
           </div>
         </div>
@@ -468,19 +449,20 @@
           </details>
           <details class="faq__item">
             <summary class="faq__q">What if it rains?</summary>
-            <p class="body-sm faq__a">We reschedule at no charge. A wet road and a rear-wheel-drive V10 are not a good afternoon, and we would rather you came back on a dry one.</p>
+            <p class="body-sm faq__a">We reschedule at no charge. A wet road and a rear-wheel-drive supercar are not a good afternoon, and we would rather you came back on a dry one.</p>
           </details>
           <details class="faq__item">
             <summary class="faq__q">Which car do I get?</summary>
-            <p class="body-sm faq__a">You choose when you book: a Huracán Tecnica in purple or green, the 718 Cayman GT4 RS, or the 911 GT3. If you want two of them, that is Driver X.</p>
+            <p class="body-sm faq__a">You choose from what is in the garage when you book. The fleet rotates with the season, so if your pick is away on your date we put you in an equally thrilling, high-performance supercar. If you want two of them, that is Driver X.</p>
           </details>
           <details class="faq__item">
             <summary class="faq__q">Do I need my own insurance?</summary>
             <p class="body-sm faq__a">No. Cover is included in the price. Your liability is capped at a deductible we confirm in writing before you pay.</p>
           </details>
+          <!-- PLACEHOLDER: paddle-shift for every car is assumed; confirm for cars that could be manual. -->
           <details class="faq__item">
             <summary class="faq__q">Can I drive a manual?</summary>
-            <p class="body-sm faq__a">The Tecnica is a seven-speed dual-clutch with paddles. There is no clutch pedal, and you will not miss it above 6,000 rpm.</p>
+            <p class="body-sm faq__a">Every car in the fleet shifts with paddles. There is no clutch pedal, and you will not miss it at redline.</p>
           </details>
           <details class="faq__item">
             <summary class="faq__q">Is it a gift?</summary>
@@ -539,9 +521,11 @@
             <div class="field">
               <label class="label" for="f-car">Car</label>
               <select class="input" id="f-car" name="car">
-                <option>Viola, the purple one</option>
-                <option>Verde, the green one</option>
-                <option>Either</option>
+                <option>Any supercar in the fleet</option>
+                <option>Huracán Tecnica, Viola</option>
+                <option>Huracán Tecnica, Verde</option>
+                <option>718 Cayman GT4 RS</option>
+                <option>911 GT3</option>
               </select>
             </div>
             <div class="field">

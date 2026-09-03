@@ -298,8 +298,17 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   color: #fff;
   background: var(--ink-2);
 }
-.hero .media img { object-position: 64% 50%; }
-.hero .media video { object-position: 64% 50%; }
+.hero .media img { object-position: 64% 50%; filter: saturate(0.92) contrast(0.98); }
+/* Sun-ray layer: the light from the Kling render, drawn on a canvas that
+   script.js scrubs with the scroll position. Same crop as the still. */
+.hero .rays {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 64% 50%;
+  pointer-events: none; opacity: 0; transition: opacity 900ms var(--ease);
+}
+.hero .rays { mix-blend-mode: screen; }
+@supports (mix-blend-mode: plus-lighter) { .hero .rays { mix-blend-mode: plus-lighter; } }
+.hero .rays.is-ready { opacity: 1; }
 .hero__scrim {
   position: absolute; inset: 0; pointer-events: none;
   background:
@@ -309,8 +318,8 @@ section[id], .card[id] { scroll-margin-top: 88px; }
 }
 .hero__inner {
   position: relative;
-  display: grid; grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end; gap: 32px;
+  display: grid; grid-template-columns: minmax(0, 1fr);
+  align-items: end;
   padding-top: 140px;
 }
 .hero__eyebrow { margin-bottom: 22px; }
@@ -319,38 +328,11 @@ section[id], .card[id] { scroll-margin-top: 88px; }
 .hero__sub { max-width: 520px; font-size: 18px; color: var(--on-dark-2); margin-bottom: 28px; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: 10px; }
 
-.ticket {
-  width: 340px; max-width: 100%;
-  padding: 20px 20px 16px;
-  border-radius: var(--r-panel);
-  background: rgba(12, 15, 13, 0.42); border: 1px solid var(--glass-line);
-  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-}
-.ticket__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: var(--on-dark-3); font-weight: 600; font-size: 13px; }
-.ticket__price, .chapter__price .n, .spec, .stat { font-variant-numeric: tabular-nums; }
-.ticket__row {
-  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 14px;
-  padding: 12px 10px; margin: 0 -10px; border-top: 1px solid var(--line-dark);
-  border-radius: 10px; text-decoration: none; color: #fff;
-  transition: background-color 160ms var(--ease), transform 140ms var(--ease-out);
-}
-.ticket__row:active { transform: scale(0.985); }
-@media (hover: hover) and (pointer: fine) { .ticket__row:hover { background: rgba(255,255,255,0.07); } }
-.ticket__name { font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; }
-.ticket__name .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verde); }
-.ticket__meta { grid-column: 1; color: var(--on-dark-3); }
-.ticket__price {
-  grid-row: 1 / span 2; grid-column: 2; align-self: center;
-  font-family: var(--font-display); font-variation-settings: "opsz" 40, "wdth" 100;
-  font-weight: 700; font-size: 24px; letter-spacing: -0.01em;
-}
-.ticket__foot { margin-top: 10px; color: var(--on-dark-3); text-transform: none; letter-spacing: 0; }
+.chapter__price .n, .spec, .stat { font-variant-numeric: tabular-nums; }
+/* The hero ticket (drives and prices panel) is parked in docs/parked/hero-ticket.html. */
 
-/* Once the ticket stacks under the copy, the headline sits higher in the
-   frame, so the bottom band deepens to meet it. */
+/* Narrower frames: the headline sits higher, so the bottom band deepens to meet it. */
 @media (max-width: 960px) {
-  .hero__inner { grid-template-columns: 1fr; }
-  .ticket { width: 100%; }
   .hero__scrim {
     background:
       linear-gradient(180deg, rgba(12,15,13,0.42) 0%, rgba(12,15,13,0) 24%),
@@ -358,11 +340,10 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   }
   .hero__title .quiet { color: rgba(255, 255, 255, 0.68); }
 }
-/* Phones: portrait photograph, and the ticket steps aside (the booking bar
-   and the drive cards carry the prices). */
+/* Phones: portrait photograph; the ray layer is 16:9 and stays off. */
 @media (max-width: 640px) {
   .hero .media img { object-position: 50% 50%; }
-  .ticket { display: none; }
+  .hero .rays { display: none; }
 }
 
 /* ---------- intro: the road ---------- */
@@ -465,6 +446,10 @@ section[id], .card[id] { scroll-margin-top: 88px; }
 /* Specs per car, compact, on the glass panel. */
 .specs--card { margin-top: 14px; }
 .specs--card .spec { height: 30px; line-height: 30px; padding: 0 11px; font-size: 13px; }
+.fleet__note {
+  max-width: 760px; margin-top: clamp(28px, 4vw, 40px);
+  font-size: 17px; line-height: 1.5; text-wrap: pretty;
+}
 .fleet__next { margin-top: 20px; text-transform: none; letter-spacing: 0; }
 @media (max-width: 760px) { .fleet__grid { grid-template-columns: minmax(0, 1fr); } .car { min-height: 0; } }
 
@@ -639,7 +624,8 @@ input[type="date"].input::-webkit-calendar-picker-indicator { filter: invert(1);
   .chapter:hover .media img, .car:hover .media img { transform: none; }
   .faq__q::after, .bar { transition: none; }
   /* Fewer movements, not zero: the fades stay, the travel goes. */
-  .chapter:active, .ticket__row:active, .pill:active { transform: none; }
+  .chapter:active, .pill:active { transform: none; }
+  .hero .rays { display: none; }
   .sheet, .sheet[hidden] { transform: none; }
   .sheet__links > * { transform: none; transition-delay: 0ms; }
   .faq__item::details-content { transition: none; }
