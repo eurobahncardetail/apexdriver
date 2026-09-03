@@ -40,7 +40,11 @@
   --font-body: Manrope, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
+  /* --ease for colour hovers; --ease-out for anything entering; --ease-in-out
+     for things that morph while on screen. */
   --ease: cubic-bezier(0.2, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 /* ---------- reset ---------- */
@@ -118,22 +122,25 @@ button, input, select, textarea { font: inherit; color: inherit; }
   font-weight: 600; font-size: 14px; line-height: 1;
   text-decoration: none; white-space: nowrap; cursor: pointer;
   transition: background-color 180ms var(--ease), color 180ms var(--ease),
-              border-color 180ms var(--ease), transform 180ms var(--ease);
+              border-color 180ms var(--ease), transform 140ms var(--ease-out);
 }
-.pill:active { transform: scale(0.98); }
+.pill:active { transform: scale(0.97); }
 .pill--verde { background: var(--verde); color: var(--ink); }
-.pill--verde:hover { background: var(--verde-2); }
 .pill--ink { background: var(--ink); color: #fff; }
-.pill--ink:hover { background: var(--ink-2); }
 .pill--glass {
   background: var(--glass); color: #fff; border-color: var(--glass-line);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
 }
-.pill--glass:hover { background: rgba(255, 255, 255, 0.16); }
 .pill--paper { background: rgba(255, 255, 255, 0.92); color: var(--ink); }
-.pill--paper:hover { background: #fff; }
 .pill--outline { border-color: var(--line-2); color: var(--ink); background: transparent; }
-.pill--outline:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+/* Hover colours only where hover exists: on touch a tap would leave them stuck. */
+@media (hover: hover) and (pointer: fine) {
+  .pill--verde:hover { background: var(--verde-2); }
+  .pill--ink:hover { background: var(--ink-2); }
+  .pill--glass:hover { background: rgba(255, 255, 255, 0.16); }
+  .pill--paper:hover { background: #fff; }
+  .pill--outline:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+}
 .pill--sm { height: 40px; padding: 0 16px; font-size: 13px; }
 .pill svg { width: 14px; height: 14px; }
 
@@ -202,7 +209,8 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   font-weight: 600; font-size: 14px;
   transition: background-color 160ms var(--ease);
 }
-.nav__link:hover, .nav__link.on { background: rgba(255, 255, 255, 0.14); }
+.nav__link.on { background: rgba(255, 255, 255, 0.14); }
+@media (hover: hover) and (pointer: fine) { .nav__link:hover { background: rgba(255, 255, 255, 0.14); } }
 .lockup {
   display: inline-flex; align-items: center; gap: 10px; height: 38px; padding: 0 16px 0 12px;
   color: #fff; text-decoration: none;
@@ -218,7 +226,7 @@ section[id], .card[id] { scroll-margin-top: 88px; }
 /* Glass over the hero, paper once the hero has scrolled under: the verde
    primary is always the one in the flow, never the fixed one. */
 .nav--solid .nav__cta { background: rgba(255, 255, 255, 0.92); color: var(--ink); border-color: transparent; }
-.nav--solid .nav__cta:hover { background: #fff; }
+@media (hover: hover) and (pointer: fine) { .nav--solid .nav__cta:hover { background: #fff; } }
 .nav__menu { display: none; height: 46px; }
 .nav--solid .nav__menu { background: rgba(12, 15, 13, 0.82); }
 @media (max-width: 900px) {
@@ -235,7 +243,22 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   background: rgba(12, 15, 13, 0.9); color: #fff;
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
 }
-.sheet[hidden] { display: none; }
+/* Fade and settle in, out faster. display transitions discretely where the
+   browser allows it; elsewhere the sheet simply toggles as before. */
+.sheet {
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out), display 220ms allow-discrete;
+  @starting-style { opacity: 0; transform: scale(0.98); }
+}
+.sheet[hidden] {
+  display: none; opacity: 0; transform: scale(0.98);
+  transition-duration: 160ms, 160ms, 160ms;
+}
+.sheet__links > * {
+  transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out), color 160ms var(--ease);
+  transition-delay: calc(60ms + var(--i, 0) * 40ms);
+  @starting-style { opacity: 0; transform: translateY(10px); }
+}
+.sheet[hidden] .sheet__links > * { opacity: 0; transform: translateY(10px); transition-delay: 0ms; transition-duration: 120ms; }
 .sheet__top { display: flex; justify-content: space-between; align-items: center; }
 .sheet__top .lockup { padding-left: 0; }
 .sheet__links { margin: auto 0; display: grid; gap: 4px; }
@@ -243,7 +266,7 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   display: block; padding: 8px 0; color: #fff; text-decoration: none;
   font-size: clamp(36px, 10vw, 56px);
 }
-.sheet__link:hover { color: var(--verde); }
+@media (hover: hover) and (pointer: fine) { .sheet__link:hover { color: var(--verde); } }
 .sheet__cta { align-self: flex-start; }
 .sheet-open { overflow: hidden; }
 
@@ -258,14 +281,14 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   background: rgba(12, 15, 13, 0.82); color: #fff; border: 1px solid var(--glass-line);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   transform: translateY(calc(100% + 32px));
-  transition: transform 320ms var(--ease);
+  transition: transform 200ms var(--ease-out); /* leaving: quick */
 }
 .bar__text { display: flex; align-items: baseline; gap: 8px; font-size: 14px; white-space: nowrap; }
 .bar .mono { color: var(--on-dark-3); }
 .bar .pill { flex: none; }
 @media (max-width: 900px) { .bar { display: flex; } }
 @media (max-width: 480px) { .bar { padding-left: 14px; } .bar__text .mono { display: none; } }
-.is-past:not(.is-booking):not(.sheet-open) .bar { transform: none; }
+.is-past:not(.is-booking):not(.sheet-open) .bar { transform: none; transition-duration: 320ms; } /* arriving */
 
 /* ---------- hero ---------- */
 .hero {
@@ -309,9 +332,10 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 14px;
   padding: 12px 10px; margin: 0 -10px; border-top: 1px solid var(--line-dark);
   border-radius: 10px; text-decoration: none; color: #fff;
-  transition: background-color 160ms var(--ease);
+  transition: background-color 160ms var(--ease), transform 140ms var(--ease-out);
 }
-.ticket__row:hover { background: rgba(255,255,255,0.07); }
+.ticket__row:active { transform: scale(0.985); }
+@media (hover: hover) and (pointer: fine) { .ticket__row:hover { background: rgba(255,255,255,0.07); } }
 .ticket__name { font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; }
 .ticket__name .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verde); }
 .ticket__meta { grid-column: 1; color: var(--on-dark-3); }
@@ -372,8 +396,10 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   display: flex; flex-direction: column; justify-content: space-between;
   padding: 22px; color: #fff; text-decoration: none;
   background: var(--ink-2);
+  transition: transform 140ms var(--ease-out);
 }
-.chapter .media img, .chapter .media video { transition: transform 900ms var(--ease); }
+.chapter:active { transform: scale(0.99); }
+.chapter .media img, .chapter .media video { transition: transform 900ms var(--ease-in-out); }
 .chapter__scrim {
   position: absolute; inset: 0; pointer-events: none;
   background:
@@ -407,7 +433,7 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   display: flex; align-items: flex-end; padding: 16px;
   background: var(--ink-2); color: #fff;
 }
-.car .media img, .car .media video { transition: transform 900ms var(--ease); }
+.car .media img, .car .media video { transition: transform 900ms var(--ease-in-out); }
 /* Photograph scale on hover only where hover exists: on touch it would fire
    on tap and stick. */
 @media (hover: hover) and (pointer: fine) {
@@ -484,10 +510,20 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   background:
     linear-gradient(var(--ink), var(--ink)) center / 12px 1.5px no-repeat,
     linear-gradient(var(--ink), var(--ink)) center / 1.5px 12px no-repeat;
-  transition: transform 240ms var(--ease), background-color 160ms var(--ease);
+  transition: transform 240ms var(--ease-in-out), background-color 160ms var(--ease);
 }
 .faq__item[open] .faq__q::after { transform: rotate(45deg); background-color: var(--mist-2); }
 .faq__a { padding: 0 0 22px; max-width: 60ch; color: var(--stone); }
+/* The answer opens with the icon: real height where the browser can
+   interpolate to auto, and a short fade everywhere. */
+.faq__item { interpolate-size: allow-keywords; }
+.faq__item::details-content {
+  height: 0; overflow: clip;
+  transition: height 240ms var(--ease-in-out), content-visibility 240ms allow-discrete;
+}
+.faq__item[open]::details-content { height: auto; }
+.faq__item[open] .faq__a { animation: faq-in 200ms var(--ease-out) both; }
+@keyframes faq-in { from { opacity: 0; } }
 @media (max-width: 860px) { .faq__grid { grid-template-columns: 1fr; } }
 
 /* ---------- book: the drive home, with the form on the photograph ---------- */
@@ -528,9 +564,9 @@ section[id], .card[id] { scroll-margin-top: 88px; }
   width: 100%; height: 54px; padding: 0 18px;
   border-radius: 16px; border: 1px solid rgba(255,255,255,0.16);
   background: rgba(255,255,255,0.06); color: #fff; caret-color: var(--verde);
-  transition: border-color 160ms var(--ease), background-color 160ms var(--ease);
+  transition: border-color 160ms var(--ease), background-color 160ms var(--ease), box-shadow 160ms var(--ease);
 }
-.input:hover { border-color: rgba(255,255,255,0.32); }
+@media (hover: hover) and (pointer: fine) { .input:hover { border-color: rgba(255,255,255,0.32); } }
 .input:focus { outline: none; border-color: var(--verde); box-shadow: 0 0 0 1px var(--verde); background: rgba(255,255,255,0.09); }
 .input.is-invalid { border-color: #FF7A59; box-shadow: 0 0 0 1px #FF7A59; }
 select.input:invalid, select.input option[value=""] { color: var(--on-dark-3); }
@@ -545,6 +581,10 @@ input[type="date"].input::-webkit-calendar-picker-indicator { filter: invert(1);
 .form__actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 6px; }
 .form__error { grid-column: 1 / -1; color: #FF9A80; }
 .form__done { grid-column: 1 / -1; color: var(--on-dark-2); }
+.form__error, .form__done {
+  transition: opacity 200ms var(--ease-out);
+  @starting-style { opacity: 0; }
+}
 
 /* ---------- footer (ink) ---------- */
 .footer {
@@ -554,7 +594,7 @@ input[type="date"].input::-webkit-calendar-picker-indicator { filter: invert(1);
 .footer .lockup { justify-self: center; padding: 0; }
 .footer__links { justify-self: end; display: flex; gap: 8px; }
 .footer__links .pill { height: 40px; padding: 0 14px; font-size: 13px; border-color: var(--line-dark); color: var(--on-dark-2); }
-.footer__links .pill:hover { color: #fff; border-color: #fff; background: transparent; }
+@media (hover: hover) and (pointer: fine) { .footer__links .pill:hover { color: #fff; border-color: #fff; background: transparent; } }
 .footer .mono, .book__copy .mono, .form__actions .mono { color: var(--on-dark-3); text-transform: none; letter-spacing: 0; }
 @media (max-width: 900px) { .book__grid { grid-template-columns: 1fr; margin-top: 32px; } .book { min-height: 0; } }
 @media (max-width: 720px) {
@@ -570,23 +610,23 @@ input[type="date"].input::-webkit-calendar-picker-indicator { filter: invert(1);
    It never depends on script.js. */
 .ad-motion .seq { opacity: 0; }
 .ad-motion.ad-fonts .seq {
-  animation: seq-in 640ms var(--ease) both;
-  animation-delay: calc(140ms + var(--i, 0) * 100ms);
+  animation: seq-in 560ms var(--ease-out) both;
+  animation-delay: calc(140ms + var(--i, 0) * 70ms);
 }
 @keyframes seq-in {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: none; }
 }
 /* Section reveals hide nothing until script.js has confirmed it is running (html.ad-js). */
-.ad-js .reveal { opacity: 0; transform: translateY(18px); }
+.ad-js .reveal { opacity: 0; transform: translateY(12px); }
 .ad-js .reveal.is-in {
   opacity: 1; transform: none;
-  transition: opacity 720ms var(--ease), transform 720ms var(--ease);
+  transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out);
 }
-.ad-js .reveal-stagger > * { opacity: 0; transform: translateY(16px); }
+.ad-js .reveal-stagger > * { opacity: 0; transform: translateY(12px); }
 .ad-js .reveal-stagger.is-in > * {
   opacity: 1; transform: none;
-  transition: opacity 640ms var(--ease), transform 640ms var(--ease);
+  transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out);
 }
 .ad-js .reveal-stagger.is-in > :nth-child(2) { transition-delay: 80ms; }
 .ad-js .reveal-stagger.is-in > :nth-child(3) { transition-delay: 160ms; }
@@ -595,6 +635,11 @@ input[type="date"].input::-webkit-calendar-picker-indicator { filter: invert(1);
 @media (prefers-reduced-motion: reduce) {
   .chapter:hover .media img, .car:hover .media img { transform: none; }
   .faq__q::after, .bar { transition: none; }
+  /* Fewer movements, not zero: the fades stay, the travel goes. */
+  .chapter:active, .ticket__row:active, .pill:active { transform: none; }
+  .sheet, .sheet[hidden] { transform: none; }
+  .sheet__links > * { transform: none; transition-delay: 0ms; }
+  .faq__item::details-content { transition: none; }
 }
 
 @media (max-width: 640px) {
